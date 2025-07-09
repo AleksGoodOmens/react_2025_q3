@@ -1,6 +1,15 @@
-import { Component, type ChangeEvent, type ReactNode } from 'react';
+import {
+  Component,
+  type ChangeEvent,
+  type InputHTMLAttributes,
+  type ReactNode,
+} from 'react';
 
-class SearchInput extends Component {
+interface SearchInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+}
+
+class SearchInput extends Component<SearchInputProps> {
   state = {
     value: '',
   };
@@ -9,13 +18,15 @@ class SearchInput extends Component {
   };
 
   render(): ReactNode {
+    const { label, ...inputProps } = this.props;
     return (
       <label>
-        <h5>search</h5>
+        <h5>{label || 'search'}</h5>
         <input
           type="text"
           value={this.state.value}
           onChange={this.handleChange}
+          {...inputProps}
         />
       </label>
     );
