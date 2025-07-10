@@ -10,7 +10,6 @@ class Home extends Component {
   componentWillUnmount(): void {
     this.setState({ isError: false });
   }
-
   render() {
     if (this.state.isError) {
       throw new Error('test error');
