@@ -27,10 +27,10 @@ class SearchInput extends Component<SearchInputProps> {
   render(): ReactNode {
     const { label, ...inputProps } = this.props;
     return (
-      <label className="col-span-5 flex gap-2 border-2 px-4 py-2 rounded-xl items-center">
+      <label className="col-span-5 flex items-center gap-2 rounded-xl border-2 px-4 py-2">
         <h5 className="uppercase">{label || 'search'}</h5>
         <input
-          className="bg-amber-200 rounded-xl px-2 py-1 w-full"
+          className="w-full rounded-xl bg-amber-200 px-2 py-1"
           type="text"
           value={this.state.value}
           onChange={this.handleChange}
