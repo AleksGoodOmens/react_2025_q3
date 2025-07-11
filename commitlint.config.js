@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   extends: ['@commitlint/config-conventional'],
   rules: {
     //   TODO Add Scope Enum Here
