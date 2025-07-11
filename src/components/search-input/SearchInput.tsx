@@ -14,15 +14,23 @@ class SearchInput extends Component<SearchInputProps> {
     value: '',
   };
   handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ value: e.target.value });
+    const value = e.target.value;
+
+    this.setState({ value: value });
   };
+
+  componentDidMount(): void {
+    const savedSearch = localStorage.getItem('search');
+    if (savedSearch) this.setState({ value: savedSearch });
+  }
 
   render(): ReactNode {
     const { label, ...inputProps } = this.props;
     return (
-      <label>
-        <h5>{label || 'search'}</h5>
+      <label className="col-span-5 flex gap-2 border-2 px-4 py-2 rounded-xl items-center">
+        <h5 className="uppercase">{label || 'search'}</h5>
         <input
+          className="bg-amber-200 rounded-xl px-2 py-1 w-full"
           type="text"
           value={this.state.value}
           onChange={this.handleChange}
