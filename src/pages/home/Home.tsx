@@ -19,8 +19,8 @@ class Home extends Component {
       throw new Error('test error');
     }
     return (
-      <section className="container mx-auto">
-        <h1 className="text-9xl">Home</h1>
+      <section className="container mx-auto p-2">
+        <h1 className="text-4xl">Countries by AmensGood</h1>
         <Button
           className="cursor-pointer rounded-xl border-2 bg-amber-800 px-4 py-2 text-white hover:bg-white"
           onClick={() => {
@@ -31,7 +31,7 @@ class Home extends Component {
         </Button>
         <SearchForm />
         <ErrorBoundary fallback={<p>Some error try again</p>}>
-          <CountryList items={[]} />
+          <CountryList />
         </ErrorBoundary>
       </section>
     );
