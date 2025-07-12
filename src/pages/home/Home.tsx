@@ -19,7 +19,7 @@ class Home extends Component {
       throw new Error('test error');
     }
     return (
-      <section className="container mx-auto p-2">
+      <section className="container mx-auto flex min-h-dvh flex-col p-2">
         <h1 className="text-4xl">Countries by AmensGood</h1>
         <Button
           className="cursor-pointer rounded-xl border-2 bg-amber-800 px-4 py-2 text-white hover:bg-white"
