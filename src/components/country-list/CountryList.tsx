@@ -60,7 +60,7 @@ class CountryList extends Component<object, IState> {
 
   render(): ReactNode {
     return (
-      <ul className="relative grid grow-1 items-start gap-2 rounded-xl border-2 p-2 md:grid-cols-2 lg:grid-cols-3">
+      <ul className="relative grid gap-2 rounded-xl border-2 p-2 md:grid-cols-2 lg:grid-cols-3">
         {this.state.loading ? (
           Array.from({ length: 20 }).map((_, i) => <SkeletonListItem key={i} />)
         ) : this.state.countries.length > 0 ? (
