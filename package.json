@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "format:fix": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "vitest"
   },
   "lint-staged": {
     "*.{ts,tsx}": "eslint --fix",
@@ -44,6 +45,7 @@
     "prettier-plugin-tailwindcss": "^0.6.14",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
-    "vite": "^7.0.3"
+    "vite": "^7.0.3",
+    "vitest": "^3.2.4"
   }
 }
