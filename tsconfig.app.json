@@ -30,7 +30,7 @@
     "noUncheckedSideEffectImports": true,
 
     /* tests */
-    "types": ["@testing-library/jest-dom"]
+    "types": ["vite/client", "@testing-library/jest-dom"]
   },
   "include": ["src", "__test__/setupTest.ts"]
 }
