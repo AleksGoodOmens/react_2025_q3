@@ -13,7 +13,7 @@ interface IState {
 class CountryList extends Component<object, IState> {
   state: IState = {
     countries: [],
-    loading: false,
+    loading: true,
   };
 
   private searchListener = () => this.handleUrlChange();
