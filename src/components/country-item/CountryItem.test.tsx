@@ -1,6 +1,6 @@
 import type { ICountry } from '@/interfaces';
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import CountryItem from './CountryItem';
 
@@ -35,13 +35,13 @@ const mockPropsWithoutCapital: ICountry = {
 };
 
 describe('CountryItem', () => {
-  it('render proper tag "li"', () => {
+  beforeEach(() => {
     render(<CountryItem {...mockProps} />);
+  });
+  it('render proper tag "li"', () => {
     expect(screen.getByRole('listitem')).toBeInTheDocument();
   });
   it('have an image with proper attributes', () => {
-    render(<CountryItem {...mockProps} />);
-
     const image = screen.getByRole('img');
 
     expect(image).toBeInTheDocument();
@@ -49,9 +49,11 @@ describe('CountryItem', () => {
     expect(image).toHaveAttribute('src', mockProps.flags.svg);
   });
   it('it render render capital name if exist', async () => {
-    render(<CountryItem {...mockProps} />);
     expect(await screen.findByText('testograd')).toBeInTheDocument();
   });
+});
+
+describe('non capital in props', () => {
   it('it do not render capital name if not exist', () => {
     render(<CountryItem {...mockPropsWithoutCapital} />);
     expect(screen.getAllByRole('paragraph').length).toBe(2);
