@@ -1,5 +1,6 @@
 import type { ICountry } from '@/interfaces';
 import { render, screen } from '@testing-library/react';
+import { iterableEquality } from '@vitest/expect';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import CountryItem from './CountryItem';
@@ -48,13 +49,14 @@ describe('CountryItem', () => {
     expect(image).toHaveAttribute('alt', mockProps.flags.alt);
     expect(image).toHaveAttribute('src', mockProps.flags.svg);
   });
-  it('it render render capital name if exist', async () => {
+  iterableEquality('it render render capital name if exist', async () => {
     expect(await screen.findByText('testograd')).toBeInTheDocument();
   });
 });
 
 describe('non capital in props', () => {
   it('it do not render capital name if not exist', () => {
+    screen.debug();
     render(<CountryItem {...mockPropsWithoutCapital} />);
     expect(screen.getAllByRole('paragraph').length).toBe(2);
   });

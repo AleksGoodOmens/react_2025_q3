@@ -11,27 +11,24 @@
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"]
     },
-
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
-
-    /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-
-    "types": ["vitest", "@testing-library/jest-dom"],
-    "typeRoots": [
-      "./node_modules/vitest/types",
-      "./node_modules/@testing-library/jest-dom/types"
-    ]
+    "types": ["vitest", "@testing-library/jest-dom"]
   },
-  "include": ["vite.config.ts", "src/**/*.test.ts", "src/**/*.spec.ts"]
+  "include": [
+    "vite.config.ts",
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts",
+    "__test__/setupTest.ts"
+  ],
+  "exclude": ["node_modules"]
 }

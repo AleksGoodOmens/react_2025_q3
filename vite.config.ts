@@ -22,10 +22,11 @@ export default defineConfig(
         enabled: true,
         include: ['src/**/*.{js,jsx,ts,tsx}'],
         exclude: [
+          'src/interfaces/*.ts',
           'src/**/*.test.{js,jsx,ts,tsx}',
           'src/**/*.spec.{js,jsx,ts,tsx}',
           'src/index.{js,jsx,ts,tsx}',
-          'src/setupTests.{js,ts}',
+          'src/__test__/*/*.{js,ts}',
           'src/**/*.d.ts',
         ],
         reporter: ['text', 'json', 'html'],
