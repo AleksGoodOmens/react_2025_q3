@@ -1,8 +1,7 @@
 export interface ICountry {
   flags: Flags;
   name: Name;
-  capital: string[];
-  borders: string[];
+  capital?: string[];
   area: number;
 }
 
