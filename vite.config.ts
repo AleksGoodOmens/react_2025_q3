@@ -9,15 +9,14 @@ export default defineConfig(
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
-        '@components': path.resolve(__dirname, './src/components'),
-        '@pages': path.resolve(__dirname, './src/pages'),
       },
     },
 
     plugins: [react(), tailwindcss()],
     test: {
+      globals: false,
       environment: 'jsdom',
-      setupFiles: ['src/__test__/setupTest.ts'],
+      setupFiles: ['src/__test__/index.ts'],
       coverage: {
         enabled: true,
         include: ['src/**/*.{js,jsx,ts,tsx}'],

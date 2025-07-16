@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { iterableEquality } from '@vitest/expect';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import CountryItem from './CountryItem';
+import { CountryItem } from './CountryItem';
 
 const mockProps: ICountry = {
   area: 1000,

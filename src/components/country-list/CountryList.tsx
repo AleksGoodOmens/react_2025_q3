@@ -2,15 +2,15 @@ import type { ICountry } from '@/interfaces';
 import { getAllCountries, getCountriesByName } from '@/service/CountryAPI';
 import { Component, type ReactNode } from 'react';
 
-import CountryItem from '../country-item/CountryItem';
-import SkeletonListItem from '../skeleton-list-item/SkeletonListItem';
+import { CountryItem } from '../country-item/CountryItem';
+import { SkeletonListItem } from '../skeleton-list-item/SkeletonListItem';
 
 interface IState {
   countries: ICountry[];
   loading: boolean;
 }
 
-class CountryList extends Component<object, IState> {
+export class CountryList extends Component<object, IState> {
   state: IState = {
     countries: [],
     loading: true,
@@ -37,7 +37,7 @@ class CountryList extends Component<object, IState> {
     return searchParams.get('search') || localStorage.getItem('search') || '';
   };
 
-  private loadCountries = async (): Promise<void> => {
+  loadCountries = async (): Promise<void> => {
     const searchValue = this.getSearchValue();
 
     try {
@@ -76,5 +76,3 @@ class CountryList extends Component<object, IState> {
     );
   }
 }
-
-export default CountryList;

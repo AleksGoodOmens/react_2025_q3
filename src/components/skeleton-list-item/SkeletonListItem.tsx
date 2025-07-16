@@ -1,4 +1,4 @@
-const SkeletonListItem = () => {
+export const SkeletonListItem = () => {
   return (
     <li data-testid="skeleton-item" className="flex animate-pulse gap-2">
       <div className="aspect-video h-full w-[75] rounded-lg bg-amber-50/30"></div>
@@ -10,5 +10,3 @@ const SkeletonListItem = () => {
     </li>
   );
 };
-
-export default SkeletonListItem;

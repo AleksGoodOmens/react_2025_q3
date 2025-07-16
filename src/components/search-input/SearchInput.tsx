@@ -9,7 +9,7 @@ interface SearchInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
 }
 
-class SearchInput extends Component<SearchInputProps> {
+export class SearchInput extends Component<SearchInputProps> {
   state = {
     value: '',
   };
@@ -40,4 +40,3 @@ class SearchInput extends Component<SearchInputProps> {
     );
   }
 }
-export default SearchInput;

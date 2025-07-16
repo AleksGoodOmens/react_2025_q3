@@ -4,8 +4,6 @@ interface IButton
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     PropsWithChildren {}
 
-const Button = ({ children, ...props }: IButton) => {
+export const Button = ({ children, ...props }: IButton) => {
   return <button {...props}>{children}</button>;
 };
-
-export default Button;

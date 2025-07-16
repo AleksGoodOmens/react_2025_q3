@@ -4,7 +4,7 @@ interface IProps extends PropsWithChildren {
   fallback: ReactNode;
 }
 
-class ErrorBoundary extends Component<IProps> {
+export class ErrorBoundary extends Component<IProps> {
   state = {
     hasError: false,
   };
@@ -20,5 +20,3 @@ class ErrorBoundary extends Component<IProps> {
     return this.props.children;
   }
 }
-
-export default ErrorBoundary;

@@ -1,9 +1,9 @@
 import type { ICountry } from '@/interfaces';
 
-const urlAllCountries =
+export const urlAllCountries =
   'https://restcountries.com/v3.1/all?fields=name,flags,capital,area,borders,';
 
-const urlCountriesByName = 'https://restcountries.com/v3.1/translation';
+export const urlCountriesByName = 'https://restcountries.com/v3.1/translation';
 
 async function getAllCountries(): Promise<ICountry[]> {
   try {
