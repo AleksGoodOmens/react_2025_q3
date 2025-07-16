@@ -3,9 +3,9 @@ import { createRoot } from 'react-dom/client';
 
 import './index.css';
 
-import Home from '@pages/home/Home';
+import Home from '@/pages/home/Home';
 
-import ErrorBoundary from '@components/error-boundary/ErrorBoundary';
+import { ErrorBoundary } from '@/components';
 
 const root = document.getElementById('root');
 

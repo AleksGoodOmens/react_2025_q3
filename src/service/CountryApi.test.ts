@@ -1,10 +1,9 @@
 // src/service/CountryAPI.test.ts
 
+import { getAllCountries } from './CountryAPI';
 import { server } from '@/__test__';
 import { http, HttpResponse } from 'msw';
 import { describe, expect, it } from 'vitest';
-
-import { getAllCountries } from './CountryAPI';
 
 describe('CountryAPI', () => {
   it('should handle errors for getAllCountries', async () => {

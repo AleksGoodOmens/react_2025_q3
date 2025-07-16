@@ -1,5 +1,5 @@
-import { cleanup } from '@testing-library/react';
 import { beforeEach } from 'vitest';
+import { cleanup } from '@testing-library/react';
 
 const localStorageMock = (() => {
   let store: Record<string, string> = {};

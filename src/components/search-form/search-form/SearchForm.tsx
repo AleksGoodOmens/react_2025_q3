@@ -1,5 +1,6 @@
-import { Button, SearchInput } from '@/components';
 import { Component, type FormEvent } from 'react';
+
+import { Button, SearchInput } from '@/components';
 
 export class SearchForm extends Component {
   private handleSearch = (e: FormEvent<HTMLFormElement>) => {

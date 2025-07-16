@@ -1,9 +1,8 @@
+import { CountryItem } from '../country-item/CountryItem';
+import { SkeletonListItem } from '../skeleton-list-item/SkeletonListItem';
 import type { ICountry } from '@/interfaces';
 import { getAllCountries, getCountriesByName } from '@/service/CountryAPI';
 import { Component, type ReactNode } from 'react';
-
-import { CountryItem } from '../country-item/CountryItem';
-import { SkeletonListItem } from '../skeleton-list-item/SkeletonListItem';
 
 interface IState {
   countries: ICountry[];

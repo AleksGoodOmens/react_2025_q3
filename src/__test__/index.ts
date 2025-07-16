@@ -2,11 +2,10 @@
 import '@testing-library/jest-dom/vitest';
 import './mockData/mockLocalStorage.js';
 
-import { cleanup } from '@testing-library/react';
+import { handlers } from './mockData/handlers.js';
 import { setupServer } from 'msw/node';
 import { afterAll, afterEach, beforeAll } from 'vitest';
-
-import { handlers } from './mockData/handlers.js';
+import { cleanup } from '@testing-library/react';
 
 export { mockCountries } from './mockData/countries.mock.js';
 

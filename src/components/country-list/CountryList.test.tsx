@@ -1,9 +1,8 @@
+import { CountryList } from './CountryList';
 import { mockCountries, server } from '@/__test__';
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-
-import { CountryList } from './CountryList';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 
 describe('CountryList', () => {
   describe('positive scenario', () => {

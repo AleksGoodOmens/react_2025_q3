@@ -1,9 +1,8 @@
+import { CountryItem } from './CountryItem';
 import type { ICountry } from '@/interfaces';
-import { render, screen } from '@testing-library/react';
 import { iterableEquality } from '@vitest/expect';
 import { beforeEach, describe, expect, it } from 'vitest';
-
-import { CountryItem } from './CountryItem';
+import { render, screen } from '@testing-library/react';
 
 const mockProps: ICountry = {
   area: 1000,

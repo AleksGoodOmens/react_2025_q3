@@ -1,6 +1,5 @@
-import { http, HttpResponse } from 'msw';
-
 import { mockCountries } from './countries.mock';
+import { http, HttpResponse } from 'msw';
 
 const url = 'https://restcountries.com/v3.1/all';
 const urlByName = 'https://restcountries.com/v3.1/translation';
