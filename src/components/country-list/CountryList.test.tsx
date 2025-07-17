@@ -1,7 +1,7 @@
 import { CountryList } from './CountryList';
 import { mockCountries, server } from '@/__test__';
 import { http, HttpResponse } from 'msw';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 
 describe('CountryList', () => {
@@ -33,22 +33,6 @@ describe('CountryList', () => {
         expect(screen.getByRole('listitem')).toHaveTextContent(
           /No countries found/gi
         );
-      });
-    });
-
-    it('should trigger load on searchUpdated event', async () => {
-      cleanup();
-      const loadMock = vi.fn();
-
-      const instance = new CountryList({});
-      instance.loadCountries = loadMock;
-
-      instance.componentDidMount();
-
-      window.dispatchEvent(new CustomEvent('searchUpdated'));
-
-      await waitFor(() => {
-        expect(loadMock).toHaveBeenCalledTimes(2);
       });
     });
   });

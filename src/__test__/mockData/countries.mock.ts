@@ -55,3 +55,32 @@ export const mockCountries: ICountry[] = [
     area: 100000,
   },
 ];
+export const mockCountry: ICountry = {
+  area: 1000,
+  capital: ['testograd'],
+  flags: { png: 'test-url', alt: 'test alt', svg: 'test-svg-path' },
+  name: {
+    official: 'official-test-country-name',
+    common: 'common-test-country-name',
+    nativeName: {
+      spa: {
+        common: 'common-spa-name',
+        official: 'official-spa-name',
+      },
+    },
+  },
+};
+export const mockCountryWithoutCapital: ICountry = {
+  area: 1000,
+  flags: { png: 'test-url', alt: 'test alt', svg: 'test-svg-path' },
+  name: {
+    official: 'official-test-country-name',
+    common: 'common-test-country-name',
+    nativeName: {
+      spa: {
+        common: 'common-spa-name',
+        official: 'official-spa-name',
+      },
+    },
+  },
+};

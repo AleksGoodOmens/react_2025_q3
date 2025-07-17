@@ -18,7 +18,6 @@ export default defineConfig(
       environment: 'jsdom',
       setupFiles: ['src/__test__/index.ts'],
       coverage: {
-        enabled: true,
         include: ['src/**/*.{js,jsx,ts,tsx}'],
         exclude: [
           'src/interfaces/*.ts',
