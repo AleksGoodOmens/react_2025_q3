@@ -33,7 +33,7 @@ describe('SearchForm', () => {
     const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
     render(<SearchForm />);
     const btn = screen.getByRole('button');
-    const searchInput = screen.getByRole('textbox');
+    const searchInput = screen.getByRole('searchbox');
 
     expect(searchInput.textContent).toBe('');
     await user.click(btn);
@@ -48,7 +48,7 @@ describe('SearchForm', () => {
     const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
     render(<SearchForm />);
     const btn = screen.getByRole('button');
-    const searchInput = screen.getByRole('textbox');
+    const searchInput = screen.getByRole('searchbox');
     expect(searchInput).toHaveValue('');
     await user.type(searchInput, testInputValue);
     expect(searchInput).toHaveValue(testInputValue);

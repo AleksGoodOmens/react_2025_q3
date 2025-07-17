@@ -1,56 +1,74 @@
 import { CountryList } from './CountryList';
 import { mockCountries, server } from '@/__test__';
 import { http, HttpResponse } from 'msw';
-import { beforeEach, describe, expect, it } from 'vitest';
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { beforeAll, describe, expect, it } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
 
 describe('CountryList', () => {
-  describe('positive scenario', () => {
-    beforeEach(() => {
-      render(<CountryList />);
-    });
-    it('should render 20 skeletons at initial render', () => {
-      expect(screen.getAllByTestId('skeleton-item')).toHaveLength(20);
-    });
+  beforeAll(() => {
+    server.use(
+      http.get('https://restcountries.com/v3.1/all', () => {
+        return HttpResponse.json(mockCountries);
+      })
+    );
+  });
 
-    it('should load and display countries', async () => {
-      await waitFor(() => {
-        expect(screen.getAllByRole('listitem').length).toBe(3);
-      });
-    });
-    it('render empty list', async () => {
-      cleanup();
-      server.use(
-        http.get('https://restcountries.com/v3.1/translation', () => {
-          return HttpResponse.json([]);
-        })
-      );
-      const searchParams = new URLSearchParams();
-      searchParams.set('search', 'non_existent_country');
-      window.history.pushState({}, '', `?${searchParams.toString()}`);
+  describe('initial render', () => {
+    it('should render 20 skeletons', () => {
       render(<CountryList />);
-      await waitFor(() => {
-        expect(screen.getByRole('listitem')).toHaveTextContent(
-          /No countries found/gi
-        );
-      });
+      expect(screen.getAllByTestId('skeleton-item')).toHaveLength(20);
     });
   });
 
-  describe('search parameters check', () => {
-    it('should handle search from URL', async () => {
+  describe('data loading', () => {
+    it('should display countries', async () => {
+      render(<CountryList />);
+      await waitFor(
+        () => {
+          expect(screen.getAllByRole('listitem')).toHaveLength(3);
+        },
+        { timeout: 200 }
+      );
+    });
+  });
+
+  describe('empty state', () => {
+    it('should show "No countries found"', async () => {
+      server.use(
+        http.get('https://restcountries.com/v3.1/translation/*', () => {
+          return HttpResponse.json([]);
+        })
+      );
+
+      window.history.pushState({}, '', '?search=empty');
+      render(<CountryList />);
+
+      await waitFor(
+        () => {
+          expect(screen.getByText(/no countries found/i)).toBeInTheDocument();
+        },
+        { timeout: 200 }
+      );
+    });
+  });
+
+  describe('search', () => {
+    it('should filter by URL param', async () => {
       server.use(
         http.get('https://restcountries.com/v3.1/translation/test', () => {
           return HttpResponse.json([mockCountries[0]]);
         })
       );
-      const searchParams = new URLSearchParams();
-      searchParams.set('search', 'test');
-      window.history.pushState({}, '', `?${searchParams.toString()}`);
+
+      window.history.pushState({}, '', '?search=test');
       render(<CountryList />);
-      await waitFor(() => {
-        expect(screen.getAllByRole('listitem').length).toBe(1);
-      });
+
+      await waitFor(
+        () => {
+          expect(screen.getAllByRole('listitem')).toHaveLength(1);
+        },
+        { timeout: 200 }
+      );
     });
   });
 });

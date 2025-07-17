@@ -3,7 +3,6 @@ import {
   mockCountry,
   mockCountryWithoutCapital,
 } from '@/__test__/mockData/countries.mock';
-import { iterableEquality } from '@vitest/expect';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
@@ -21,14 +20,13 @@ describe('CountryItem', () => {
     expect(image).toHaveAttribute('alt', mockCountry.flags.alt);
     expect(image).toHaveAttribute('src', mockCountry.flags.svg);
   });
-  iterableEquality('it render render capital name if exist', async () => {
+  it('it render render capital name if exist', async () => {
     expect(await screen.findByText('testograd')).toBeInTheDocument();
   });
 });
 
 describe('non capital in props', () => {
   it('it do not render capital name if not exist', () => {
-    screen.debug();
     render(<CountryItem {...mockCountryWithoutCapital} />);
     expect(screen.getAllByRole('paragraph').length).toBe(2);
   });

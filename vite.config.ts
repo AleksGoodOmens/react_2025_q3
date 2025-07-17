@@ -26,6 +26,7 @@ export default defineConfig(
           'src/index.{js,jsx,ts,tsx}',
           'src/__test__/*/*.{js,ts}',
           'src/**/*.d.ts',
+          'src/components/index.ts',
         ],
         reporter: ['text', 'json', 'html'],
         thresholds: {
