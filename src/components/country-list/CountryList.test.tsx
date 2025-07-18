@@ -1,34 +1,91 @@
 import { CountryList } from './CountryList';
 import { mockCountries, server } from '@/__test__';
 import { http, HttpResponse } from 'msw';
-import { beforeAll, describe, expect, it } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+  afterAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+  type MockInstance,
+} from 'vitest';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 
 describe('CountryList', () => {
-  beforeAll(() => {
-    server.use(
-      http.get('https://restcountries.com/v3.1/all', () => {
-        return HttpResponse.json(mockCountries);
-      })
-    );
-  });
+  describe('check for change state to loading and back', () => {
+    let consoleSpy: MockInstance;
+    server.resetHandlers();
+    cleanup();
+    localStorage.clear();
+    beforeEach(() => {
+      consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      server.use(
+        http.get('https://restcountries.com/v3.1/all', () => {
+          return new HttpResponse(null, { status: 500 });
+        })
+      );
+      render(<CountryList />);
+    });
 
+    it('should show error state when loading fails', async () => {
+      expect(screen.getAllByRole('status')).toHaveLength(20);
+
+      await waitFor(
+        () => {
+          expect(consoleSpy).toHaveBeenCalledTimes(2);
+        },
+        { timeout: 200 }
+      );
+    });
+
+    afterAll(() => {
+      consoleSpy.mockRestore();
+    });
+  });
   describe('initial render', () => {
     it('should render 20 skeletons', () => {
       render(<CountryList />);
-      expect(screen.getAllByTestId('skeleton-item')).toHaveLength(20);
+      expect(screen.getAllByRole('status')).toHaveLength(20);
     });
   });
 
   describe('data loading', () => {
     it('should display countries', async () => {
       render(<CountryList />);
-      await waitFor(
-        () => {
-          expect(screen.getAllByRole('listitem')).toHaveLength(3);
-        },
-        { timeout: 200 }
+      expect(await screen.findAllByRole('status')).toHaveLength(20);
+
+      expect(await screen.findAllByRole('listitem')).toHaveLength(3);
+    });
+    it('should show skeletons during search and then results', async () => {
+      server.use(
+        http.get('https://restcountries.com/v3.1/all', async () => {
+          await new Promise((resolve) => setTimeout(resolve, 100)); // Задержка
+          return HttpResponse.json(mockCountries);
+        }),
+        http.get('https://restcountries.com/v3.1/translation*', async () => {
+          await new Promise((resolve) => setTimeout(resolve, 300)); // Задержка
+          return HttpResponse.json([mockCountries[0]]);
+        })
       );
+
+      render(<CountryList />);
+
+      expect(screen.getAllByRole('status', { busy: true })).toHaveLength(20);
+
+      await waitFor(() => {
+        expect(screen.getAllByRole('listitem')).toHaveLength(3);
+      });
+
+      window.history.pushState({}, '', '?search=test');
+      window.dispatchEvent(new CustomEvent('searchUpdated'));
+      expect(await screen.findAllByRole('status', { busy: true })).toHaveLength(
+        20
+      );
+
+      await waitFor(() => {
+        expect(screen.getAllByRole('listitem')).toHaveLength(1);
+      });
     });
   });
 
