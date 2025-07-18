@@ -1,10 +1,18 @@
 import { ErrorBoundary } from './ErrorBoundary';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
 describe('error boundary', () => {
   const fallback = <p>test fallback</p>;
   const children = <h1>test</h1>;
+
+  beforeEach(() => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
   it('render component', () => {
     render(<ErrorBoundary fallback={fallback}>{children}</ErrorBoundary>);
     expect(screen.getByRole('heading')).toBeInTheDocument();

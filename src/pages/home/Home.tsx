@@ -12,7 +12,7 @@ class Home extends Component {
   }
   render() {
     if (this.state.isError) {
-      throw new Error('test error for Данияр');
+      throw new Error('test error');
     }
     return (
       <section className="container mx-auto flex min-h-dvh flex-col p-2">

@@ -1,5 +1,6 @@
 import { CountryList } from './CountryList';
 import { mockCountries, server } from '@/__test__';
+import { BASE_API_URL } from '@/constants';
 import { http, HttpResponse } from 'msw';
 import {
   afterAll,
@@ -20,8 +21,11 @@ describe('CountryList', () => {
     localStorage.clear();
     beforeEach(() => {
       consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+      const url = new URL('all', BASE_API_URL);
+
       server.use(
-        http.get('https://restcountries.com/v3.1/all', () => {
+        http.get(url.href, () => {
           return new HttpResponse(null, { status: 500 });
         })
       );

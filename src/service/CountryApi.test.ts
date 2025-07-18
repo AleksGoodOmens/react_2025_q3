@@ -1,12 +1,6 @@
-// src/service/CountryAPI.test.ts
-
-import {
-  getAllCountries,
-  getCountriesByName,
-  urlAllCountries,
-  urlCountriesByName,
-} from './CountryAPI';
+import { getCountry } from './CountryAPI';
 import { server } from '@/__test__';
+import { BASE_API_URL } from '@/constants';
 import { http, HttpResponse } from 'msw';
 import {
   afterAll,
@@ -21,15 +15,18 @@ import {
 describe('CountryAPI', () => {
   let consoleSpy: MockInstance;
   beforeAll(() => {
+    localStorage.clear();
     consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   afterAll(() => {
     consoleSpy.mockRestore();
   });
-  it('should handle errors for getAllCountries', async () => {
+  it('should handle errors for', async () => {
+    const url = new URL('all', BASE_API_URL);
+
     server.use(
-      http.get(urlAllCountries, () => {
+      http.get(url.href, () => {
         return new HttpResponse(null, {
           status: 500,
           statusText: 'Internal Server Error',
@@ -37,25 +34,7 @@ describe('CountryAPI', () => {
       })
     );
 
-    await expect(getAllCountries()).rejects.toThrow('HTTP error! status: 500');
-    expect(consoleSpy).toHaveBeenCalledWith(
-      'CountryService failed:',
-      expect.any(Error)
-    );
-  });
-  it('should handle errors for getCountryByName', async () => {
-    server.use(
-      http.get(urlCountriesByName, () => {
-        return new HttpResponse(null, {
-          status: 500,
-          statusText: 'Internal Server Error',
-        });
-      })
-    );
-
-    await expect(getCountriesByName('')).rejects.toThrow(
-      'HTTP error! status: 500'
-    );
+    await expect(getCountry()).rejects.toThrow('Internal Server Error');
     expect(consoleSpy).toHaveBeenCalledWith(
       'CountryService failed:',
       expect.any(Error)

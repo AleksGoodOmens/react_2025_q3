@@ -1,7 +1,7 @@
 import { CountryItem } from '../country-item/CountryItem';
 import { SkeletonListItem } from '../skeleton-list-item/SkeletonListItem';
 import type { ICountry } from '@/interfaces';
-import { getAllCountries, getCountriesByName } from '@/service/CountryAPI';
+import { getCountry } from '@/service/CountryAPI';
 import { Component, type ReactNode } from 'react';
 
 interface IState {
@@ -41,8 +41,8 @@ export class CountryList extends Component<object, IState> {
 
     try {
       const countryList = searchValue
-        ? await getCountriesByName(searchValue)
-        : await getAllCountries();
+        ? await getCountry(`translation/${searchValue}`)
+        : await getCountry('all');
 
       this.setState({
         countries: countryList,
