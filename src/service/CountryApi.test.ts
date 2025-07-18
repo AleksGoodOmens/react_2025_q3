@@ -1,6 +1,11 @@
 // src/service/CountryAPI.test.ts
 
-import { getAllCountries } from './CountryAPI';
+import {
+  getAllCountries,
+  getCountriesByName,
+  urlAllCountries,
+  urlCountriesByName,
+} from './CountryAPI';
 import { server } from '@/__test__';
 import { http, HttpResponse } from 'msw';
 import {
@@ -24,7 +29,7 @@ describe('CountryAPI', () => {
   });
   it('should handle errors for getAllCountries', async () => {
     server.use(
-      http.get('https://restcountries.com/v3.1/all', () => {
+      http.get(urlAllCountries, () => {
         return new HttpResponse(null, {
           status: 500,
           statusText: 'Internal Server Error',
@@ -33,6 +38,24 @@ describe('CountryAPI', () => {
     );
 
     await expect(getAllCountries()).rejects.toThrow('HTTP error! status: 500');
+    expect(consoleSpy).toHaveBeenCalledWith(
+      'CountryService failed:',
+      expect.any(Error)
+    );
+  });
+  it('should handle errors for getCountryByName', async () => {
+    server.use(
+      http.get(urlCountriesByName, () => {
+        return new HttpResponse(null, {
+          status: 500,
+          statusText: 'Internal Server Error',
+        });
+      })
+    );
+
+    await expect(getCountriesByName('')).rejects.toThrow(
+      'HTTP error! status: 500'
+    );
     expect(consoleSpy).toHaveBeenCalledWith(
       'CountryService failed:',
       expect.any(Error)
