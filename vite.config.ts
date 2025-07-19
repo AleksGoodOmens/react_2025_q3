@@ -14,6 +14,7 @@ export default defineConfig(
 
     plugins: [react(), tailwindcss()],
     test: {
+      reporters: ['verbose'],
       globals: false,
       environment: 'jsdom',
       setupFiles: ['src/__test__/index.ts'],

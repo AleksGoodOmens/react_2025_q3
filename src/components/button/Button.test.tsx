@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 
 const mockButtonChildren = 'test button';
 
-describe('button test', () => {
+describe('button', () => {
   it('render button with children', () => {
     render(<Button>{mockButtonChildren}</Button>);
     const btn = screen.getByRole('button');
