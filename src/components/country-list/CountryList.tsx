@@ -36,7 +36,7 @@ export class CountryList extends Component<object, IState> {
     return searchParams.get('search') || localStorage.getItem('search') || '';
   };
 
-  loadCountries = async (): Promise<void> => {
+  private loadCountries = async (): Promise<void> => {
     const searchValue = this.getSearchValue();
 
     try {
