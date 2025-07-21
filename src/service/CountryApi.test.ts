@@ -11,6 +11,7 @@ import {
   vi,
   type MockInstance,
 } from 'vitest';
+import z from 'zod';
 
 describe('CountryAPI', () => {
   let consoleSpy: MockInstance;
@@ -27,6 +28,24 @@ describe('CountryAPI', () => {
 
     server.use(
       http.get(url.href, () => {
+        return new HttpResponse(null, {
+          status: 500,
+          statusText: 'Internal Server Error',
+        });
+      })
+    );
+
+    await expect(getCountry()).rejects.toThrow('Internal Server Error');
+    expect(consoleSpy).toHaveBeenCalledWith(
+      'CountryService failed:',
+      expect.any(Error)
+    );
+  });
+  it('should handle errors for incorrect data object', async () => {
+    const url = new URL('all', BASE_API_URL);
+
+    server.use(
+      http.get(url.href, () => {
         return new HttpResponse([], {
           status: 500,
           statusText: 'Internal Server Error',
@@ -39,5 +58,28 @@ describe('CountryAPI', () => {
       'CountryService failed:',
       expect.any(Error)
     );
+  });
+  it('should throw "Invalid data format" when data fails Zod validation', async () => {
+    const invalidData = {
+      name: { common: 123 },
+      flags: { png: true },
+      area: 'not a number',
+    };
+
+    server.use(
+      http.get('https://restcountries.com/v3.1/all', () => {
+        return HttpResponse.json([invalidData]);
+      })
+    );
+
+    await expect(getCountry()).rejects.toThrow('Invalid data format');
+
+    const consoleSpy = vi.spyOn(console, 'error');
+    await expect(getCountry()).rejects.toThrow();
+    expect(consoleSpy).toHaveBeenCalledWith(
+      'Validation error:',
+      expect.any(z.ZodError)
+    );
+    consoleSpy.mockRestore();
   });
 });
