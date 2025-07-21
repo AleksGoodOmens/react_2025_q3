@@ -27,7 +27,7 @@ describe('CountryAPI', () => {
 
     server.use(
       http.get(url.href, () => {
-        return new HttpResponse(null, {
+        return new HttpResponse([], {
           status: 500,
           statusText: 'Internal Server Error',
         });

@@ -16,7 +16,7 @@ export const handlers = [
   http.get(test_url_by_name, async () => {
     await new Promise((resolve) => setTimeout(resolve, NETWORK_DELAY));
 
-    return HttpResponse.json(mockCountries[0]);
+    return HttpResponse.json([mockCountries[0]]);
   }),
   http.get(test_url_by_non_existed, async () => {
     await new Promise((resolve) => setTimeout(resolve, NETWORK_DELAY));

@@ -22,11 +22,9 @@ describe('CountryList', () => {
     beforeEach(() => {
       consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-      const url = new URL('all', BASE_API_URL);
-
       server.use(
-        http.get(url.href, () => {
-          return new HttpResponse(null, { status: 500 });
+        http.get(`${BASE_API_URL}all`, () => {
+          return HttpResponse.json([], { status: 500 });
         })
       );
       render(<CountryList />);
