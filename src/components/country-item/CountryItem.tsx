@@ -1,10 +1,11 @@
 import type { ICountry } from '@/interfaces';
+import { memo } from 'react';
 
 interface Props {
   countryData: ICountry;
 }
 
-export const CountryItem = ({ countryData }: Props) => {
+export const CountryItem = memo(function CountryItem({ countryData }: Props) {
   const { area, capital, flags, name } = countryData;
 
   return (
@@ -34,4 +35,4 @@ export const CountryItem = ({ countryData }: Props) => {
       </div>
     </li>
   );
-};
+});
