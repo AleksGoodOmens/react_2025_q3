@@ -1,9 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { RouterProvider } from 'react-router';
 
 import './index.css';
 
-import Home from '@/pages/home/Home';
+import { router } from './router';
 
 import { ErrorBoundary } from '@/components';
 
@@ -13,7 +14,7 @@ if (root)
   createRoot(root).render(
     <StrictMode>
       <ErrorBoundary fallback={<p>Something went wrong</p>}>
-        <Home />
+        <RouterProvider router={router} />
       </ErrorBoundary>
     </StrictMode>
   );
