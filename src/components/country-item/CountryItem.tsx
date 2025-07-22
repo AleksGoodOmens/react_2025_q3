@@ -14,7 +14,7 @@ export const CountryItem = ({ countryData }: Props) => {
         height={'100%'}
         className="rounded-md object-cover"
         src={flags.svg}
-        alt={flags.alt}
+        alt={flags.alt || name.official}
       />
       <div>
         <p className="font-bold">{name.official}</p>

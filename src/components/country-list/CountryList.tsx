@@ -2,76 +2,61 @@ import { CountryItem } from '../country-item/CountryItem';
 import { SkeletonListItem } from '../skeleton-list-item/SkeletonListItem';
 import type { ICountry } from '@/interfaces';
 import { getCountry } from '@/service/CountryAPI';
-import { Component, type ReactNode } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-interface IState {
-  countries: ICountry[];
-  loading: boolean;
-}
+export const CountryList = () => {
+  const [countries, setCountries] = useState<ICountry[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-export class CountryList extends Component<object, IState> {
-  state: IState = {
-    countries: [],
-    loading: true,
-  };
-
-  private searchListener = () => this.handleUrlChange();
-
-  componentDidMount(): void {
-    this.loadCountries();
-    window.addEventListener('searchUpdated', this.searchListener);
-  }
-
-  componentWillUnmount(): void {
-    window.removeEventListener('searchUpdated', this.searchListener);
-  }
-
-  private handleUrlChange = async () => {
-    this.setState({ loading: true });
-    await this.loadCountries();
-  };
-
-  private getSearchValue = (): string => {
+  const getSearchValue = useCallback((): string => {
     const searchParams = new URLSearchParams(window.location.search);
     return searchParams.get('search') || localStorage.getItem('search') || '';
-  };
+  }, []);
 
-  private loadCountries = async (): Promise<void> => {
-    const searchValue = this.getSearchValue();
+  const loadCountries = useCallback(async (): Promise<void> => {
+    const searchValue = getSearchValue();
 
     try {
       const countryList = searchValue
         ? await getCountry(`translation/${searchValue}`)
         : await getCountry('all');
 
-      this.setState({
-        countries: countryList,
-        loading: false,
-      });
+      setCountries(countryList);
     } catch (error) {
       console.error('Failed to load countries:', error);
-      this.setState({
-        countries: [],
-        loading: false,
-      });
+      setCountries([]);
+    } finally {
+      setLoading(false);
     }
-  };
+  }, [getSearchValue]);
 
-  render(): ReactNode {
-    return (
-      <ul className="relative grid gap-2 rounded-xl border-2 p-2 md:grid-cols-2 lg:grid-cols-3">
-        {this.state.loading ? (
-          Array.from({ length: 20 }).map((_, i) => <SkeletonListItem key={i} />)
-        ) : this.state.countries.length > 0 ? (
-          this.state.countries.map((item) => (
-            <CountryItem key={`${item.name.official}`} {...item} />
-          ))
-        ) : (
-          <li className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center">
-            No countries found
-          </li>
-        )}
-      </ul>
-    );
-  }
-}
+  const handleUrlChange = useCallback(() => {
+    setLoading(true);
+    loadCountries();
+  }, [loadCountries]);
+
+  useEffect(() => {
+    window.addEventListener('searchUpdated', () => handleUrlChange());
+    loadCountries();
+
+    return () => {
+      window.removeEventListener('searchUpdated', () => handleUrlChange());
+    };
+  }, [loadCountries, handleUrlChange]);
+
+  return (
+    <ul className="relative grid gap-2 rounded-xl border-2 p-2 md:grid-cols-2 lg:grid-cols-3">
+      {loading ? (
+        Array.from({ length: 20 }).map((_, i) => <SkeletonListItem key={i} />)
+      ) : countries.length > 0 ? (
+        countries.map((item) => (
+          <CountryItem key={`${item.name.official}`} countryData={item} />
+        ))
+      ) : (
+        <li className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center">
+          No countries found
+        </li>
+      )}
+    </ul>
+  );
+};
