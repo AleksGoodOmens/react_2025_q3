@@ -10,4 +10,7 @@
     overflow-y: scroll;
     @apply font-jetBrains bg-amber-500;
   }
+  img {
+    height: 100%;
+  }
 }

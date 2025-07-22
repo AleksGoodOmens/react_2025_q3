@@ -9,7 +9,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 describe('CountryItem component tests', () => {
   describe('Basic rendering tests with complete data', () => {
     beforeEach(() => {
-      render(<CountryItem {...mockCountry} />);
+      render(<CountryItem countryData={mockCountry} />);
     });
 
     it('should render as a list item with proper "li" tag', () => {
@@ -28,7 +28,7 @@ describe('CountryItem component tests', () => {
     });
     it('should render only two paragraphs when capital data is missing', () => {
       cleanup();
-      render(<CountryItem {...mockCountryWithoutCapital} />);
+      render(<CountryItem countryData={mockCountryWithoutCapital} />);
       expect(screen.getAllByRole('paragraph').length).toBe(2);
     });
   });

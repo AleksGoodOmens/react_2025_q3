@@ -24,3 +24,8 @@ export const CountrySchema = z.object({
 });
 
 export type ICountry = z.infer<typeof CountrySchema>;
+
+export interface IGetCountriesResponse {
+  error?: string;
+  countries: ICountry[] | [];
+}

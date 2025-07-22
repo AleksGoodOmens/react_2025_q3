@@ -26,7 +26,9 @@ class Home extends Component {
           error
         </Button>
         <SearchForm />
-        <ErrorBoundary fallback={<p>Some error try again</p>}>
+        <ErrorBoundary
+          fallback={<p> Unexpected error occurred, Please try again later</p>}
+        >
           <CountryList />
         </ErrorBoundary>
       </section>
