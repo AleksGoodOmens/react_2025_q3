@@ -1,10 +1,20 @@
-import { memo, useCallback, useState, type ChangeEvent } from 'react';
+import {
+  memo,
+  useCallback,
+  useState,
+  type ChangeEvent,
+  type ComponentPropsWithoutRef,
+} from 'react';
 
-interface Props {
+interface Props extends ComponentPropsWithoutRef<'input'> {
   label?: string;
 }
 
-export const SearchInput = memo(function SearchInput({ label }: Props) {
+export const SearchInput = memo(function SearchInput({
+  label,
+  name,
+  ...rest
+}: Props) {
   const [value, setValue] = useState(localStorage.getItem('search') || '');
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -19,9 +29,10 @@ export const SearchInput = memo(function SearchInput({ label }: Props) {
       <input
         className="w-full rounded-xl bg-amber-200 px-2 py-1"
         type="search"
-        name={label || 'search'}
+        name={name || 'search'}
         value={value}
         onChange={handleChange}
+        {...rest}
       />
     </label>
   );
