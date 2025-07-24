@@ -1,9 +1,17 @@
 import { CountryItem } from '../country-item/CountryItem';
 import { SkeletonListItem } from '../skeleton-list-item/SkeletonListItem';
-import { useCountries } from '@/hooks';
+import type { ICountry } from '@/interfaces';
+import { useNavigation } from 'react-router';
 
-export const CountryList = () => {
-  const { countries, isLoading } = useCountries();
+interface Props {
+  countries: ICountry[] | [];
+}
+
+export const CountryList = ({ countries }: Props) => {
+  const navigation = useNavigation();
+
+  const isLoading = navigation.state === 'loading';
+
   return (
     <ul className="relative grid gap-2 rounded-xl border-2 p-2 md:grid-cols-2 lg:grid-cols-3">
       {isLoading ? (
