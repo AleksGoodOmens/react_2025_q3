@@ -1,5 +1,6 @@
 import { useLocalStorage } from '@/hooks';
-import { useCallback, type FormEvent } from 'react';
+import type { FormEvent } from 'react';
+import { Form, useSearchParams, useSubmit } from 'react-router';
 
 import { Button, SearchInput } from '@/components';
 
@@ -8,30 +9,28 @@ interface Props {
 }
 
 export const SearchForm = ({ searchValue }: Props) => {
+  const submit = useSubmit();
+  const [searchParams] = useSearchParams();
+
   const { storageValue, updateStorage, clearStorage } =
     useLocalStorage('search');
-  const handleSearch = useCallback(
-    (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const formData = new FormData(e.currentTarget).get('search');
-      if (!formData) {
-        clearStorage();
-        window.history.pushState({}, '', window.location.pathname);
-        return;
-      }
-      const searchValue = formData.toString().trim();
-      updateStorage(searchValue);
-      const searchParams = new URLSearchParams(window.location.search);
-      searchParams.set('search', searchValue);
-      window.history.pushState({}, '', `?${searchParams.toString()}`);
-    },
-    [clearStorage, updateStorage]
-  );
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const currentParams = new URLSearchParams(searchParams);
+
+    const formData = new FormData(event.currentTarget);
+    const searchValue = formData.get('search')?.toString() || '';
+    if (!searchValue) clearStorage();
+    updateStorage(searchValue);
+    currentParams.set('search', searchValue);
+
+    submit(currentParams);
+  };
 
   return (
-    <form
+    <Form
       role="search"
-      onSubmit={handleSearch}
+      onSubmit={handleSubmit}
       className="my-2 grid gap-2 sm:grid-cols-6 sm:justify-center"
     >
       <SearchInput
@@ -45,6 +44,6 @@ export const SearchForm = ({ searchValue }: Props) => {
       >
         search
       </Button>
-    </form>
+    </Form>
   );
 };

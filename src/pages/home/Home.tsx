@@ -34,13 +34,15 @@ const Home = () => {
         error
       </Button>
       <SearchForm searchValue={search} />
-      <Pagination
-        limit={limit}
-        total={total}
-        next={next}
-        prev={prev}
-        page={page}
-      />
+      {total > limit && (
+        <Pagination
+          limit={limit}
+          total={total}
+          next={next}
+          prev={prev}
+          page={page}
+        />
+      )}
 
       <CountryList countries={countries} />
       <Outlet />

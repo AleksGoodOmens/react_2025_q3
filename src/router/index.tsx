@@ -19,22 +19,22 @@ export const router = createBrowserRouter([
         loader: async ({ request }) => {
           const url = new URL(request.url);
           const search = url.searchParams.get('search') || '';
-          const page = Number(url.searchParams.get('page')) || 0;
+          const page = Number(url.searchParams.get('page')) || 1;
           const limit = Number(url.searchParams.get('limit')) || 20;
-
           const { countries, error } = await getCountry(
             search ? `translation/${search}` : 'all'
           );
 
-          const offset = page * limit;
+          const offset = (page - 1) * limit;
           const end = offset + limit;
+
           const filteredCountries = countries.slice(offset, end);
 
           return {
             countries: filteredCountries,
             search: search,
-            next: offset < countries.length,
-            prev: page > 1,
+            prev: page <= 1,
+            next: page < Math.ceil(countries.length / limit),
             page: page,
             limit: limit,
             total: countries.length,

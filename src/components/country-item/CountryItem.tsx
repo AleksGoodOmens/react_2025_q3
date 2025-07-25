@@ -9,7 +9,7 @@ export const CountryItem = memo(function CountryItem({ countryData }: Props) {
   const { area, capital, flags, name } = countryData;
 
   return (
-    <li className="border-b-2 p-1">
+    <li className="animate-fadeIn border-b-2 p-1">
       <p className="mb-2 text-center font-bold">{name.official}</p>
 
       <div className="flex gap-2">
