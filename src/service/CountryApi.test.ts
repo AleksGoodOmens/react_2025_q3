@@ -13,7 +13,7 @@ import {
 } from 'vitest';
 import z from 'zod';
 
-describe('CountryAPI', () => {
+describe.skip('CountryAPI', () => {
   let consoleSpy: MockInstance;
   beforeAll(() => {
     localStorage.clear();

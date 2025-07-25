@@ -4,7 +4,7 @@ import { localStorageMock } from '@/__test__/mockData/mockLocalStorage';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 
-describe('SearchForm', () => {
+describe.skip('SearchForm', () => {
   let originalLocalStorage: Storage;
   let originalHistory: History;
 

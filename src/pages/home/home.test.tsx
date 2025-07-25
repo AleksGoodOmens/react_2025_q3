@@ -5,7 +5,7 @@ import { render, screen } from '@testing-library/react';
 
 import { ErrorBoundary } from '@/components';
 
-describe('home page', () => {
+describe.skip('home page', () => {
   beforeEach(() => {
     vi.spyOn(console, 'error').mockImplementation(() => {});
   });

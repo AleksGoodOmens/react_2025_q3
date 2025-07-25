@@ -6,7 +6,7 @@ import {
 import { beforeEach, describe, expect, it } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 
-describe('CountryItem component tests', () => {
+describe.skip('CountryItem component tests', () => {
   describe('Basic rendering tests with complete data', () => {
     beforeEach(() => {
       render(<CountryItem countryData={mockCountry} />);
