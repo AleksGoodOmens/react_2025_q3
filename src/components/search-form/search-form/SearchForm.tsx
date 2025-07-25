@@ -1,6 +1,6 @@
 import { useLocalStorage } from '@/hooks';
 import type { FormEvent } from 'react';
-import { Form, useSearchParams, useSubmit } from 'react-router';
+import { Form, useSearchParams } from 'react-router';
 
 import { Button, SearchInput } from '@/components';
 
@@ -9,7 +9,6 @@ interface Props {
 }
 
 export const SearchForm = ({ searchValue }: Props) => {
-  const submit = useSubmit();
   const [searchParams] = useSearchParams();
 
   const { storageValue, updateStorage, clearStorage } =
@@ -23,8 +22,6 @@ export const SearchForm = ({ searchValue }: Props) => {
     if (!searchValue) clearStorage();
     updateStorage(searchValue);
     currentParams.set('search', searchValue);
-
-    submit(currentParams);
   };
 
   return (
