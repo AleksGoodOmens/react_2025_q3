@@ -1,34 +1,38 @@
 import type { ICountry } from '@/interfaces';
 import clsx from 'clsx';
 import { memo } from 'react';
-import { useSearchParams } from 'react-router';
+import { useNavigate, useParams, useSearchParams } from 'react-router';
 
 interface Props {
   countryData: ICountry;
 }
 
 export const CountryItem = memo(function CountryItem({ countryData }: Props) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { country } = useParams();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const { area, capital, flags, name } = countryData;
-  const isOpened = searchParams.get('details');
-  const isActive = isOpened === name.common;
+
+  const isActive = country === name.common;
 
   const handleOpenDetails = () => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set('details', name.common);
-    setSearchParams(newParams);
+    const prevParams = new URLSearchParams(searchParams);
+
+    navigate({
+      pathname: `details/${name.common}`,
+      search: prevParams.toString(),
+    });
   };
 
   const handleCloseDetails = () => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.delete('details');
-    setSearchParams(newParams);
+    const prevParams = new URLSearchParams(searchParams);
+    navigate({ pathname: '/', search: prevParams.toString() });
   };
 
   return (
     <li
       className={clsx(
-        !isOpened && 'grow basis-xs',
+        'grow basis-xs',
         'animate-fadeIn',
         isActive && 'rounded-3xl bg-amber-800 text-white'
       )}

@@ -2,9 +2,9 @@ import About from '@/pages/about/About';
 import Home from '@/pages/home/Home';
 import NotFound from '@/pages/not-found/NotFound';
 import { getCountries, getCountry } from '@/service/CountryAPI';
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, redirect } from 'react-router';
 
-import { GeneralLayout } from '@/components';
+import { Details, GeneralLayout } from '@/components';
 
 export const router = createBrowserRouter([
   {
@@ -20,11 +20,7 @@ export const router = createBrowserRouter([
           const search = url.searchParams.get('search') || '';
           const page = Number(url.searchParams.get('page')) || 1;
           const limit = Number(url.searchParams.get('limit')) || 20;
-          const countryName = url.searchParams.get('details');
-          let detailsCountry;
-          if (countryName) {
-            detailsCountry = await getCountry(countryName);
-          }
+
           const { countries, error } = await getCountries(
             search ? `translation/${search}` : 'all'
           );
@@ -36,7 +32,6 @@ export const router = createBrowserRouter([
 
           return {
             countries: filteredCountries,
-            details: detailsCountry,
             search: search,
             prev: page <= 1,
             next: page < Math.ceil(countries.length / limit),
@@ -46,11 +41,27 @@ export const router = createBrowserRouter([
             error: error,
           };
         },
+        children: [
+          {
+            path: 'details/:country',
+            Component: Details,
+            loader: async ({ params }) => {
+              const countryName = params.country;
+
+              if (!countryName) {
+                redirect('/');
+                return;
+              }
+              const country = await getCountry(countryName);
+
+              return { country };
+            },
+          },
+        ],
       },
       {
-        path: '/about',
+        path: 'about',
         Component: About,
-        loader: () => {},
       },
     ],
   },

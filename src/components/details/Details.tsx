@@ -1,12 +1,13 @@
 import type { IDetailedCountry } from '@/interfaces';
-import { useNavigation } from 'react-router';
+import { useLoaderData, useNavigation } from 'react-router';
 
-interface Props {
+interface loaderData {
   country: IDetailedCountry;
 }
 
-export const Details = ({ country }: Props) => {
+export const Details = () => {
   const { state } = useNavigation();
+  const { country } = useLoaderData<loaderData>();
 
   const {
     name,
@@ -32,7 +33,7 @@ export const Details = ({ country }: Props) => {
   if (state === 'loading') return <div>loading...</div>;
 
   return (
-    <section className="mx-auto self-start rounded-2xl border-2 border-black bg-amber-800 p-6 text-white shadow-md">
+    <section className="animate-fadeIn mx-auto flex-4/6 self-start rounded-2xl border-2 border-black bg-amber-800 p-6 text-white shadow-md">
       <header className="mb-4">
         <h2 className="text-3xl font-bold">{name?.official || name?.common}</h2>
         {name?.common !== name?.official && (

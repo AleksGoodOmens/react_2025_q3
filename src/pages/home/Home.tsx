@@ -1,14 +1,8 @@
-import type { ICountry, IDetailedCountry } from '@/interfaces';
+import type { ICountry } from '@/interfaces';
 import { useState } from 'react';
-import { useLoaderData } from 'react-router';
+import { Outlet, useLoaderData } from 'react-router';
 
-import {
-  Button,
-  CountryList,
-  Details,
-  Pagination,
-  SearchForm,
-} from '@/components';
+import { Button, CountryList, Pagination, SearchForm } from '@/components';
 
 interface LoaderData {
   countries: ICountry[] | [];
@@ -19,11 +13,10 @@ interface LoaderData {
   limit: number;
   total: number;
   error: string | undefined;
-  details: IDetailedCountry | null;
 }
 const Home = () => {
   const [isError, setIsError] = useState(false);
-  const { countries, limit, total, page, next, prev, search, details } =
+  const { countries, limit, total, page, next, prev, search } =
     useLoaderData<LoaderData>();
 
   if (isError) {
@@ -52,11 +45,8 @@ const Home = () => {
       )}
 
       <div className="flex flex-col-reverse gap-2 md:flex-row">
-        <CountryList
-          className={`${details ? 'flex-col md:shrink-0 md:basis-2/6 lg:basis-1/3' : 'w-full'} `}
-          countries={countries}
-        />
-        {details && <Details country={details} />}
+        <CountryList countries={countries} />
+        <Outlet />
       </div>
     </section>
   );
