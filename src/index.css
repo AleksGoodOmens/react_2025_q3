@@ -24,4 +24,8 @@
   img {
     height: 100%;
   }
+
+  button {
+    @apply cursor-pointer;
+  }
 }

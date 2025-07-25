@@ -1,8 +1,12 @@
 import { BASE_API_URL } from '@/constants';
-import { CountrySchema, type IGetCountriesResponse } from '@/interfaces';
+import {
+  CountrySchema,
+  DetailedCountriesSchema,
+  type IGetCountriesResponse,
+} from '@/interfaces';
 import z from 'zod';
 
-export async function getCountry(
+export async function getCountries(
   params: string = 'all'
 ): Promise<IGetCountriesResponse> {
   const url = new URL(params, BASE_API_URL);
@@ -39,5 +43,35 @@ export async function getCountry(
       error: `unknown error`,
       countries: [],
     };
+  }
+}
+export async function getCountry(countryName: string) {
+  try {
+    const response: Response = await fetch(
+      `${BASE_API_URL}name/${countryName}`
+    );
+
+    if (!response.ok) throw new Error(response.statusText);
+    const data: unknown = await response.json();
+
+    const result = z.array(DetailedCountriesSchema).safeParse(data);
+
+    if (response.status === 404) {
+      console.log('404');
+      return null;
+    }
+    if (!result.success) {
+      console.log('not success');
+      result.error.issues.forEach((err) => {
+        console.warn(`Problem with field: ${err.path.join('.')}`);
+        console.warn(`Expected: ${err.message}`);
+        console.warn(`Received: ${err.path}`);
+      });
+      return null;
+    }
+    return result.data[0];
+  } catch (error: unknown) {
+    if (error instanceof Error) return null;
+    return null;
   }
 }

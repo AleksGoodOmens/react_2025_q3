@@ -1,4 +1,4 @@
-import { getCountry } from './CountryAPI';
+import { getCountries } from './CountryAPI';
 import { server } from '@/__test__';
 import { BASE_API_URL } from '@/constants';
 import { http, HttpResponse } from 'msw';
@@ -35,7 +35,7 @@ describe('CountryAPI', () => {
       })
     );
 
-    await expect(getCountry()).rejects.toThrow('Internal Server Error');
+    await expect(getCountries()).rejects.toThrow('Internal Server Error');
     expect(consoleSpy).toHaveBeenCalledWith(
       'CountryService failed:',
       expect.any(Error)
@@ -53,7 +53,7 @@ describe('CountryAPI', () => {
       })
     );
 
-    await expect(getCountry()).rejects.toThrow('Internal Server Error');
+    await expect(getCountries()).rejects.toThrow('Internal Server Error');
     expect(consoleSpy).toHaveBeenCalledWith(
       'CountryService failed:',
       expect.any(Error)
@@ -72,10 +72,10 @@ describe('CountryAPI', () => {
       })
     );
 
-    await expect(getCountry()).rejects.toThrow('Invalid data format');
+    await expect(getCountries()).rejects.toThrow('Invalid data format');
 
     const consoleSpy = vi.spyOn(console, 'error');
-    await expect(getCountry()).rejects.toThrow();
+    await expect(getCountries()).rejects.toThrow();
     expect(consoleSpy).toHaveBeenCalledWith(
       'Validation error:',
       expect.any(z.ZodError)

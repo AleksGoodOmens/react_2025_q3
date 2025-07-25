@@ -1,6 +1,6 @@
 import { useLocalStorage } from './useLocalStorage';
 import type { ICountry } from '@/interfaces';
-import { getCountry } from '@/service/CountryAPI';
+import { getCountries } from '@/service/CountryAPI';
 import { useCallback, useEffect, useState } from 'react';
 
 export const useCountries = () => {
@@ -13,8 +13,8 @@ export const useCountries = () => {
     setIsLoading(true);
 
     const { error, countries } = search
-      ? await getCountry(`translation/${search}`)
-      : await getCountry('all');
+      ? await getCountries(`translation/${search}`)
+      : await getCountries('all');
 
     if (error) setError(error);
     setCountries(countries);
