@@ -22,6 +22,7 @@ export default defineConfig(
         include: ['src/**/*.{js,jsx,ts,tsx}'],
         exclude: [
           'src/interfaces/*.ts',
+          'src/**/*.unused.*',
           'src/**/*.test.{js,jsx,ts,tsx}',
           'src/**/*.spec.{js,jsx,ts,tsx}',
           'src/index.{js,jsx,ts,tsx}',

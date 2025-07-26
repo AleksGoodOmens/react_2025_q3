@@ -1,6 +1,6 @@
 import type { ICountry } from '@/interfaces';
 import { useState } from 'react';
-import { Outlet, useLoaderData } from 'react-router';
+import { Outlet, useLoaderData, useParams } from 'react-router';
 
 import { Button, CountryList, Pagination, SearchForm } from '@/components';
 
@@ -16,6 +16,7 @@ interface LoaderData {
 }
 const Home = () => {
   const [isError, setIsError] = useState(false);
+  const { country } = useParams();
   const { countries, limit, total, page, next, prev, search } =
     useLoaderData<LoaderData>();
 
@@ -26,7 +27,7 @@ const Home = () => {
     <section>
       <h1 className="text-4xl">Countries by AmensGood</h1>
       <Button
-        className="cursor-pointer rounded-xl border-2 bg-amber-800 px-4 py-2 text-white hover:bg-white"
+        variant="main"
         onClick={() => {
           setIsError(true);
         }}
@@ -45,7 +46,7 @@ const Home = () => {
       )}
 
       <div className="flex flex-col-reverse gap-2 md:flex-row">
-        <CountryList countries={countries} />
+        <CountryList countries={countries} isActive={Boolean(country)} />
         <Outlet />
       </div>
     </section>

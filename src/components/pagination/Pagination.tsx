@@ -1,4 +1,5 @@
 import { Button } from '../button/Button';
+import clsx from 'clsx';
 import { useCallback, useMemo, type ChangeEvent } from 'react';
 import { useSearchParams, useSubmit } from 'react-router';
 
@@ -67,23 +68,33 @@ export const Pagination = ({ limit, total, page, next, prev }: Props) => {
 
       <div className="flex justify-center gap-4 p-2">
         <Button
+          variant="main"
           disabled={prev}
           onClick={() => handlePageChange(currentPage - 1)}
         >
           prev
         </Button>
-        {visiblePages.map((_, pageNumber) => {
-          return (
-            <Button
-              className={currentPage === pageNumber + 1 ? 'bg-amber-800' : ''}
-              key={pageNumber}
-              onClick={() => handlePageChange(pageNumber + 1)}
-            >
-              {pageNumber + 1}
-            </Button>
-          );
-        })}
+        <div className="flex gap-2">
+          {visiblePages.map((_, pageNumber) => {
+            console.log(pageNumber - currentPage);
+            return (
+              <Button
+                variant="minor"
+                className={clsx(
+                  currentPage === pageNumber + 1 && 'bg-amber-800',
+                  currentPage - (pageNumber + 1) > 2 && 'hidden',
+                  currentPage - (pageNumber + 1) < -2 && 'hidden'
+                )}
+                key={pageNumber}
+                onClick={() => handlePageChange(pageNumber + 1)}
+              >
+                {pageNumber + 1}
+              </Button>
+            );
+          })}
+        </div>
         <Button
+          variant="main"
           disabled={!next}
           onClick={() => handlePageChange(currentPage + 1)}
         >

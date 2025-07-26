@@ -5,11 +5,16 @@ import {
 } from '@/__test__/mockData/countries.mock';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 
-describe.skip('CountryItem component tests', () => {
+describe('CountryItem component tests', () => {
   describe('Basic rendering tests with complete data', () => {
     beforeEach(() => {
-      render(<CountryItem countryData={mockCountry} />);
+      render(
+        <MemoryRouter>
+          <CountryItem countryData={mockCountry} />
+        </MemoryRouter>
+      );
     });
 
     it('should render as a list item with proper "li" tag', () => {
@@ -28,7 +33,11 @@ describe.skip('CountryItem component tests', () => {
     });
     it('should render only two paragraphs when capital data is missing', () => {
       cleanup();
-      render(<CountryItem countryData={mockCountryWithoutCapital} />);
+      render(
+        <MemoryRouter>
+          <CountryItem countryData={mockCountryWithoutCapital} />
+        </MemoryRouter>
+      );
       expect(screen.getAllByRole('paragraph').length).toBe(2);
     });
   });

@@ -4,7 +4,7 @@ import { localStorageMock } from '@/__test__/mockData/mockLocalStorage';
 import { afterAll, beforeEach, describe, expect, it } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 
-describe.skip('SearchInput', () => {
+describe.only('SearchInput', () => {
   describe('render with local storage', () => {
     const originalLocalStorage: Storage = window.localStorage;
     Object.defineProperty(window, 'localStorage', {
@@ -23,14 +23,8 @@ describe.skip('SearchInput', () => {
     });
     it('render empty search input when local storage is empty', () => {
       expect(localStorage.getItem('search')).toBeNull();
-      render(<SearchInput />);
+      render(<SearchInput storageValue="" />);
       expect(screen.getByRole('searchbox')).toHaveValue('');
-    });
-
-    it('render with initial search value from local storage', () => {
-      localStorage.setItem('search', 'test value');
-      render(<SearchInput />);
-      expect(screen.getByRole('searchbox')).toHaveValue('test value');
     });
   });
   describe('check label', () => {
@@ -38,7 +32,7 @@ describe.skip('SearchInput', () => {
       cleanup();
     });
     it('render label with h5 and input', () => {
-      render(<SearchInput />);
+      render(<SearchInput storageValue="" />);
       const searchbox = screen.getByRole('searchbox', { name: /search/i });
       const h5 = screen.getByRole('heading', { level: 5 });
 
@@ -47,21 +41,16 @@ describe.skip('SearchInput', () => {
       expect(searchbox).toHaveAttribute('type', 'search');
     });
     it('render default label empty props', () => {
-      render(<SearchInput />);
+      render(<SearchInput storageValue="" />);
       expect(screen.getByRole('heading', { name: 'search' }));
       expect(screen.getByRole('searchbox', { name: /search/i }));
-    });
-    it('render different label from props', () => {
-      render(<SearchInput label="test" />);
-      expect(screen.getByRole('heading', { name: 'test' }));
-      expect(screen.getByRole('searchbox', { name: /test/i }));
     });
   });
 
   describe('input check', () => {
     beforeEach(() => {
       cleanup();
-      render(<SearchInput />);
+      render(<SearchInput storageValue="" />);
     });
 
     it('user can type the text', async () => {

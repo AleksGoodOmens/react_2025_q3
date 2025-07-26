@@ -1,36 +1,37 @@
-import Home from './Home';
 import { user } from '@/__test__';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { router } from '@/router';
+import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { RouterProvider } from 'react-router';
 
-import { ErrorBoundary } from '@/components';
-
-describe.skip('home page', () => {
+describe('home page', () => {
+  const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
   beforeEach(() => {
-    vi.spyOn(console, 'error').mockImplementation(() => {});
+    cleanup();
   });
 
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-  it('render home page heading', () => {
-    render(<Home />);
+  it('render home page heading', async () => {
+    render(<RouterProvider router={router} />);
 
-    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
-  });
-  it('have button that trigger error', async () => {
-    render(
-      <ErrorBoundary fallback="test">
-        <Home />
-      </ErrorBoundary>
+    await waitFor(
+      () => {
+        expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
+      },
+      { timeout: 3000 }
     );
+  });
 
-    const btn = screen.getByRole('button', { name: 'error' });
+  it('trigger error', async () => {
+    render(<RouterProvider router={router} />);
 
-    expect(btn).toBeInTheDocument();
+    const errorBtn = await screen.findByRole('button', { name: 'error' });
+    expect(errorBtn).toBeInTheDocument();
+    await user.click(errorBtn);
+    expect(consoleSpy).toHaveBeenCalled();
+  });
 
-    await user.click(btn);
-
-    expect(btn).not.toBeInTheDocument();
+  afterAll(() => {
+    cleanup();
+    vi.restoreAllMocks();
   });
 });

@@ -35,10 +35,7 @@ export const SearchForm = ({ searchValue }: Props) => {
         id="search"
         storageValue={searchValue || storageValue}
       />
-      <Button
-        type="submit"
-        className="cursor-pointer rounded-xl border-2 p-2 uppercase duration-300 hover:bg-amber-800 hover:text-white"
-      >
+      <Button variant="ghost" type="submit">
         search
       </Button>
     </Form>

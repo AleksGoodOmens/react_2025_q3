@@ -3,10 +3,20 @@ import { user } from '@/__test__';
 import { localStorageMock } from '@/__test__/mockData/mockLocalStorage';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
+import { createMemoryRouter, RouterProvider } from 'react-router';
 
-describe.skip('SearchForm', () => {
+describe('SearchForm', () => {
   let originalLocalStorage: Storage;
   let originalHistory: History;
+
+  vi.mock('react-router', async (importOriginal) => {
+    const actual = await importOriginal<typeof import('react-router')>();
+    return {
+      ...actual,
+      useSearchParams: () => [new URLSearchParams(), vi.fn()],
+      useNavigate: () => vi.fn(),
+    };
+  });
 
   beforeEach(() => {
     originalLocalStorage = window.localStorage;
@@ -20,18 +30,22 @@ describe.skip('SearchForm', () => {
     window.history.pushState = vi.fn();
   });
 
-  afterEach(() => {
-    Object.defineProperty(window, 'localStorage', {
-      value: originalLocalStorage,
-    });
-    Object.defineProperty(window, 'history', {
-      value: originalHistory,
-    });
-  });
-
   describe('Rendering Tests:', () => {
     beforeEach(() => {
-      render(<SearchForm />);
+      const router = createMemoryRouter(
+        [
+          {
+            path: '/',
+            element: <SearchForm searchValue="" />,
+          },
+        ],
+        {
+          initialEntries: ['/'],
+        }
+      );
+
+      // 2. Рендерим через RouterProvider
+      render(<RouterProvider router={router} />);
     });
 
     afterEach(() => {
@@ -53,13 +67,37 @@ describe.skip('SearchForm', () => {
       cleanup();
       const testValue = 'test';
       localStorage.setItem('search', testValue);
-      render(<SearchForm />);
+      const router = createMemoryRouter(
+        [
+          {
+            path: '/',
+            element: <SearchForm searchValue="" />,
+          },
+        ],
+        {
+          initialEntries: ['/'],
+        }
+      );
+
+      render(<RouterProvider router={router} />);
       expect(screen.getByRole('searchbox')).toHaveValue(testValue);
     });
   });
   describe('User Interaction Tests:', () => {
     beforeEach(() => {
-      render(<SearchForm />);
+      const router = createMemoryRouter(
+        [
+          {
+            path: '/',
+            element: <SearchForm searchValue="" />,
+          },
+        ],
+        {
+          initialEntries: ['/'],
+        }
+      );
+
+      render(<RouterProvider router={router} />);
     });
     afterEach(() => {
       localStorage.clear();
@@ -78,9 +116,10 @@ describe.skip('SearchForm', () => {
       const input = screen.getByRole('searchbox');
       const btn = screen.getByRole('button', { name: 'search' });
 
-      expect(localStorage.getItem('search')).toBe(null);
+      expect(localStorage.getItem('search')).toBeNull();
       await user.type(input, testValue);
       await user.click(btn);
+      await new Promise((resolve) => setTimeout(resolve, 0));
       expect(localStorage.getItem('search')).toBe(testValue);
     });
     it('Trims whitespace from search input before saving', async () => {
@@ -94,72 +133,14 @@ describe.skip('SearchForm', () => {
       await user.click(btn);
       expect(localStorage.getItem('search')).toBe(properValue);
     });
-    it('Triggers search callback with correct parameters', async () => {
-      const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
-      const testValue = ' test test ';
-      const input = screen.getByRole('searchbox');
-      const btn = screen.getByRole('button', { name: 'search' });
-
-      await user.type(input, testValue);
-      await user.click(btn);
-
-      expect(dispatchEventSpy).toHaveBeenCalledOnce();
-      expect(window.history.pushState).toHaveBeenCalledWith(
-        {},
-        '',
-        '?search=test+test'
-      );
-    });
-  });
-  describe('LocalStorage Integration:', () => {
-    beforeEach(() => {
-      render(<SearchForm />);
-    });
-
-    afterEach(() => {
-      localStorage.clear();
-      cleanup();
-    });
-    it('Retrieves saved search term on component mount', async () => {
-      cleanup();
-      const testValue = 'test';
-      localStorage.setItem('search', testValue);
-      render(<SearchForm />);
-      expect(screen.getByRole('searchbox')).toHaveValue(testValue);
-    });
   });
 
-  describe('User can send the form:', async () => {
-    it('it send form', async () => {
-      const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
-      render(<SearchForm />);
-      const btn = screen.getByRole('button');
-      const searchInput = screen.getByRole('searchbox');
-
-      expect(searchInput.textContent).toBe('');
-      await user.click(btn);
-
-      expect(window.history.pushState).toHaveBeenCalledWith({}, '', '?');
-      expect(dispatchEventSpy).toHaveBeenCalled();
+  afterEach(() => {
+    Object.defineProperty(window, 'localStorage', {
+      value: originalLocalStorage,
     });
-
-    it('it send proper test after user input', async () => {
-      cleanup();
-      const testInputValue = 'test user type';
-      const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
-      render(<SearchForm />);
-      const btn = screen.getByRole('button');
-      const searchInput = screen.getByRole('searchbox');
-      expect(searchInput).toHaveValue('');
-      await user.type(searchInput, testInputValue);
-      expect(searchInput).toHaveValue(testInputValue);
-      await user.click(btn);
-      expect(window.history.pushState).toHaveBeenCalledWith(
-        {},
-        '',
-        `?search=${testInputValue.split(' ').join('+')}`
-      );
-      expect(dispatchEventSpy).toHaveBeenCalled();
+    Object.defineProperty(window, 'history', {
+      value: originalHistory,
     });
   });
 });

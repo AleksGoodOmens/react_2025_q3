@@ -1,4 +1,4 @@
-import type { ICountry } from '@/interfaces';
+import type { ICountry, IDetailedCountry } from '@/interfaces';
 
 export const mockCountries: ICountry[] = [
   {
@@ -83,4 +83,59 @@ export const mockCountryWithoutCapital: ICountry = {
       },
     },
   },
+};
+
+export const MockDetailedCountry: IDetailedCountry = {
+  name: {
+    common: 'Test Country',
+    official: 'Official Test Country',
+    nativeName: {
+      eng: {
+        official: 'Official Test Country',
+        common: 'Test Country',
+      },
+    },
+  },
+  flag: '',
+  capital: ['Test Capital'],
+  region: 'Test Region',
+  subregion: 'Test Subregion',
+  flags: {
+    png: 'https://test.flag.png',
+    svg: 'https://test.flag.svg',
+    alt: 'Test flag description',
+  },
+  coatOfArms: {
+    png: 'https://test.coat.png',
+    svg: 'https://test.coat.svg',
+  },
+  area: 123456,
+  population: 9876543,
+  languages: {
+    eng: 'English',
+    test: 'Test Language',
+  },
+  currencies: {
+    TEST: {
+      name: 'Test Currency',
+      symbol: '₺',
+    },
+  },
+  timezones: ['UTC+0'],
+  borders: ['TST', 'TST2'],
+  idd: {
+    root: '+1',
+    suffixes: ['23', '45'],
+  },
+  postalCode: {
+    format: 'TEST ###',
+    regex: '^[A-Z]{4}$',
+  },
+  maps: {
+    googleMaps: 'https://google.maps/test',
+    openStreetMaps: 'https://osm.org/test',
+  },
+  independent: true,
+  status: 'officially-assigned',
+  altSpellings: ['TC', 'Test C.'],
 };

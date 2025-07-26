@@ -214,7 +214,7 @@ export const Details = () => {
   );
 };
 
-const DetailItem = ({
+export const DetailItem = ({
   label,
   value,
 }: {
@@ -227,7 +227,7 @@ const DetailItem = ({
   </div>
 );
 
-const DetailSection = ({
+export const DetailSection = ({
   title,
   content,
 }: {
