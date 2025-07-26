@@ -76,7 +76,6 @@ export const Pagination = ({ limit, total, page, next, prev }: Props) => {
         </Button>
         <div className="flex gap-2">
           {visiblePages.map((_, pageNumber) => {
-            console.log(pageNumber - currentPage);
             return (
               <Button
                 variant="minor"
