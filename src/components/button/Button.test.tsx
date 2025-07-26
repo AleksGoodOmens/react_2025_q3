@@ -6,7 +6,7 @@ const mockButtonChildren = 'test button';
 
 describe('button', () => {
   it('render button with children', () => {
-    render(<Button>{mockButtonChildren}</Button>);
+    render(<Button variant="main">{mockButtonChildren}</Button>);
     const btn = screen.getByRole('button');
     expect(btn).toBeInTheDocument();
   });
