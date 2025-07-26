@@ -12,7 +12,7 @@ export const CountryList = ({ countries, className, isActive }: Props) => {
   return (
     <ul
       className={clsx(
-        'relative flex flex-wrap rounded-2xl border-2',
+        'relative flex min-h-32 basis-full flex-wrap rounded-2xl border-2',
         isActive && 'flex-1/2',
         className
       )}
