@@ -1,7 +1,7 @@
 import { CountryList } from './CountryList';
 import { mockCountries } from '@/__test__';
-import { describe, expect, it, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { cleanup, render, screen } from '@testing-library/react';
 
 describe('CountryList', () => {
   vi.mock('react-router', () => ({
@@ -10,6 +10,9 @@ describe('CountryList', () => {
     useNavigate: () => vi.fn(),
     useLocation: () => vi.fn(),
   }));
+  beforeEach(() => {
+    cleanup();
+  });
   describe('empty state', () => {
     it('should show "No countries found" if list is empty', async () => {
       render(<CountryList countries={[]} isActive={false} />);

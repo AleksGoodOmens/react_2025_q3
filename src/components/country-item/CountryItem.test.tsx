@@ -10,6 +10,7 @@ import { MemoryRouter } from 'react-router';
 describe('CountryItem component tests', () => {
   describe('Basic rendering tests with complete data', () => {
     beforeEach(() => {
+      cleanup();
       render(
         <MemoryRouter>
           <CountryItem countryData={mockCountry} />

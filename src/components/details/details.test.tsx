@@ -1,7 +1,7 @@
 import { DetailItem, Details, DetailSection } from './Details';
 import { MockDetailedCountry } from '@/__test__/mockData/countries.mock';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { useLoaderData, useNavigation, useSearchParams } from 'react-router';
 
 describe('details page', () => {
@@ -12,6 +12,7 @@ describe('details page', () => {
     useNavigate: vi.fn(),
   }));
   beforeEach(() => {
+    cleanup();
     (useLoaderData as jest.Mock).mockReturnValue({
       country: MockDetailedCountry,
     });
