@@ -46,7 +46,7 @@ export const Pagination = ({ limit, total, page, next, prev }: Props) => {
 
   return (
     <div>
-      <div className="flex items-center justify-between gap-4 rounded-2xl border-2 p-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border-2 p-4">
         <div className="flex items-center gap-2">
           <h4>limit per page</h4>
           <select
@@ -61,9 +61,14 @@ export const Pagination = ({ limit, total, page, next, prev }: Props) => {
             <option value="50">50</option>
           </select>
         </div>
-        <h4 className="rounded-2xl border-2 bg-amber-600 p-2 text-white">
-          Total: <span>{total}</span>
-        </h4>
+        <div className="grid gap-1">
+          <h4 className="rounded-2xl border-2 bg-amber-600 p-2 text-white">
+            Total items: <span>{total}</span>
+          </h4>
+          <h4 className="rounded-2xl border-2 bg-amber-600 p-2 text-white">
+            Total pages: <span>{Math.ceil(total / limit)}</span>
+          </h4>
+        </div>
       </div>
 
       <div className="flex justify-center gap-4 p-2">

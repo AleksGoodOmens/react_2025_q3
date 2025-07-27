@@ -1,5 +1,11 @@
+import { Button } from '../button/Button';
 import type { IDetailedCountry } from '@/interfaces';
-import { useLoaderData, useNavigation } from 'react-router';
+import {
+  useLoaderData,
+  useNavigate,
+  useNavigation,
+  useSearchParams,
+} from 'react-router';
 
 interface loaderData {
   country: IDetailedCountry;
@@ -8,6 +14,12 @@ interface loaderData {
 export const Details = () => {
   const { state } = useNavigation();
   const { country } = useLoaderData<loaderData>();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const handleClose = () => {
+    navigate({ pathname: '/', search: searchParams.toString() });
+  };
 
   const {
     name,
@@ -34,11 +46,18 @@ export const Details = () => {
 
   return (
     <section className="animate-fadeIn mx-auto flex-4/6 self-start rounded-2xl border-2 border-black bg-amber-800 p-6 text-white shadow-md">
-      <header className="mb-4">
-        <h2 className="text-3xl font-bold">{name?.official || name?.common}</h2>
-        {name?.common !== name?.official && (
-          <h2 className="text-xl">{name?.common}</h2>
-        )}
+      <header className="mb-4 flex justify-between gap-2">
+        <div>
+          <h2 className="text-3xl font-bold">
+            {name?.official || name?.common}
+          </h2>
+          {name?.common !== name?.official && (
+            <h2 className="text-xl">{name?.common}</h2>
+          )}
+        </div>
+        <Button className="self-start" variant="ghost" onClick={handleClose}>
+          X
+        </Button>
       </header>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -60,7 +79,6 @@ export const Details = () => {
             )}
           </div>
 
-          {/* Основные данные */}
           <div className="grid grid-cols-2 gap-4">
             <DetailItem label="Region" value={region} />
             <DetailItem label="Subregion" value={subregion} />

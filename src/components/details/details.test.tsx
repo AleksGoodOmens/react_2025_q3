@@ -2,12 +2,14 @@ import { DetailItem, Details, DetailSection } from './Details';
 import { MockDetailedCountry } from '@/__test__/mockData/countries.mock';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { useLoaderData, useNavigation } from 'react-router';
+import { useLoaderData, useNavigation, useSearchParams } from 'react-router';
 
 describe('details page', () => {
   vi.mock('react-router', () => ({
     useLoaderData: vi.fn(),
     useNavigation: vi.fn(),
+    useSearchParams: vi.fn(),
+    useNavigate: vi.fn(),
   }));
   beforeEach(() => {
     (useLoaderData as jest.Mock).mockReturnValue({
@@ -17,6 +19,8 @@ describe('details page', () => {
     (useNavigation as jest.Mock).mockReturnValue({
       state: 'idle',
     });
+
+    (useSearchParams as jest.Mock).mockReturnValue(['searchParams']);
   });
   it('should render country details correctly', () => {
     render(<Details />);
