@@ -6,7 +6,8 @@ interface IButton
     PropsWithChildren {
   variant: 'main' | 'ghost' | 'minor';
 }
-const mainClasses = ' bg-amber-800  text-white hover:bg-white duration-300';
+const mainClasses =
+  ' bg-amber-800  text-white hover:bg-amber-500 duration-300 disabled:bg-amber-300 disabled:cursor-not-allowed';
 const ghostClasses = 'hover:bg-amber-800 hover:text-white duration-300';
 const minorClasses = 'text-white';
 

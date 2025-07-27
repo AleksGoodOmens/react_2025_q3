@@ -35,7 +35,7 @@ const Home = () => {
         error
       </Button>
       <SearchForm searchValue={search} />
-      {total > limit && (
+      {total > 0 && (
         <Pagination
           limit={limit}
           total={total}
