@@ -1,11 +1,22 @@
 import About from './About';
+import { aboutMe } from './data';
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { createMemoryRouter, RouterProvider } from 'react-router';
 
 describe('about', () => {
-  it('page contains one h1 tag only', () => {
-    render(<About />);
+  it('page contains one h1 tag only', async () => {
+    const memoryRouter = createMemoryRouter([
+      {
+        path: '/',
+        Component: About,
+        loader: () => {
+          return { ...aboutMe };
+        },
+      },
+    ]);
+    render(<RouterProvider router={memoryRouter} />);
 
-    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+    expect(await screen.findAllByRole('heading', { level: 1 })).toHaveLength(1);
   });
 });
