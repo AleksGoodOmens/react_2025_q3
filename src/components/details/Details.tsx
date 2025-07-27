@@ -21,6 +21,14 @@ export const Details = () => {
     navigate({ pathname: '/', search: searchParams.toString() });
   };
 
+  if (!country) {
+    return (
+      <section className="animate-fadeIn mx-auto flex-4/6 self-start rounded-2xl border-2 border-black bg-amber-800 p-6 text-white shadow-md">
+        <h2>No info about this country</h2>
+      </section>
+    );
+  }
+
   const {
     name,
     capital,

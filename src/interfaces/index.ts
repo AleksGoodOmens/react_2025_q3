@@ -58,7 +58,7 @@ export const DetailedCountriesSchema = z.object({
   capital: z.array(z.string()),
   altSpellings: z.array(z.string()),
   region: z.string(),
-  subregion: z.string(),
+  subregion: z.string().optional(),
   languages: z.record(z.string(), z.string()),
   borders: z.array(z.string()).optional(),
   currencies: z
