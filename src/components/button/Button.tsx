@@ -7,15 +7,16 @@ interface IButton
   variant: 'main' | 'ghost' | 'minor';
 }
 const mainClasses =
-  ' bg-amber-800  text-white hover:bg-amber-500 duration-300 disabled:bg-amber-300 disabled:cursor-not-allowed';
-const ghostClasses = 'hover:bg-amber-800 hover:text-white duration-300';
-const minorClasses = 'text-white';
+  'bg-amber-800 dark:bg-amber-400 text-white hover:bg-amber-300 dark:hover:bg-amber-500 ';
+const ghostClasses =
+  'hover:bg-amber-800 hover:text-white bg-amber-600 dark:bg-amber-400 ';
+const minorClasses = 'hover:bg-amber-800 dark:hover:bg-amber-600 text-white';
 
 export const Button = ({ children, className, variant, ...props }: IButton) => {
   return (
     <button
       className={clsx(
-        'rounded-xl border-2 px-4 py-2 uppercase',
+        'rounded-xl border-2 px-4 py-2 uppercase duration-300 disabled:cursor-not-allowed disabled:bg-amber-300',
         className,
         variant === 'ghost' && ghostClasses,
         variant === 'main' && mainClasses,

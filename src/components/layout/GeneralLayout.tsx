@@ -1,3 +1,4 @@
+import { ThemeChanger } from '../theme-changer/ThemeChanger';
 import { Link, NavLink, Outlet } from 'react-router';
 
 export const GeneralLayout = () => {
@@ -6,6 +7,7 @@ export const GeneralLayout = () => {
       <header className="flex gap-2">
         <Link to={'/'}>AmensGood</Link>
         <NavLink to={'/about'}>About</NavLink>
+        <ThemeChanger />
       </header>
       <main className="grow">
         <Outlet />
