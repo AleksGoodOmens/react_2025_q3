@@ -1,7 +1,7 @@
 import { Button } from '../button/Button';
 import clsx from 'clsx';
 import { useCallback, useMemo, type ChangeEvent } from 'react';
-import { useSearchParams, useSubmit } from 'react-router';
+import { useSearchParams } from 'react-router';
 
 interface Props {
   limit: number;
@@ -13,7 +13,6 @@ interface Props {
 
 export const Pagination = ({ limit, total, page, next, prev }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const submit = useSubmit();
   const totalPages = useMemo(() => {
     return Math.ceil(total / limit);
   }, [limit, total]);
@@ -24,24 +23,19 @@ export const Pagination = ({ limit, total, page, next, prev }: Props) => {
     return Array.from({ length: totalPages }, (_, i) => i + 1);
   }, [totalPages]);
 
-  const handleChangeLimit = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>) => {
-      const newLimit = e.target.value;
-      searchParams.set('limit', newLimit);
-      searchParams.set('page', '1');
-      setSearchParams(searchParams);
-      submit(searchParams);
-    },
-    [searchParams, submit, setSearchParams]
-  );
+  const handleChangeLimit = (e: ChangeEvent<HTMLSelectElement>) => {
+    const newLimit = e.target.value;
+    searchParams.set('limit', newLimit);
+    searchParams.set('page', '1');
+    setSearchParams(searchParams);
+  };
 
   const handlePageChange = useCallback(
     (newPage: number) => {
       searchParams.set('page', newPage.toString());
       setSearchParams(searchParams);
-      submit(searchParams);
     },
-    [searchParams, setSearchParams, submit]
+    [searchParams, setSearchParams]
   );
 
   return (

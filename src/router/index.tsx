@@ -3,11 +3,11 @@ import { aboutMe } from '@/pages/about/data';
 import Home from '@/pages/home/Home';
 import NotFound from '@/pages/not-found/NotFound';
 import { getCountries, getCountry } from '@/service/CountryAPI';
-import { createBrowserRouter, redirect } from 'react-router';
+import { createBrowserRouter, type RouteObject } from 'react-router';
 
 import { Details, GeneralLayout } from '@/components';
 
-export const router = createBrowserRouter([
+export const routerConfig: RouteObject[] = [
   {
     Component: GeneralLayout,
     errorElement: <div>Main app error</div>,
@@ -45,14 +45,11 @@ export const router = createBrowserRouter([
         children: [
           {
             path: 'details/:country',
+            hydrateFallbackElement: <div>loading...</div>,
             Component: Details,
             loader: async ({ params }) => {
               const countryName = params.country;
 
-              if (!countryName) {
-                redirect('/');
-                return;
-              }
               const country = await getCountry(countryName);
 
               return { country };
@@ -62,6 +59,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'about',
+        hydrateFallbackElement: <div>loading...</div>,
         Component: About,
         loader: () => {
           return aboutMe;
@@ -73,4 +71,6 @@ export const router = createBrowserRouter([
     path: '*',
     Component: NotFound,
   },
-]);
+];
+
+export const router = createBrowserRouter(routerConfig);

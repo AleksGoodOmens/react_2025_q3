@@ -17,7 +17,7 @@ interface LoaderData {
 const Home = () => {
   const [isError, setIsError] = useState(false);
   const { country } = useParams();
-  const { countries, limit, total, page, next, prev, search } =
+  const { countries, limit, total, page, next, prev, search, error } =
     useLoaderData<LoaderData>();
 
   if (isError) {
@@ -25,6 +25,7 @@ const Home = () => {
   }
   return (
     <section>
+      <h2>{error}</h2>
       <h1 className="text-4xl">Countries by AmensGood</h1>
       <Button
         variant="main"

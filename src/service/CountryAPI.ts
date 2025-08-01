@@ -9,7 +9,8 @@ import z from 'zod';
 export async function getCountries(
   params: string = 'all'
 ): Promise<IGetCountriesResponse> {
-  const url = new URL(params, BASE_API_URL);
+  const url = new URL(`v3.1/${params}`, BASE_API_URL);
+
   if (params === 'all') {
     url.searchParams.set('fields', 'name,flags,capital,area,borders');
   }
@@ -36,7 +37,7 @@ export async function getCountries(
   } catch (error: unknown) {
     if (error instanceof Error)
       return {
-        error: `${error.message}`,
+        error: error.message,
         countries: [],
       };
     return {
@@ -45,11 +46,10 @@ export async function getCountries(
     };
   }
 }
-export async function getCountry(countryName: string) {
+export async function getCountry(countryName: string = '') {
+  const url = new URL(`v3.1/name/${countryName}`, BASE_API_URL);
   try {
-    const response: Response = await fetch(
-      `${BASE_API_URL}name/${countryName}`
-    );
+    const response: Response = await fetch(url);
 
     if (!response.ok) throw new Error(response.statusText);
     const data: unknown = await response.json();
@@ -57,11 +57,9 @@ export async function getCountry(countryName: string) {
     const result = z.array(DetailedCountriesSchema).safeParse(data);
 
     if (response.status === 404) {
-      console.log('404');
       return null;
     }
     if (!result.success) {
-      console.log('not success');
       result.error.issues.forEach((err) => {
         console.warn(`Problem with field: ${err.path.join('.')}`);
         console.warn(`Expected: ${err.message}`);

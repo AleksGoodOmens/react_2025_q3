@@ -11,8 +11,11 @@ export { mockCountries } from './mockData/countries.mock.js';
 export const user = userEvent.setup();
 export const server = setupServer(...handlers);
 
-beforeAll(() => server.listen());
+beforeAll(() => {
+  server.listen();
+});
 afterEach(() => {
   server.resetHandlers();
 });
+
 afterAll(() => server.close());

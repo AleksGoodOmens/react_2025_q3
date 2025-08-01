@@ -23,7 +23,7 @@ describe('CountryAPI', () => {
     consoleSpy.mockRestore();
   });
   it('should handle errors for', async () => {
-    const url = new URL('all', BASE_API_URL);
+    const url = new URL('v3.1/all', BASE_API_URL);
 
     server.use(
       http.get(url.href, () => {

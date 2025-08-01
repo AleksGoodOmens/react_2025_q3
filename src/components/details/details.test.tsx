@@ -1,8 +1,14 @@
 import { DetailItem, Details, DetailSection } from './Details';
+import { user } from '@/__test__';
 import { MockDetailedCountry } from '@/__test__/mockData/countries.mock';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
-import { useLoaderData, useNavigation, useSearchParams } from 'react-router';
+import {
+  useLoaderData,
+  useNavigate,
+  useNavigation,
+  useSearchParams,
+} from 'react-router';
 
 describe('details page', () => {
   vi.mock('react-router', () => ({
@@ -26,13 +32,11 @@ describe('details page', () => {
   it('should render country details correctly', () => {
     render(<Details />);
 
-    // Проверяем основные элементы
     expect(screen.getByText('Official Test Country')).toBeInTheDocument();
     expect(screen.getByText('Test Country')).toBeInTheDocument();
     expect(screen.getByText('Test Region')).toBeInTheDocument();
     expect(screen.getByText('Test Subregion')).toBeInTheDocument();
 
-    // Проверяем изображения
     const flagImg = screen.getByAltText('Test flag description');
     expect(flagImg).toHaveAttribute('src', 'https://test.flag.png');
 
@@ -74,6 +78,18 @@ describe('details page', () => {
     expect(screen.getByText('Postal Code')).toBeInTheDocument();
     expect(screen.getByText('Alternative Names')).toBeInTheDocument();
     expect(screen.getByText('Maps')).toBeInTheDocument();
+  });
+  it('user can close details by click X', async () => {
+    const navigate = vi.fn();
+    vi.clearAllMocks();
+    (useNavigate as jest.Mock).mockReturnValue(navigate);
+
+    render(<Details />);
+    const closeBtn = await screen.findByRole('button', { name: /x/i });
+    expect(closeBtn).toBeInTheDocument();
+    await user.click(closeBtn);
+
+    expect(navigate).toBeCalledWith({ pathname: '/', search: 'searchParams' });
   });
   describe('Country Name Rendering', () => {
     it('should display official name when available', () => {
@@ -162,7 +178,6 @@ describe('details page', () => {
       expect(screen.getByText('N/A')).toBeInTheDocument();
     });
   });
-
   describe('DetailSection Component', () => {
     it('should render title and content', () => {
       render(

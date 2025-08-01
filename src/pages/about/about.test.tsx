@@ -9,6 +9,7 @@ describe('about', () => {
     const memoryRouter = createMemoryRouter([
       {
         path: '/',
+        hydrateFallbackElement: <div>loading...</div>,
         Component: About,
         loader: () => {
           return { ...aboutMe };
