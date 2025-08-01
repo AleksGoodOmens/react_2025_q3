@@ -79,6 +79,7 @@ export const Pagination = ({ limit, total, page, next, prev }: Props) => {
               <Button
                 variant="minor"
                 className={clsx(
+                  'w-14',
                   currentPage === pageNumber + 1 &&
                     'bg-amber-800 dark:bg-amber-600',
                   currentPage - (pageNumber + 1) > 2 && 'hidden',
