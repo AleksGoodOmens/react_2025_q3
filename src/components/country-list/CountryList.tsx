@@ -11,7 +11,6 @@ interface Props {
 
 export const CountryList = ({ countries, className, isActive }: Props) => {
   const favorite = useCountryStore((state) => state.favorite);
-  console.log(favorite);
   return (
     <ul
       className={clsx(

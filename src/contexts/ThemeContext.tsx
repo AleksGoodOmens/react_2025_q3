@@ -8,10 +8,13 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
   const { storageValue, updateStorage } = useLocalStorage('theme');
   const [theme, setTheme] = useState<Theme>(() => {
     const savedTheme = storageValue as Theme | null;
-    const systemPrefersDark = window.matchMedia(
-      '(prefers-color-scheme: dark)'
-    ).matches;
-    return savedTheme || (systemPrefersDark ? 'dark' : 'light');
+    if (savedTheme) return savedTheme;
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light';
+    }
+    return 'light';
   });
 
   useEffect(() => {

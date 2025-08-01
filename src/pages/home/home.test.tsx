@@ -1,4 +1,5 @@
 import { server, user } from '@/__test__';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 import { routerConfig } from '@/router';
 import { http, HttpResponse } from 'msw';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -14,9 +15,12 @@ describe('home page', () => {
       initialEntries: ['/'],
     });
 
-    render(<RouterProvider router={router} />);
+    render(
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    );
 
-    // Проверяем, что заголовок отрендерился
     expect(
       await screen.findByRole('heading', { level: 1 })
     ).toBeInTheDocument();
@@ -35,7 +39,11 @@ describe('home page', () => {
       initialEntries: ['/'],
     });
 
-    render(<RouterProvider router={router} />);
+    render(
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    );
 
     await waitFor(() => {
       expect(screen.getByText(/No countries found/i)).toBeInTheDocument();
@@ -49,7 +57,11 @@ describe('home page', () => {
       initialEntries: ['/'],
     });
 
-    render(<RouterProvider router={router} />);
+    render(
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    );
 
     const errorBtn = await screen.findByRole('button', { name: 'error' });
     await user.click(errorBtn);
@@ -63,7 +75,11 @@ describe('home page', () => {
       initialEntries: ['/'],
     });
 
-    render(<RouterProvider router={router} />);
+    render(
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    );
 
     const getButton = async (name: 'prev' | 'next' | '1' | '2') => {
       return screen.findByRole('button', { name });
@@ -120,7 +136,11 @@ describe('home page', () => {
       initialEntries: ['/'],
     });
 
-    render(<RouterProvider router={router} />);
+    render(
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    );
     const select = await screen.findByRole('combobox');
     expect(select).toBeInTheDocument();
     expect(select).toHaveValue('20');
