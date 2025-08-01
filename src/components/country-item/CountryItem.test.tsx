@@ -19,7 +19,7 @@ describe('CountryItem component tests', () => {
 
       render(
         <MemoryRouter>
-          <CountryItem countryData={mockCountry} />
+          <CountryItem countryData={mockCountry} isFavorite={false} />
         </MemoryRouter>
       );
     });
@@ -42,7 +42,10 @@ describe('CountryItem component tests', () => {
       cleanup();
       render(
         <MemoryRouter>
-          <CountryItem countryData={mockCountryWithoutCapital} />
+          <CountryItem
+            countryData={mockCountryWithoutCapital}
+            isFavorite={false}
+          />
         </MemoryRouter>
       );
       expect(screen.getAllByRole('paragraph').length).toBe(2);
@@ -70,7 +73,7 @@ describe('CountryItem component tests', () => {
 
       render(
         <MemoryRouter>
-          <CountryItem countryData={mockCountry} />
+          <CountryItem countryData={mockCountry} isFavorite={false} />
         </MemoryRouter>
       );
       const liBtn = screen.getByRole('button', {
