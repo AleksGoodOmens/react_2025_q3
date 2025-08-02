@@ -9,30 +9,41 @@ describe('CountryList', () => {
     useSearchParams: () => [new URLSearchParams(), vi.fn()],
     useNavigate: () => vi.fn(),
     useLocation: () => vi.fn(),
+    useNavigation: () => vi.fn().mockReturnValue({ state: '' }),
   }));
   beforeEach(() => {
     cleanup();
   });
   describe('empty state', () => {
     it('should show "No countries found" if list is empty', async () => {
-      render(<CountryList countries={[]} isActive={false} />);
+      render(<CountryList countries={[]} isActive={false} limit={20} />);
 
       expect(screen.getByText(/no countries found/i)).toBeInTheDocument();
     });
     it('should show "proper amount of cards if cards provided', async () => {
-      render(<CountryList countries={mockCountries} isActive={false} />);
+      render(
+        <CountryList countries={mockCountries} isActive={false} limit={20} />
+      );
 
       expect(screen.getAllByRole('listitem')).toHaveLength(3);
     });
     it('component should have proper classname if it is`t active', async () => {
-      render(<CountryList countries={mockCountries} isActive={false} />);
+      render(
+        <CountryList countries={mockCountries} isActive={false} limit={20} />
+      );
 
-      expect(screen.getByRole('list')).not.toHaveClass('flex-1/2');
+      expect(screen.getByRole('list')).toHaveClass(
+        'md:grid-cols-2 lg:grid-cols-3'
+      );
     });
     it('component should have proper classname if it is active', async () => {
-      render(<CountryList countries={mockCountries} isActive={true} />);
+      render(
+        <CountryList countries={mockCountries} isActive={true} limit={20} />
+      );
 
-      expect(screen.getByRole('list')).toHaveClass('flex-1/2');
+      expect(screen.getByRole('list')).not.toHaveClass(
+        'md:grid-cols-2 lg:grid-cols-3'
+      );
     });
   });
 });
