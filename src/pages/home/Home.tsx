@@ -2,7 +2,13 @@ import type { ICountry } from '@/interfaces';
 import { useState } from 'react';
 import { Outlet, useLoaderData, useParams } from 'react-router';
 
-import { Button, CountryList, Pagination, SearchForm } from '@/components';
+import {
+  Button,
+  CountryList,
+  Flyout,
+  Pagination,
+  SearchForm,
+} from '@/components';
 
 interface LoaderData {
   countries: ICountry[] | [];
@@ -49,6 +55,7 @@ const Home = () => {
       <div className="flex flex-col-reverse gap-2 md:flex-row">
         <CountryList countries={countries} isActive={Boolean(country)} />
         <Outlet />
+        <Flyout />
       </div>
     </section>
   );

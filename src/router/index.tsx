@@ -1,11 +1,12 @@
 import About from '@/pages/about/About';
 import { aboutMe } from '@/pages/about/data';
+import { Details } from '@/pages/details/Details';
 import Home from '@/pages/home/Home';
 import NotFound from '@/pages/not-found/NotFound';
 import { getCountries, getCountry } from '@/service/CountryAPI';
 import { createBrowserRouter, type RouteObject } from 'react-router';
 
-import { Details, GeneralLayout } from '@/components';
+import { GeneralLayout } from '@/components';
 
 export const routerConfig: RouteObject[] = [
   {

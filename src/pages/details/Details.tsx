@@ -1,4 +1,3 @@
-import { Button } from '../button/Button';
 import type { IDetailedCountry } from '@/interfaces';
 import {
   useLoaderData,
@@ -6,6 +5,8 @@ import {
   useNavigation,
   useSearchParams,
 } from 'react-router';
+
+import { Button } from '@/components';
 
 interface loaderData {
   country: IDetailedCountry;
