@@ -1,4 +1,5 @@
 import type { ICountry } from '@/interfaces';
+import clsx from 'clsx';
 import { useState } from 'react';
 import { Outlet, useLoaderData, useParams } from 'react-router';
 
@@ -52,9 +53,15 @@ const Home = () => {
         />
       )}
 
-      <div className="flex flex-col-reverse gap-2 md:flex-row">
-        <CountryList countries={countries} isActive={Boolean(country)} />
-        <Outlet />
+      <div className={clsx('grid gap-2', Boolean(country) && 'md:grid-cols-2')}>
+        <CountryList
+          countries={countries}
+          isActive={Boolean(country)}
+          limit={limit}
+        />
+        <div>
+          <Outlet />
+        </div>
         <Flyout />
       </div>
     </section>

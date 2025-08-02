@@ -15,7 +15,7 @@ export const Button = ({ children, className, variant, ...props }: IButton) => {
   return (
     <button
       className={clsx(
-        'rounded-xl border-2 px-4 py-2 uppercase duration-300 disabled:cursor-not-allowed disabled:bg-amber-300',
+        'rounded-xl border-2 px-4 py-2 uppercase disabled:cursor-not-allowed disabled:bg-amber-300',
         className,
         variant === 'ghost' && ghostClasses,
         variant === 'main' && mainClasses,

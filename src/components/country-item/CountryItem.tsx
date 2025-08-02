@@ -48,18 +48,13 @@ export const CountryItem = memo(function CountryItem({
   return (
     <li
       className={clsx(
-        'grow basis-xs',
-        'animate-fadeIn',
-        isActive && 'rounded-3xl bg-amber-800 text-white'
+        'animate-fadeIn flex items-center rounded-2xl border-b-2 px-4 py-1',
+        isActive && 'bg-amber-800 text-white',
+        isFavorite && 'bg-amber-600'
       )}
     >
-      <input
-        type="checkbox"
-        checked={isFavorite}
-        onChange={handleToggleFavorite}
-      />
       <button
-        className="block h-full w-full border-b-2 p-1"
+        className="block h-full w-full"
         onClick={isActive ? handleCloseDetails : handleOpenDetails}
       >
         <p className="mb-2 text-center font-bold">{name.official}</p>
@@ -91,6 +86,35 @@ export const CountryItem = memo(function CountryItem({
           </div>
         </div>
       </button>
+      <label className="relative block h-6 w-6">
+        <input
+          type="checkbox"
+          checked={isFavorite}
+          onChange={handleToggleFavorite}
+          className="absolute top-0 left-0 h-full w-full cursor-pointer appearance-none"
+        />
+        <div
+          className={clsx(
+            'h-6 w-6 rounded-full border-2 transition-all duration-300',
+            'flex items-center justify-center',
+            isFavorite
+              ? 'border-amber-500 bg-amber-500 text-white'
+              : 'border-gray-300 bg-white text-transparent'
+          )}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className={clsx(
+              'h-4 w-4 transition-transform duration-200',
+              isFavorite ? 'scale-100' : 'scale-0'
+            )}
+          >
+            <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+          </svg>
+        </div>
+      </label>
     </li>
   );
 });

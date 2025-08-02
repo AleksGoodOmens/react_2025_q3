@@ -1,37 +1,53 @@
 import { CountryItem } from '../country-item/CountryItem';
+import { SkeletonListItem } from '../skeleton-list-item/SkeletonListItem';
 import type { ICountry } from '@/interfaces';
 import { useCountryStore } from '@/store/useCountryStore';
 import clsx from 'clsx';
+import { useNavigation } from 'react-router';
 
 interface Props {
   countries: ICountry[] | [];
   className?: string;
   isActive: boolean;
+  limit: number;
 }
 
-export const CountryList = ({ countries, className, isActive }: Props) => {
+export const CountryList = ({
+  countries,
+  className,
+  isActive,
+  limit,
+}: Props) => {
   const favorite = useCountryStore((state) => state.favorite);
+  const { state } = useNavigation();
   return (
     <ul
       className={clsx(
-        'relative flex min-h-32 basis-full flex-wrap rounded-2xl border-2',
-        isActive && 'flex-1/2',
+        'relative order-1 grid grid-cols-1 gap-2 rounded-2xl border-2 md:order-0',
+        isActive ? '' : 'md:grid-cols-2 lg:grid-cols-3',
         className
       )}
     >
-      {countries.length > 0 ? (
+      {countries.length === 0 && (
+        <li className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center">
+          No countries found
+        </li>
+      )}
+
+      {countries.length > 0 &&
+        state !== 'loading' &&
         countries.map((item) => (
           <CountryItem
             key={`${item.name.official}`}
             isFavorite={favorite.includes(item.name.official)}
             countryData={item}
           />
-        ))
-      ) : (
-        <li className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center">
-          No countries found
-        </li>
-      )}
+        ))}
+
+      {state === 'loading' &&
+        [...Array(limit)].map((_, i) => (
+          <SkeletonListItem key={`skeleton-${i}`} />
+        ))}
     </ul>
   );
 };
