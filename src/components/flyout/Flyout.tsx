@@ -33,6 +33,7 @@ export const Flyout = () => {
 
   return (
     <div
+      role="dialog"
       className={clsx(container, favorite.length ? show : hide)}
       style={browserHints}
     >
