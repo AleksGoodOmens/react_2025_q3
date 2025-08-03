@@ -39,7 +39,9 @@ export const CountryList = ({
         countries.map((item) => (
           <CountryItem
             key={`${item.name.official}`}
-            isFavorite={favorite.includes(item.name.official)}
+            isFavorite={favorite.some(
+              ({ name }) => name.official === item.name.official
+            )}
             countryData={item}
           />
         ))}

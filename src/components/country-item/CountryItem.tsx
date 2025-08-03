@@ -42,7 +42,7 @@ export const CountryItem = memo(function CountryItem({
       removeFromFavorite(name.official);
       return;
     }
-    addToFavorite(name.official);
+    addToFavorite(countryData);
   };
 
   return (

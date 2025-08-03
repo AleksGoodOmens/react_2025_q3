@@ -1,4 +1,5 @@
 import { Button } from '../button/Button';
+import { useCSV } from '@/hooks/useCSV';
 import { useCountryStore } from '@/store/useCountryStore';
 import clsx from 'clsx';
 
@@ -14,9 +15,21 @@ const styles = {
   highlight: 'text-xl font-extrabold text-black',
 };
 
+const { container, show, hide, browserHints, highlight } = styles;
+
 export const Flyout = () => {
   const { favorite, clearFavorite } = useCountryStore((state) => state);
-  const { container, show, hide, browserHints, highlight } = styles;
+  const { create, isLoading, url, clear } = useCSV();
+
+  const handleRestore = async () => {
+    if (url) await clear();
+    clearFavorite();
+  };
+
+  const handleDownload = () => {
+    create(favorite);
+  };
+
   return (
     <div
       className={clsx(container, favorite.length ? show : hide)}
@@ -28,15 +41,29 @@ export const Flyout = () => {
       </p>
       <div className="space-x-2">
         <Button
-          disabled={!favorite.length}
-          onClick={clearFavorite}
+          disabled={!favorite.length || isLoading}
+          onClick={url ? clear : handleRestore}
           variant="main"
         >
-          unselect all
+          {url ? 'cancel' : 'unselect all'}
         </Button>
-        <Button variant="main" disabled={!favorite.length}>
-          download
-        </Button>
+        {url ? (
+          <a
+            href={url}
+            download={`${favorite.length}-items`}
+            onClick={handleRestore}
+          >
+            download - {favorite.length}
+          </a>
+        ) : (
+          <Button
+            variant="main"
+            disabled={!favorite.length || isLoading}
+            onClick={handleDownload}
+          >
+            {isLoading ? 'wait...' : 'create CSV'}
+          </Button>
+        )}
       </div>
     </div>
   );

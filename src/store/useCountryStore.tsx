@@ -1,37 +1,47 @@
+import type { ICountry } from '@/interfaces';
 import { create } from 'zustand';
 
 interface IState {
-  favorite: string[];
+  favorite: ICountry[];
 }
 
 interface IActions {
-  addToFavorite: (newCountry: string) => void;
+  addToFavorite: (newCountry: ICountry) => void;
   removeFromFavorite: (countryName: string) => void;
   clearFavorite: () => void;
 }
 
-export const useCountryStore = create<IState & IActions>((set) => ({
-  favorite: localStorage.getItem('favorite')?.split(',') || [],
-  addToFavorite: (newCountry: string) =>
-    set((state: IState) => {
-      const newCountryArray = [...state.favorite, newCountry];
-      localStorage.setItem('favorite', newCountryArray.join(','));
-      return { favorite: newCountryArray };
-    }),
-  removeFromFavorite: (countryName: string) =>
-    set((state: IState) => {
-      const newCountryArray = [
-        ...state.favorite.filter((country) => country !== countryName),
-      ];
-      localStorage.setItem('favorite', newCountryArray.join(','));
+export const useCountryStore = create<IState & IActions>((set) => {
+  const storageValue = localStorage.getItem('favorite');
+  let favorite: ICountry[] = [];
+  if (storageValue) {
+    favorite = JSON.parse(storageValue) as ICountry[];
+  }
+  return {
+    favorite: favorite,
+    addToFavorite: (newCountry) =>
+      set((state) => {
+        const newCountryArray = [...state.favorite, newCountry];
+        localStorage.setItem('favorite', JSON.stringify(newCountryArray));
+        return { favorite: newCountryArray };
+      }),
+    removeFromFavorite: (countryName) =>
+      set((state) => {
+        const newCountryArray = [
+          ...state.favorite.filter(
+            (country) => country.name.official !== countryName
+          ),
+        ];
+        localStorage.setItem('favorite', JSON.stringify(newCountryArray));
 
-      return {
-        favorite: newCountryArray,
-      };
-    }),
-  clearFavorite: () =>
-    set(() => {
-      localStorage.removeItem('favorite');
-      return { favorite: [] };
-    }),
-}));
+        return {
+          favorite: newCountryArray,
+        };
+      }),
+    clearFavorite: () =>
+      set(() => {
+        localStorage.removeItem('favorite');
+        return { favorite: [] };
+      }),
+  };
+});
