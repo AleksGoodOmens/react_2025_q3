@@ -1,7 +1,8 @@
-import { Button } from '../button/Button';
-import { useCSV } from '@/hooks/useCSV';
-import { useCountryStore } from '@/store/useCountryStore';
 import clsx from 'clsx';
+
+import { Button } from '@/components';
+
+import { useCountryStore, useCSV } from '@/hooks';
 
 const styles = {
   container:

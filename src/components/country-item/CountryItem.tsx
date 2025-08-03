@@ -1,8 +1,10 @@
-import type { ICountry } from '@/interfaces';
-import { useCountryStore } from '@/store/useCountryStore';
 import clsx from 'clsx';
 import { memo } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
+
+import type { ICountry } from '@/interfaces';
+
+import { useCountryStore } from '@/hooks';
 
 interface Props {
   countryData: ICountry;

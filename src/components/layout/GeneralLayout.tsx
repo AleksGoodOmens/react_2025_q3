@@ -1,6 +1,7 @@
-import { ThemeChanger } from '../theme-changer/ThemeChanger';
 import clsx from 'clsx';
 import { NavLink, Outlet } from 'react-router';
+
+import { ThemeChanger } from '@/components';
 
 const links = [
   { path: '/', name: 'home' },

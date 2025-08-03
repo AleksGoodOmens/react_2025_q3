@@ -1,5 +1,6 @@
-import type { ICountry } from '@/interfaces';
 import { create } from 'zustand';
+
+import type { ICountry } from '@/interfaces';
 
 interface IState {
   favorite: ICountry[];

@@ -1,8 +1,9 @@
 // src/components/ThemeToggle.tsx
 import { ThemeContext } from './themeContext';
-import type { ThemeContextType } from '@/interfaces';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 import { useContext } from 'react';
+
+import type { ThemeContextType } from '@/interfaces';
 
 export const ThemeChanger = () => {
   const { theme, toggleTheme } = useContext(ThemeContext) as ThemeContextType;

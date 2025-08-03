@@ -1,8 +1,9 @@
-import { useLocalStorage } from '@/hooks';
 import type { FormEvent } from 'react';
 import { Form, useSearchParams } from 'react-router';
 
 import { Button, SearchInput } from '@/components';
+
+import { useLocalStorage } from '@/hooks';
 
 interface Props {
   searchValue: string;

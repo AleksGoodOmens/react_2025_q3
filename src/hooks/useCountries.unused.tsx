@@ -1,7 +1,8 @@
 import { useLocalStorage } from './useLocalStorage';
-import type { ICountry } from '@/interfaces';
 import { getCountries } from '@/service/CountryAPI';
 import { useCallback, useEffect, useState } from 'react';
+
+import type { ICountry } from '@/interfaces';
 
 export const useCountries = () => {
   const [countries, setCountries] = useState<ICountry[] | []>([]);

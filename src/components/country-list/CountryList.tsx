@@ -1,9 +1,11 @@
-import { CountryItem } from '../country-item/CountryItem';
-import { SkeletonListItem } from '../skeleton-list-item/SkeletonListItem';
-import type { ICountry } from '@/interfaces';
-import { useCountryStore } from '@/store/useCountryStore';
 import clsx from 'clsx';
 import { useNavigation } from 'react-router';
+
+import { CountryItem, SkeletonListItem } from '@/components';
+
+import type { ICountry } from '@/interfaces';
+
+import { useCountryStore } from '@/hooks';
 
 interface Props {
   countries: ICountry[] | [];

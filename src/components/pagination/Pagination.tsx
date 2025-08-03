@@ -1,7 +1,8 @@
-import { Button } from '../button/Button';
 import clsx from 'clsx';
 import { useCallback, useMemo, type ChangeEvent } from 'react';
 import { useSearchParams } from 'react-router';
+
+import { Button } from '@/components';
 
 interface Props {
   limit: number;
