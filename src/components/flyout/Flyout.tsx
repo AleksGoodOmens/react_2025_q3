@@ -6,9 +6,9 @@ import { useCountryStore, useCSV } from '@/hooks';
 
 const styles = {
   container:
-    'fixed right-5 bottom-5 space-y-4 rounded-2xl border-2 bg-amber-800 p-4 text-white shadow-2xl transition-opacity duration-300 ease-in-out',
+    'fixed right-5 bottom-5 space-y-4 rounded-2xl border-2 bg-amber-800 p-4 text-white shadow-2xl transition-opacity  duration-300 ease-in-out z-100',
   hide: 'pointer-events-none opacity-0',
-  show: 'opacity-100 delay-100',
+  show: 'opacity-100 delay-100 pointer-events-auto',
   browserHints: {
     transitionProperty: 'opacity, pointer-events',
     willChange: 'opacity',

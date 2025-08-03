@@ -50,9 +50,9 @@ export const CountryItem = memo(function CountryItem({
   return (
     <li
       className={clsx(
-        'animate-fadeIn flex items-center rounded-2xl border-b-2 px-4 py-1',
+        'animate-fadeIn flex items-center rounded-2xl border-b-2 bg-amber-600 px-4 py-1',
         isActive && 'bg-amber-800 text-white',
-        isFavorite && 'bg-amber-600'
+        isFavorite && 'bg-amber-700'
       )}
     >
       <button

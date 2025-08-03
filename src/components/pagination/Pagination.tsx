@@ -66,7 +66,7 @@ export const Pagination = ({ limit, total, page, next, prev }: Props) => {
         </div>
       </div>
 
-      <div className="flex justify-center gap-4 p-2">
+      <div className="flex flex-col justify-center gap-4 p-2 sm:flex-row">
         <Button
           variant="main"
           disabled={prev}
@@ -74,7 +74,7 @@ export const Pagination = ({ limit, total, page, next, prev }: Props) => {
         >
           prev
         </Button>
-        <div className="flex gap-2">
+        <div className="flex gap-2 self-center">
           {visiblePages.map((_, pageNumber) => {
             return (
               <Button
