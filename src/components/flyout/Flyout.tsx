@@ -51,6 +51,7 @@ export const Flyout = () => {
         {url ? (
           <a
             href={url}
+            className="inline-block px-2 py-2"
             download={`${favorite.length}-items`}
             onClick={handleRestore}
           >

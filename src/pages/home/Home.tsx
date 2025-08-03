@@ -57,7 +57,7 @@ const Home = () => {
       <div className={clsx('grid gap-2', Boolean(country) && 'md:grid-cols-2')}>
         <CountryList
           countries={countries}
-          isActive={Boolean(country)}
+          activeCountry={country}
           limit={limit}
         />
         <div>

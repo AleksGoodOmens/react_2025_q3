@@ -10,14 +10,14 @@ import { useCountryStore } from '@/hooks';
 interface Props {
   countries: ICountry[] | [];
   className?: string;
-  isActive: boolean;
+  activeCountry?: string;
   limit: number;
 }
 
 export const CountryList = ({
   countries,
   className,
-  isActive,
+  activeCountry,
   limit,
 }: Props) => {
   const favorite = useCountryStore((state) => state.favorite);
@@ -26,7 +26,7 @@ export const CountryList = ({
     <ul
       className={clsx(
         'relative order-1 grid grid-cols-1 gap-2 rounded-2xl border-2 md:order-0',
-        isActive ? '' : 'md:grid-cols-2 lg:grid-cols-3',
+        activeCountry ? '' : 'md:grid-cols-2 lg:grid-cols-3',
         className
       )}
     >
@@ -44,6 +44,7 @@ export const CountryList = ({
             isFavorite={favorite.some(
               ({ name }) => name.official === item.name.official
             )}
+            isActive={activeCountry === item.name.common}
             countryData={item}
           />
         ))}
