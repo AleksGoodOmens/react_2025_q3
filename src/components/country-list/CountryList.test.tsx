@@ -16,21 +16,17 @@ describe('CountryList', () => {
   });
   describe('empty state', () => {
     it('should show "No countries found" if list is empty', async () => {
-      render(<CountryList countries={[]} isActive={false} limit={20} />);
+      render(<CountryList countries={[]} limit={20} />);
 
       expect(screen.getByText(/no countries found/i)).toBeInTheDocument();
     });
     it('should show "proper amount of cards if cards provided', async () => {
-      render(
-        <CountryList countries={mockCountries} isActive={false} limit={20} />
-      );
+      render(<CountryList countries={mockCountries} limit={20} />);
 
       expect(screen.getAllByRole('listitem')).toHaveLength(3);
     });
     it('component should have proper classname if it is`t active', async () => {
-      render(
-        <CountryList countries={mockCountries} isActive={false} limit={20} />
-      );
+      render(<CountryList countries={mockCountries} limit={20} />);
 
       expect(screen.getByRole('list')).toHaveClass(
         'md:grid-cols-2 lg:grid-cols-3'
@@ -38,7 +34,11 @@ describe('CountryList', () => {
     });
     it('component should have proper classname if it is active', async () => {
       render(
-        <CountryList countries={mockCountries} isActive={true} limit={20} />
+        <CountryList
+          countries={mockCountries}
+          activeCountry={'Test Country'}
+          limit={20}
+        />
       );
 
       expect(screen.getByRole('list')).not.toHaveClass(
