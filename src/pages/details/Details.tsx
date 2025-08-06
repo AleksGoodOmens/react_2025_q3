@@ -1,31 +1,37 @@
-import {
-  useLoaderData,
-  useNavigate,
-  useNavigation,
-  useSearchParams,
-} from 'react-router';
+import { useLoaderData, useNavigate, useSearchParams } from 'react-router';
 
-import type { IDetailedCountry } from '@/interfaces';
+import { useCountry } from '@/hooks/useCountry';
 
 import { Button } from '@/components';
 
 interface loaderData {
-  country: IDetailedCountry;
+  countryName: string;
 }
 
 export const Details = () => {
-  const { state } = useNavigation();
-  const { country } = useLoaderData<loaderData>();
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const { countryName } = useLoaderData<loaderData>();
+  const {
+    data: updatedCountry,
+    isLoading,
+    isFetching,
+    error,
+  } = useCountry(countryName);
 
   const handleClose = () => {
     navigate({ pathname: '/', search: searchParams.toString() });
   };
 
-  if (!country) {
+  if (isLoading) return <div>loading...</div>;
+  if (isFetching) return <div>fetching...</div>;
+
+  if (error || !updatedCountry) {
     return (
       <section className="animate-fadeIn rounded-2xl border-2 border-black bg-amber-800 p-6 text-white shadow-md">
+        <Button className="self-start" variant="ghost" onClick={handleClose}>
+          X
+        </Button>
         <h2>No info about this country</h2>
       </section>
     );
@@ -50,9 +56,7 @@ export const Details = () => {
     independent,
     status,
     altSpellings,
-  } = country;
-
-  if (state === 'loading') return <div>loading...</div>;
+  } = updatedCountry;
 
   return (
     <section className="animate-fadeIn rounded-2xl border-2 border-black bg-amber-800 p-6 text-white shadow-md">

@@ -49,28 +49,30 @@ export async function getCountries(
 }
 export async function getCountry(countryName: string = '') {
   const url = new URL(`v3.1/name/${countryName}`, BASE_API_URL);
-  try {
-    const response: Response = await fetch(url);
+  const response: Response = await fetch(url);
 
-    if (!response.ok) throw new Error(response.statusText);
-    const data: unknown = await response.json();
-
-    const result = z.array(DetailedCountriesSchema).safeParse(data);
-
+  if (!response.ok) {
     if (response.status === 404) {
-      return null;
+      throw new Error(`Country "${countryName}" not found`);
     }
-    if (!result.success) {
-      result.error.issues.forEach((err) => {
-        console.warn(`Problem with field: ${err.path.join('.')}`);
-        console.warn(`Expected: ${err.message}`);
-        console.warn(`Received: ${err.path}`);
-      });
-      return null;
-    }
-    return result.data[0];
-  } catch (error: unknown) {
-    if (error instanceof Error) return null;
-    return null;
+    throw new Error(`HTTP error! status: ${response.status}`);
   }
+
+  const data: unknown = await response.json();
+
+  const result = z.array(DetailedCountriesSchema).safeParse(data);
+
+  if (!result.success) {
+    const errorDetails = result.error.issues
+      .map((issue) => `Field ${issue.path.join('.')}: ${issue.message}`)
+      .join('; ');
+
+    throw new Error(`Invalid data format: ${errorDetails}`);
+  }
+
+  if (result.data.length === 0) {
+    throw new Error('No country data received');
+  }
+
+  return result.data[0];
 }

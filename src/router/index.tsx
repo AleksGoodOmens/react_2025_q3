@@ -1,5 +1,5 @@
-import { getCountries, getCountry } from '@/service/CountryAPI';
-import { createBrowserRouter, type RouteObject } from 'react-router';
+import { getCountries } from '@/service/CountryAPI';
+import { createBrowserRouter, redirect, type RouteObject } from 'react-router';
 
 import About from '@/pages/about/About';
 import { aboutMe } from '@/pages/about/data';
@@ -52,9 +52,9 @@ export const routerConfig: RouteObject[] = [
             loader: async ({ params }) => {
               const countryName = params.country;
 
-              const country = await getCountry(countryName);
+              if (!countryName) return redirect('/');
 
-              return { country };
+              return { countryName };
             },
           },
         ],
