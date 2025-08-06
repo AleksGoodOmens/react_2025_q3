@@ -1,5 +1,3 @@
-import clsx from 'clsx';
-
 import type { ICountry } from '@/interfaces';
 
 import { useCountryStore } from '@/hooks';
@@ -8,20 +6,13 @@ import { CountryItem } from '@/components';
 
 interface Props {
   countries: ICountry[] | [];
-  className?: string;
   activeCountry?: string;
 }
 
-export const CountryList = ({ countries, className, activeCountry }: Props) => {
+export const CountryList = ({ countries, activeCountry }: Props) => {
   const favorite = useCountryStore((state) => state.favorite);
   return (
-    <ul
-      className={clsx(
-        'relative order-1 grid grid-cols-1 gap-2 rounded-2xl border-2 md:order-0',
-        activeCountry ? '' : 'md:grid-cols-2 lg:grid-cols-3',
-        className
-      )}
-    >
+    <>
       {countries.length === 0 && (
         <li className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center">
           No countries found
@@ -38,6 +29,6 @@ export const CountryList = ({ countries, className, activeCountry }: Props) => {
           countryData={item}
         />
       ))}
-    </ul>
+    </>
   );
 };

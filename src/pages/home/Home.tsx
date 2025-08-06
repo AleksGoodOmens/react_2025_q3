@@ -24,9 +24,9 @@ const Home = () => {
   if (isError) {
     throw new Error('test error');
   }
+
   return (
     <section>
-      {error && <h2>{error?.message}</h2>}
       <h1 className="text-4xl">Countries by AmensGood</h1>
       <Button
         variant="main"
@@ -36,29 +36,36 @@ const Home = () => {
       >
         error
       </Button>
-      <SearchForm searchValue={search} />
+      <SearchForm />
 
       <Pagination
         limit={limit}
         total={data?.total || 0}
-        next={data?.next || false}
-        prev={data?.prev || false}
+        next={Boolean(data?.next)}
+        prev={Boolean(data?.prev)}
         page={page}
       />
 
       <div className={clsx('grid gap-2', Boolean(country) && 'md:grid-cols-2')}>
-        {data && (
-          <CountryList countries={data.countries} activeCountry={country} />
-        )}
-        {isLoading && (
-          <SkeletonList isActive={Boolean(search)} amount={limit} />
-        )}
+        <ul
+          className={clsx(
+            'relative order-1 grid grid-cols-1 gap-2 rounded-2xl border-2 md:order-0',
+            country ? '' : 'md:grid-cols-2 lg:grid-cols-3'
+          )}
+        >
+          {error && (
+            <h2 className="col-span-full p-4 text-center">{error?.message}</h2>
+          )}
+          {data && (
+            <CountryList countries={data.countries} activeCountry={country} />
+          )}
 
-        <div>
-          <Outlet />
-        </div>
-        <Flyout />
+          {isLoading && <SkeletonList amount={limit} />}
+        </ul>
+
+        <Outlet />
       </div>
+      <Flyout />
     </section>
   );
 };

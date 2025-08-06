@@ -5,24 +5,28 @@ import { useLocalStorage } from '@/hooks';
 
 import { Button, SearchInput } from '@/components';
 
-interface Props {
-  searchValue: string;
-}
-
-export const SearchForm = ({ searchValue }: Props) => {
-  const [searchParams] = useSearchParams();
+export const SearchForm = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchValue = searchParams.get('search');
 
   const { storageValue, updateStorage, clearStorage } =
     useLocalStorage('search');
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    const currentParams = new URLSearchParams(searchParams);
-
     const formData = new FormData(event.currentTarget);
-    const searchValue = formData.get('search')?.toString() || '';
-    if (!searchValue) clearStorage();
-    updateStorage(searchValue);
-    currentParams.set('search', searchValue);
+    const newSearchValue = formData.get('search')?.toString() || null;
+
+    if (!newSearchValue) {
+      clearStorage();
+      searchParams.delete('search');
+    }
+
+    if (newSearchValue) {
+      updateStorage(newSearchValue);
+      searchParams.set('search', newSearchValue);
+    }
+
+    setSearchParams(searchParams);
   };
 
   return (

@@ -25,7 +25,7 @@ export async function getCountries({
 
   if (!response.ok) {
     if (response.status === 404) {
-      throw new Error(`Page "${page}" not found`);
+      throw new Error(`no country with provided name "${search}" found`);
     }
     throw new Error(`HTTP error! status: ${response.status}`);
   }
@@ -41,7 +41,7 @@ export async function getCountries({
   const filteredCountries = result.data.slice(offset, end);
   return {
     countries: filteredCountries,
-    prev: page <= 1,
+    prev: page > 1,
     next: page < Math.ceil(result.data.length / limit),
     page: page,
     limit: limit,

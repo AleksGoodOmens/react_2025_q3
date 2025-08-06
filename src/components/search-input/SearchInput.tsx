@@ -35,6 +35,7 @@ export const SearchInput = memo(function SearchInput({
         value={value}
         onChange={handleOnChange}
         name={name || 'search'}
+        placeholder="name of country"
         {...rest}
       />
     </label>

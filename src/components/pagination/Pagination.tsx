@@ -6,13 +6,13 @@ import { Button } from '@/components';
 
 interface Props {
   limit: number;
-  total: number;
+  total: number | undefined;
   page: number;
   next: boolean;
   prev: boolean;
 }
 
-export const Pagination = ({ limit, total, page, next, prev }: Props) => {
+export const Pagination = ({ limit, total = 0, page, next, prev }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const totalPages = useMemo(() => {
     return Math.ceil(total / limit);
@@ -38,6 +38,8 @@ export const Pagination = ({ limit, total, page, next, prev }: Props) => {
     },
     [searchParams, setSearchParams]
   );
+
+  console.log(prev, next);
 
   return (
     <div>
@@ -69,7 +71,7 @@ export const Pagination = ({ limit, total, page, next, prev }: Props) => {
       <div className="flex flex-col justify-center gap-4 p-2 sm:flex-row">
         <Button
           variant="main"
-          disabled={prev}
+          disabled={!prev}
           onClick={() => handlePageChange(currentPage - 1)}
         >
           prev
