@@ -1,10 +1,11 @@
 import { server, user } from '@/__test__';
-import { ThemeProvider } from '@/contexts/ThemeContext';
 import { routerConfig } from '@/router';
 import { http, HttpResponse } from 'msw';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
+
+import { ThemeProvider } from '@/providers/ThemeProvider';
 
 describe('home page', () => {
   beforeEach(() => {

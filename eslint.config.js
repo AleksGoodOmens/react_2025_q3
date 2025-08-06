@@ -6,9 +6,11 @@ import react from 'eslint-plugin-react';
 import reactCompiler from 'eslint-plugin-react-compiler';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
+import pluginQuery from '@tanstack/eslint-plugin-query';
 
 export default tseslint.config(
   { ignores: ['dist'] },
+  ...pluginQuery.configs['flat/recommended'],
   {
     extends: [
       js.configs.recommended,

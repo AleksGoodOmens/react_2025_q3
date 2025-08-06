@@ -1,9 +1,9 @@
 import type { FormEvent } from 'react';
 import { Form, useSearchParams } from 'react-router';
 
-import { Button, SearchInput } from '@/components';
-
 import { useLocalStorage } from '@/hooks';
+
+import { Button, SearchInput } from '@/components';
 
 interface Props {
   searchValue: string;

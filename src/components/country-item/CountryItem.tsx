@@ -17,9 +17,7 @@ export const CountryItem = memo(function CountryItem({
   isFavorite,
   isActive,
 }: Props) {
-  const { addToFavorite, removeFromFavorite } = useCountryStore(
-    (state) => state
-  );
+  const { addToFavorite, removeFromFavorite } = useCountryStore();
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();

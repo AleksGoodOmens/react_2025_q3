@@ -2,6 +2,8 @@ import clsx from 'clsx';
 import { useState } from 'react';
 import { Outlet, useLoaderData, useParams } from 'react-router';
 
+import type { ICountry } from '@/interfaces';
+
 import {
   Button,
   CountryList,
@@ -9,8 +11,6 @@ import {
   Pagination,
   SearchForm,
 } from '@/components';
-
-import type { ICountry } from '@/interfaces';
 
 interface LoaderData {
   countries: ICountry[] | [];

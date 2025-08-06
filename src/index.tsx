@@ -4,8 +4,9 @@ import { RouterProvider } from 'react-router';
 
 import './index.css';
 
-import { ThemeProvider } from './contexts/ThemeContext';
-import { router } from './router';
+import { router } from '@/router';
+
+import { QueryProvider, ThemeProvider } from '@/providers';
 
 import { ErrorBoundary } from '@/components';
 
@@ -15,9 +16,11 @@ if (root)
   createRoot(root).render(
     <StrictMode>
       <ErrorBoundary fallback={<p>Something went wrong</p>}>
-        <ThemeProvider>
-          <RouterProvider router={router} />
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider>
+            <RouterProvider router={router} />
+          </ThemeProvider>
+        </QueryProvider>
       </ErrorBoundary>
     </StrictMode>
   );

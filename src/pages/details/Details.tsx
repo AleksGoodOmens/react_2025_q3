@@ -5,9 +5,9 @@ import {
   useSearchParams,
 } from 'react-router';
 
-import { Button } from '@/components';
-
 import type { IDetailedCountry } from '@/interfaces';
+
+import { Button } from '@/components';
 
 interface loaderData {
   country: IDetailedCountry;

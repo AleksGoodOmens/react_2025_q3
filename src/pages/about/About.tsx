@@ -3,6 +3,7 @@ import { useLoaderData } from 'react-router';
 
 const About = () => {
   const data = useLoaderData<typeof aboutMe>();
+
   return (
     <section className="mx-auto max-w-4xl rounded-lg bg-amber-300 p-6 shadow-md">
       <div className="flex flex-col items-center gap-6 md:flex-row">

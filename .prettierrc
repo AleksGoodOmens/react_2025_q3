@@ -10,11 +10,16 @@
   "importOrder": [
     "react",
     "",
-    "@/components",
-    "",
     "@/interfaces",
     "",
-    "@/hooks"
+    "@/providers",
+    "",
+    "@/hooks",
+    "",
+    "@/pages",
+    "",
+    "@/components",
+    ""
   ],
   "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"],
   "importOrderTypeScriptVersion": "5.0.0",
