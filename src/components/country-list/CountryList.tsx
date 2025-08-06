@@ -1,27 +1,19 @@
 import clsx from 'clsx';
-import { useNavigation } from 'react-router';
 
 import type { ICountry } from '@/interfaces';
 
 import { useCountryStore } from '@/hooks';
 
-import { CountryItem, SkeletonListItem } from '@/components';
+import { CountryItem } from '@/components';
 
 interface Props {
   countries: ICountry[] | [];
   className?: string;
   activeCountry?: string;
-  limit: number;
 }
 
-export const CountryList = ({
-  countries,
-  className,
-  activeCountry,
-  limit,
-}: Props) => {
+export const CountryList = ({ countries, className, activeCountry }: Props) => {
   const favorite = useCountryStore((state) => state.favorite);
-  const { state } = useNavigation();
   return (
     <ul
       className={clsx(
@@ -36,23 +28,16 @@ export const CountryList = ({
         </li>
       )}
 
-      {countries.length > 0 &&
-        state !== 'loading' &&
-        countries.map((item) => (
-          <CountryItem
-            key={`${item.name.official}`}
-            isFavorite={favorite.some(
-              ({ name }) => name.official === item.name.official
-            )}
-            isActive={activeCountry === item.name.common}
-            countryData={item}
-          />
-        ))}
-
-      {state === 'loading' &&
-        [...Array(limit)].map((_, i) => (
-          <SkeletonListItem key={`skeleton-${i}`} />
-        ))}
+      {countries.map((item) => (
+        <CountryItem
+          key={`${item.name.official}`}
+          isFavorite={favorite.some(
+            ({ name }) => name.official === item.name.official
+          )}
+          isActive={activeCountry === item.name.common}
+          countryData={item}
+        />
+      ))}
     </ul>
   );
 };

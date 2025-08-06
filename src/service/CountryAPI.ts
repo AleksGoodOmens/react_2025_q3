@@ -4,48 +4,49 @@ import z from 'zod';
 import {
   CountrySchema,
   DetailedCountriesSchema,
-  type IGetCountriesResponse,
+  type ICountriesData,
+  type IHomePageProps,
 } from '@/interfaces';
 
-export async function getCountries(
-  params: string = 'all'
-): Promise<IGetCountriesResponse> {
-  const url = new URL(`v3.1/${params}`, BASE_API_URL);
+export async function getCountries({
+  limit,
+  page,
+  search,
+}: IHomePageProps): Promise<ICountriesData> {
+  const url =
+    search === 'all'
+      ? new URL(`v3.1/${search}`, BASE_API_URL)
+      : new URL(`v3.1/translation/${search}`, BASE_API_URL);
 
-  if (params === 'all') {
+  if (search === 'all') {
     url.searchParams.set('fields', 'name,flags,capital,area,borders');
   }
-  try {
-    const response: Response = await fetch(url);
+  const response: Response = await fetch(url);
 
-    if (!response.ok) throw new Error(response.statusText);
-    const data: unknown = await response.json();
-    const result = z.array(CountrySchema).safeParse(data);
+  if (!response.ok) {
     if (response.status === 404) {
-      return {
-        countries: [],
-      };
+      throw new Error(`Page "${page}" not found`);
     }
-    if (!result.success) {
-      return {
-        error: `Invalid data format ${result.error.message}`,
-        countries: [],
-      };
-    }
-    return {
-      countries: result.data,
-    };
-  } catch (error: unknown) {
-    if (error instanceof Error)
-      return {
-        error: error.message,
-        countries: [],
-      };
-    return {
-      error: `unknown error`,
-      countries: [],
-    };
+    throw new Error(`HTTP error! status: ${response.status}`);
   }
+  const data: unknown = await response.json();
+  const result = z.array(CountrySchema).safeParse(data);
+
+  if (!result.success) {
+    throw new Error(`Invalid data format ${result.error.message}`);
+  }
+  const offset = (page - 1) * limit;
+  const end = offset + limit;
+
+  const filteredCountries = result.data.slice(offset, end);
+  return {
+    countries: filteredCountries,
+    prev: page <= 1,
+    next: page < Math.ceil(result.data.length / limit),
+    page: page,
+    limit: limit,
+    total: result.data.length,
+  };
 }
 export async function getCountry(countryName: string = '') {
   const url = new URL(`v3.1/name/${countryName}`, BASE_API_URL);

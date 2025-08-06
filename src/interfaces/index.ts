@@ -94,12 +94,25 @@ export type ICountry = z.infer<typeof CountrySchema>;
 export type IDetailedCountry = z.infer<typeof DetailedCountriesSchema>;
 export type IGetCountries = z.infer<typeof CountriesSchema>;
 
-export interface IGetCountriesResponse {
-  error?: string;
-  countries: ICountry[] | [];
-}
 export type Theme = 'light' | 'dark';
 export type ThemeContextType = {
   theme: Theme;
   toggleTheme: () => void;
 };
+
+export interface ICountriesData {
+  countries: ICountry[] | [];
+  page: number;
+  next: boolean;
+  prev: boolean;
+  limit: number;
+  total: number;
+}
+
+export interface IDetailsPageProps {
+  countryName: string;
+}
+
+export interface IHomePageProps extends Pick<ICountriesData, 'limit' | 'page'> {
+  search: string;
+}

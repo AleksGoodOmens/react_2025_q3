@@ -1,4 +1,28 @@
-export const SkeletonListItem = () => {
+import clsx from 'clsx';
+
+interface Props {
+  amount: number;
+  isActive: boolean;
+  className?: string;
+}
+
+export const SkeletonList = ({ amount, isActive, className }: Props) => {
+  return (
+    <ul
+      className={clsx(
+        'relative order-1 grid grid-cols-1 gap-2 rounded-2xl border-2 md:order-0',
+        isActive ? '' : 'md:grid-cols-2 lg:grid-cols-3',
+        className
+      )}
+    >
+      {[...Array(amount)].map((_, i) => (
+        <SkeletonListItem key={`skeleton-${i}`} />
+      ))}
+    </ul>
+  );
+};
+
+const SkeletonListItem = () => {
   return (
     <li
       role="status"
