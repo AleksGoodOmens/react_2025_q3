@@ -14,9 +14,7 @@ export const CountryList = ({ countries, activeCountry }: Props) => {
   return (
     <>
       {countries.length === 0 && (
-        <li className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center">
-          No countries found
-        </li>
+        <li className="text-center">No countries found</li>
       )}
 
       {countries.map((item) => (

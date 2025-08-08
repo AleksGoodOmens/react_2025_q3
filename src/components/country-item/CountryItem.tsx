@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import { memo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 
 import type { ICountry } from '@/interfaces';
@@ -10,13 +9,15 @@ interface Props {
   countryData: ICountry;
   isFavorite: boolean;
   isActive: boolean;
+  className?: string | undefined;
 }
 
-export const CountryItem = memo(function CountryItem({
+export const CountryItem = ({
   countryData,
   isFavorite,
   isActive,
-}: Props) {
+  className,
+}: Props) => {
   const { addToFavorite, removeFromFavorite } = useCountryStore();
 
   const [searchParams] = useSearchParams();
@@ -50,7 +51,8 @@ export const CountryItem = memo(function CountryItem({
       className={clsx(
         'animate-fadeIn flex items-center rounded-2xl border-b-2 bg-amber-600 px-4 py-1',
         isActive && '-order-1 bg-amber-800 text-white',
-        isFavorite && 'bg-amber-700'
+        isFavorite && 'bg-amber-700',
+        className
       )}
     >
       <button
@@ -117,4 +119,4 @@ export const CountryItem = memo(function CountryItem({
       </label>
     </li>
   );
-});
+};

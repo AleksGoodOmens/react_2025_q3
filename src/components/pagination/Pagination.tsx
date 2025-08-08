@@ -39,8 +39,6 @@ export const Pagination = ({ limit, total = 0, page, next, prev }: Props) => {
     [searchParams, setSearchParams]
   );
 
-  console.log(prev, next);
-
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border-2 p-4">
