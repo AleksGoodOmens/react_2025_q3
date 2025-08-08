@@ -1,5 +1,6 @@
 import {
   longListOfMockCountries,
+  MockBrokenDetailedCountry,
   mockCountries,
   MockDetailedCountry,
 } from './countries.mock';
@@ -15,7 +16,12 @@ const simulateNetworkDelay = () =>
 
 const createEndpointHandler = (config: {
   path: string;
-  response: ICountry | [] | ICountry[] | IDetailedCountry[];
+  response:
+    | ICountry
+    | []
+    | ICountry[]
+    | IDetailedCountry[]
+    | (typeof MockBrokenDetailedCountry)[];
   errorResponse?: unknown;
   exactMatch?: boolean;
 }) => {
@@ -39,12 +45,23 @@ export const handlers = [
     response: [mockCountries[0]],
   }),
   createEndpointHandler({
+    path: 'v3.1/translation/unknown',
+    response: [],
+  }),
+  createEndpointHandler({
     path: 'v3.1/name/Moldova',
     response: [MockDetailedCountry],
   }),
-
   createEndpointHandler({
-    path: 'v3.1/translation/non_existent_country',
+    path: 'v3.1/name/test',
+    response: [MockDetailedCountry],
+  }),
+  createEndpointHandler({
+    path: 'v3.1/name/unknown',
     response: [],
+  }),
+  createEndpointHandler({
+    path: 'v3.1/name/broken',
+    response: [MockBrokenDetailedCountry],
   }),
 ];

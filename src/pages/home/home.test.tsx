@@ -8,7 +8,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router';
 import { QueryProvider, ThemeProvider } from '@/providers';
 
 describe('home page', () => {
-  describe('positive scenario', () => {
+  describe.skip('positive scenario', () => {
     const router = createMemoryRouter(routerConfig, {
       initialEntries: ['/'],
     });

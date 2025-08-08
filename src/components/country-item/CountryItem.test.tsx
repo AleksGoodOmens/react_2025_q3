@@ -59,7 +59,6 @@ describe('CountryItem component tests', () => {
       const liBtn = screen.getByRole('button', {
         name: /official-test-country-name/i,
       });
-      screen.debug(liBtn);
       expect(liBtn).toBeInTheDocument();
 
       await user.click(liBtn);

@@ -1,2 +1,2 @@
-export * from './ThemeProvider';
-export * from './QueryProvider';
+export { ThemeProvider } from './ThemeProvider';
+export { QueryProvider } from './QueryProvider';
