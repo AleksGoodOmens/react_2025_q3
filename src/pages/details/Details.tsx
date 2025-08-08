@@ -8,7 +8,7 @@ interface loaderData {
   countryName: string;
 }
 
-export const Details = () => {
+const Details = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { countryName } = useLoaderData<loaderData>();
@@ -278,3 +278,5 @@ export const DetailSection = ({
     {content}
   </div>
 );
+
+export default Details;

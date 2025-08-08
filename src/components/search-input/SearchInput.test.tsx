@@ -4,7 +4,7 @@ import { localStorageMock } from '@/__test__/mockData/mockLocalStorage';
 import { afterAll, beforeEach, describe, expect, it } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 
-describe.only('SearchInput', () => {
+describe('SearchInput', () => {
   describe('render with local storage', () => {
     const originalLocalStorage: Storage = window.localStorage;
     Object.defineProperty(window, 'localStorage', {

@@ -40,7 +40,7 @@ const Home = () => {
 
       <Pagination
         limit={limit}
-        total={data?.total || 0}
+        total={data?.total}
         next={Boolean(data?.next)}
         prev={Boolean(data?.prev)}
         page={page}
@@ -50,7 +50,7 @@ const Home = () => {
         <ul
           className={clsx(
             'relative order-1 grid grid-cols-1 gap-2 rounded-2xl border-2 md:order-0',
-            country && 'md:grid-cols-2 lg:grid-cols-3'
+            !country && 'md:grid-cols-2 lg:grid-cols-3'
           )}
         >
           {error && (

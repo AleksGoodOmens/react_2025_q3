@@ -7,5 +7,5 @@ export * from './layout/GeneralLayout';
 export * from './pagination/Pagination';
 export * from './search-form/search-form/SearchForm';
 export * from './search-input/SearchInput';
-export * from './skeleton-list-item/SkeletonListItem';
+export * from './skeleton-list/SkeletonList';
 export * from './theme-changer/ThemeChanger';

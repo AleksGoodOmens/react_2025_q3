@@ -4,7 +4,7 @@ import type { IDetailsPageProps, IHomePageProps } from '@/interfaces';
 
 import About from '@/pages/about/About';
 import { aboutMe } from '@/pages/about/data';
-import { Details } from '@/pages/details/Details';
+import Details from '@/pages/details/Details';
 import Home from '@/pages/home/Home';
 import NotFound from '@/pages/not-found/NotFound';
 
