@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Outlet, useLoaderData, useParams } from 'react-router';
 import type { IHomePageProps } from '@/interfaces';
 
-import { useCountries } from '@/hooks/useCountries';
+import { useCountries } from '@/hooks';
 
 import {
   Button,

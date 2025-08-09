@@ -1,6 +1,6 @@
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router';
 
-import { useCountry } from '@/hooks/useCountry';
+import { useCountry } from '@/hooks';
 
 import { Button } from '@/components';
 

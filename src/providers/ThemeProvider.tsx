@@ -1,9 +1,9 @@
 import { useEffect, useState, type PropsWithChildren } from 'react';
 import type { Theme } from '@/interfaces';
 
-import { useLocalStorage } from '@/hooks';
+import { ThemeContext } from '@/contexts';
 
-import { ThemeContext } from '@/components/theme-changer/themeContext';
+import { useLocalStorage } from '@/hooks';
 
 export const ThemeProvider = ({ children }: PropsWithChildren) => {
   const { storageValue, updateStorage } = useLocalStorage('theme');
