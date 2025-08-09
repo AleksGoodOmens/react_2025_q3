@@ -1,19 +1,18 @@
+import { CountryItem } from '../country-item/CountryItem';
+import { SkeletonListItem } from '../skeleton-list-item/SkeletonListItem';
 import type { ICountry } from '@/interfaces';
-import { getAllCountries, getCountriesByName } from '@/service/CountryAPI';
+import { getCountry } from '@/service/CountryAPI';
 import { Component, type ReactNode } from 'react';
-
-import CountryItem from '../country-item/CountryItem';
-import SkeletonListItem from '../skeleton-list-item/SkeletonListItem';
 
 interface IState {
   countries: ICountry[];
   loading: boolean;
 }
 
-class CountryList extends Component<object, IState> {
+export class CountryList extends Component<object, IState> {
   state: IState = {
     countries: [],
-    loading: false,
+    loading: true,
   };
 
   private searchListener = () => this.handleUrlChange();
@@ -42,8 +41,8 @@ class CountryList extends Component<object, IState> {
 
     try {
       const countryList = searchValue
-        ? await getCountriesByName(searchValue)
-        : await getAllCountries();
+        ? await getCountry(`translation/${searchValue}`)
+        : await getCountry('all');
 
       this.setState({
         countries: countryList,
@@ -76,5 +75,3 @@ class CountryList extends Component<object, IState> {
     );
   }
 }
-
-export default CountryList;

@@ -1,10 +1,6 @@
 import { Component } from 'react';
 
-import Button from '@components/button/Button';
-import CountryList from '@components/country-list/CountryList';
-import ErrorBoundary from '@components/error-boundary/ErrorBoundary';
-
-import SearchForm from './components/search-form/SearchForm';
+import { Button, CountryList, ErrorBoundary, SearchForm } from '@/components';
 
 class Home extends Component {
   state = {

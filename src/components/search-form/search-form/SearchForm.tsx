@@ -1,19 +1,15 @@
 import { Component, type FormEvent } from 'react';
 
-import Button from '@/components/button/Button';
-import SearchInput from '@/components/search-input/SearchInput';
+import { Button, SearchInput } from '@/components';
 
-class SearchForm extends Component {
+export class SearchForm extends Component {
   private handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget).get('search');
-    console.log(formData);
     if (!formData) {
-      console.log(formData, 'clear');
-
       localStorage.removeItem('search');
       window.history.pushState({}, '', '?');
-      window.dispatchEvent(new Event('searchUpdated'));
+      window.dispatchEvent(new CustomEvent('searchUpdated'));
 
       return;
     }
@@ -40,4 +36,3 @@ class SearchForm extends Component {
     );
   }
 }
-export default SearchForm;

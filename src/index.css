@@ -6,6 +6,8 @@
 }
 @layer base {
   html {
+    scroll-behavior: smooth;
+    overflow-y: scroll;
     @apply font-jetBrains bg-amber-500;
   }
 }

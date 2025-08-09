@@ -9,7 +9,7 @@ interface SearchInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
 }
 
-class SearchInput extends Component<SearchInputProps> {
+export class SearchInput extends Component<SearchInputProps> {
   state = {
     value: '',
   };
@@ -31,7 +31,8 @@ class SearchInput extends Component<SearchInputProps> {
         <h5 className="uppercase">{label || 'search'}</h5>
         <input
           className="w-full rounded-xl bg-amber-200 px-2 py-1"
-          type="text"
+          type="search"
+          name={label || 'search'}
           value={this.state.value}
           onChange={this.handleChange}
           {...inputProps}
@@ -40,4 +41,3 @@ class SearchInput extends Component<SearchInputProps> {
     );
   }
 }
-export default SearchInput;

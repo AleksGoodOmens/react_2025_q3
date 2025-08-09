@@ -1,36 +1,25 @@
-import type { ICountry } from '@/interfaces';
+import { BASE_API_URL } from '@/constants';
+import { CountrySchema, type ICountry } from '@/interfaces';
+import z from 'zod';
 
-const urlAllCountries =
-  'https://restcountries.com/v3.1/all?fields=name,flags,capital,area,borders,';
-
-const urlCountriesByName = 'https://restcountries.com/v3.1/translation';
-
-async function getAllCountries(): Promise<ICountry[]> {
+export async function getCountry(params: string = 'all'): Promise<ICountry[]> {
+  const url = new URL(params, BASE_API_URL);
+  if (params === 'all') {
+    url.searchParams.set('fields', 'name, flags, capital, area, borders');
+  }
   try {
-    const response = await fetch(urlAllCountries);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    const response: Response = await fetch(url);
+    if (!response.ok) throw new Error(response.statusText);
+    const data: unknown = await response.json();
+
+    const result = z.array(CountrySchema).safeParse(data);
+    if (!result.success) {
+      console.error('Validation error:', result.error);
+      throw new Error('Invalid data format');
     }
-    const data: ICountry[] = await response.json();
-    return data;
+    return result.data;
   } catch (error) {
     console.error('CountryService failed:', error);
     throw error;
   }
 }
-
-async function getCountriesByName(searchValue: string): Promise<ICountry[]> {
-  try {
-    const response = await fetch(`${urlCountriesByName}/${searchValue}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data: ICountry[] = await response.json();
-    return data;
-  } catch (error) {
-    console.error('CountryService failed:', error);
-    throw error;
-  }
-}
-
-export { getAllCountries, getCountriesByName };

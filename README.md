@@ -1,69 +1,48 @@
-# React + TypeScript + Vite
+# Country Explorer App by AmensGood
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Country Explorer** is a React-based web application that allows users to explore detailed information about countries around the world. Built as an educational project for [RS School](https://rs.school/), this app utilizes the [Countries API](https://restcountries.com/) to fetch and display comprehensive data about nations, including their flags, capitals, populations, currencies, languages, and more.
 
-Currently, two official plugins are available:
+## Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🔍 Search Functionality
 
-## Expanding the ESLint configuration
+- Quickly find any country by typing its name in the search bar.
+- Dynamic filtering ensures instant results as you type.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 🌍 Full Country List
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Browse all available countries in a clean, responsive layout.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### 📊 Detailed Country Information
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+Each country's profile includes:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Official name & native name**
+- **Flag & coat of arms (if available)**
+- **Capital city & region**
+- **Population & area**
+- **Currencies & exchange rates**
+- **Languages spoken**
+- **Border countries (with clickable links)**
 
-```js
-// eslint.config.js
-import reactDom from 'eslint-plugin-react-dom';
-import reactX from 'eslint-plugin-react-x';
+### 🚀 Technical Implementation
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+- Built with **React.js** (class components)
+- Responsive design using **CSS modules** or **tailwind css**
+- API calls handled via **Axios/Fetch**
+- Error handling for API failures
+- test coverage >80%
+
+### 📚 Educational Purpose
+
+This project was developed as part of the RS School curriculum to practice:
+
+- Working with external APIs
+- React class components
+- error boundary
+- Responsive UI design
+- Clean code architecture
+
+Try it out and explore the world from your browser! 🌎✨
+
+_(Note: This is a demo project - data accuracy depends on the Countries API.)_

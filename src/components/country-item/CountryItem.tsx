@@ -1,7 +1,7 @@
 import type { ICountry } from '@/interfaces';
 import { PureComponent, type ReactNode } from 'react';
 
-class CountryItem extends PureComponent<ICountry> {
+export class CountryItem extends PureComponent<ICountry> {
   render(): ReactNode {
     const { area, capital, flags, name } = this.props;
 
@@ -34,5 +34,3 @@ class CountryItem extends PureComponent<ICountry> {
     );
   }
 }
-
-export default CountryItem;

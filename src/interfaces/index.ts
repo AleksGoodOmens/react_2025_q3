@@ -1,28 +1,35 @@
-export interface ICountry {
-  flags: Flags;
-  name: Name;
-  capital: string[];
-  borders: string[];
-  area: number;
-}
+// export interface ICountry {
+//   flags: { png: string; svg: string; alt: string };
+//   name: {
+//     common: string;
+//     official: string;
+//     nativeName: { spa: { official: string; common: string } };
+//   };
+//   capital?: string[];
+//   area: number;
+// }
 
-interface Flags {
-  png: string;
-  svg: string;
-  alt: string;
-}
+import { z } from 'zod';
 
-interface Name {
-  common: string;
-  official: string;
-  nativeName: NativeName;
-}
+export const CountrySchema = z.object({
+  flags: z.object({
+    png: z.string(),
+    svg: z.string(),
+    alt: z.string(),
+  }),
+  name: z.object({
+    common: z.string(),
+    official: z.string(),
+    nativeName: z.object({
+      spa: z.object({
+        official: z.string(),
+        common: z.string(),
+      }),
+    }),
+  }),
+  capital: z.array(z.string()).optional(),
+  area: z.number(),
+});
 
-interface NativeName {
-  spa: Spa;
-}
-
-interface Spa {
-  official: string;
-  common: string;
-}
+// Тип можно автоматически вывести из схемы
+export type ICountry = z.infer<typeof CountrySchema>;
