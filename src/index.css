@@ -1,0 +1,11 @@
+@import './fonts.css';
+@import 'tailwindcss';
+
+@theme {
+  --font-jetBrains: 'JetBrains Mono', 'sans-serif';
+}
+@layer base {
+  html {
+    @apply font-jetBrains bg-amber-500;
+  }
+}
