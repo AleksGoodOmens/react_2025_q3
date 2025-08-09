@@ -36,7 +36,7 @@ describe('SearchForm', () => {
         [
           {
             path: '/',
-            element: <SearchForm searchValue="" />,
+            element: <SearchForm />,
           },
         ],
         {
@@ -71,7 +71,7 @@ describe('SearchForm', () => {
         [
           {
             path: '/',
-            element: <SearchForm searchValue="" />,
+            element: <SearchForm />,
           },
         ],
         {
@@ -89,7 +89,7 @@ describe('SearchForm', () => {
         [
           {
             path: '/',
-            element: <SearchForm searchValue="" />,
+            element: <SearchForm />,
           },
         ],
         {

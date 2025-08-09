@@ -16,12 +16,25 @@ describe('CountryList', () => {
   });
   describe('empty state', () => {
     it('should show "No countries found" if list is empty', async () => {
-      render(<CountryList countries={[]} />);
+      render(
+        <CountryList
+          countries={[]}
+          isFetching={false}
+          activeCountry=""
+          error="undefined"
+        />
+      );
 
       expect(screen.getByText(/no countries found/i)).toBeInTheDocument();
     });
     it('should show "proper amount of cards if cards provided', async () => {
-      render(<CountryList countries={mockCountries} />);
+      render(
+        <CountryList
+          countries={mockCountries}
+          error="undefined"
+          isFetching={false}
+        />
+      );
 
       expect(screen.getAllByRole('listitem')).toHaveLength(3);
     });

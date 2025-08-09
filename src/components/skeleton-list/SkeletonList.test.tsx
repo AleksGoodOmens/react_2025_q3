@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 
 describe('SkeletonList', () => {
   it('render "skeleton" component', () => {
-    render(<SkeletonList amount={5} />);
+    render(<SkeletonList amount={5} active={true} />);
     expect(screen.getAllByRole('status')).toHaveLength(5);
   });
 });
