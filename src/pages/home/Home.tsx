@@ -10,6 +10,7 @@ import {
   CountryList,
   Flyout,
   Heading,
+  OverlayUpdate,
   Pagination,
   PaginationSkeleton,
   SearchForm,
@@ -48,6 +49,7 @@ const Home = () => {
         <>
           <SearchFormSkeleton />
           <PaginationSkeleton />
+          <OverlayUpdate />
         </>
       )}
       {!isLoading && (

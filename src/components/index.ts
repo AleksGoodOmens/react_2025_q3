@@ -13,3 +13,6 @@ export * from './pagination-skeleton/PaginationSkeleton';
 export * from './search-form-skeleton/SearchFromSkeleton';
 export * from './overlay-update/OverlayUpdate';
 export * from './heading/Heading';
+export * from './details-country/DetailsCountry';
+export * from './details-country-skeleton/DetailsCountrySkeleton';
+export * from './details-country/DetailsCountry';
