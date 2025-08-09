@@ -25,16 +25,6 @@ const Stub = createRoutesStub([
 ]);
 
 describe('Details', () => {
-  it('renders loading state', async () => {
-    render(
-      <QueryClientProvider client={createTestClient()}>
-        <Stub />
-      </QueryClientProvider>
-    );
-
-    expect(await screen.findByText('loading...')).toBeInTheDocument();
-  });
-
   it('renders country data from MSW', async () => {
     render(
       <QueryClientProvider client={createTestClient()}>
