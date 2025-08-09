@@ -8,9 +8,10 @@
     "prettier-plugin-tailwindcss"
   ],
   "importOrder": [
-    "react",
     "",
     "@/interfaces",
+    "",
+    "@/router",
     "",
     "@/providers",
     "",
@@ -18,8 +19,7 @@
     "",
     "@/pages",
     "",
-    "@/components",
-    ""
+    "@/components"
   ],
   "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"],
   "importOrderTypeScriptVersion": "5.0.0",

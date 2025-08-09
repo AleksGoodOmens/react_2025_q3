@@ -1,5 +1,4 @@
 import { useEffect, useState, type PropsWithChildren } from 'react';
-
 import type { Theme } from '@/interfaces';
 
 import { useLocalStorage } from '@/hooks';

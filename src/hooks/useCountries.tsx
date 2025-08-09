@@ -1,6 +1,5 @@
 import { getCountries } from '@/service/CountryAPI';
 import { useQuery } from '@tanstack/react-query';
-
 import type { IHomePageProps } from '@/interfaces';
 
 export function useCountries(props: IHomePageProps) {

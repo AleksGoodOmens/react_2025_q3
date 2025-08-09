@@ -6,7 +6,6 @@ import {
 } from './countries.mock';
 import { BASE_API_URL } from '@/constants';
 import { http, HttpResponse } from 'msw';
-
 import type { ICountry, IDetailedCountry } from '@/interfaces';
 
 const NETWORK_DELAY = 10;

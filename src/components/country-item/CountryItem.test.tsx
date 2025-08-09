@@ -4,9 +4,9 @@ import {
   mockCountry,
   mockCountryWithoutCapital,
 } from '@/__test__/mockData/countries.mock';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('CountryItem component tests', () => {
   describe('Basic rendering tests with complete data', async () => {

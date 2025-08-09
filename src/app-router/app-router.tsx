@@ -1,5 +1,4 @@
 import { createBrowserRouter, redirect, type RouteObject } from 'react-router';
-
 import type { IDetailsPageProps, IHomePageProps } from '@/interfaces';
 
 import About from '@/pages/about/About';
@@ -65,4 +64,4 @@ export const routerConfig: RouteObject[] = [
   },
 ];
 
-export const router = createBrowserRouter(routerConfig);
+export const appRouter = createBrowserRouter(routerConfig);

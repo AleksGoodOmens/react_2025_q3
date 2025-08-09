@@ -1,7 +1,7 @@
 import { CountryList } from './CountryList';
 import { mockCountries } from '@/__test__';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('CountryList', () => {
   vi.mock('react-router', () => ({

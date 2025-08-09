@@ -1,8 +1,8 @@
 import About from './About';
 import { aboutMe } from './data';
-import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
+import { describe, expect, it } from 'vitest';
 
 describe('about', () => {
   it('page contains one h1 tag only', async () => {

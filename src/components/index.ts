@@ -9,3 +9,7 @@ export * from './search-form/search-form/SearchForm';
 export * from './search-input/SearchInput';
 export * from './skeleton-list/SkeletonList';
 export * from './theme-changer/ThemeChanger';
+export * from './pagination-skeleton/PaginationSkeleton';
+export * from './search-form-skeleton/SearchFromSkeleton';
+export * from './overlay-update/OverlayUpdate';
+export * from './heading/Heading';

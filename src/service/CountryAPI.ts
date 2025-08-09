@@ -1,6 +1,5 @@
 import { BASE_API_URL } from '@/constants';
 import z from 'zod';
-
 import {
   CountrySchema,
   DetailedCountriesSchema,

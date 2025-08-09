@@ -59,7 +59,7 @@ const Details = () => {
   } = updatedCountry;
 
   return (
-    <section className="animate-fadeIn rounded-2xl border-2 border-black bg-amber-800 p-6 text-white shadow-md">
+    <section className="animate-fadeIn sticky top-0 h-fit rounded-2xl border-2 border-black bg-amber-800 p-6 text-white shadow-md">
       <header className="mb-4 flex justify-between gap-2">
         <div>
           <h2 className="text-3xl font-bold">

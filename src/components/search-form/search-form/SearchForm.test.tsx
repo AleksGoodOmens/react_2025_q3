@@ -1,9 +1,9 @@
 import { SearchForm } from './SearchForm';
 import { user } from '@/__test__';
 import { localStorageMock } from '@/__test__/mockData/mockLocalStorage';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('SearchForm', () => {
   let originalLocalStorage: Storage;

@@ -1,14 +1,22 @@
+import clsx from 'clsx';
+
 interface Props {
   amount: number;
+  active: boolean;
 }
 
-export const SkeletonList = ({ amount }: Props) => {
+export const SkeletonList = ({ amount, active }: Props) => {
   return (
-    <>
+    <ul
+      className={clsx(
+        'relative order-1 grid grid-cols-1 gap-2 overflow-hidden rounded-2xl border-2 md:order-0',
+        !active && 'md:grid-cols-2 lg:grid-cols-3'
+      )}
+    >
       {[...Array(amount)].map((_, i) => (
         <SkeletonListItem key={`skeleton-${i}`} />
       ))}
-    </>
+    </ul>
   );
 };
 

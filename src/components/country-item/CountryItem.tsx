@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import { useNavigate, useSearchParams } from 'react-router';
-
 import type { ICountry } from '@/interfaces';
 
 import { useCountryStore } from '@/hooks';
@@ -50,7 +49,7 @@ export const CountryItem = ({
     <li
       className={clsx(
         'animate-fadeIn flex items-center rounded-2xl border-b-2 bg-amber-600 px-4 py-1',
-        isActive && '-order-1 bg-amber-800 text-white',
+        isActive && 'sticky top-0 -order-1 bg-amber-800 text-white',
         isFavorite && 'bg-amber-700',
         className
       )}

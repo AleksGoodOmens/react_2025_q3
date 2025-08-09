@@ -1,9 +1,9 @@
 import { server, user } from '@/__test__';
-import { routerConfig } from '@/router';
-import { http, HttpResponse } from 'msw';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { routerConfig } from '@/app-router/app-router';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { http, HttpResponse } from 'msw';
 import { createMemoryRouter, RouterProvider } from 'react-router';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { QueryProvider, ThemeProvider } from '@/providers';
 

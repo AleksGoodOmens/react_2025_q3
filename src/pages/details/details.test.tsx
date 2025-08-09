@@ -1,8 +1,8 @@
 import Details from './Details';
-import { describe, expect, it } from 'vitest';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { createRoutesStub } from 'react-router';
+import { describe, expect, it } from 'vitest';
 
 const createTestClient = () =>
   new QueryClient({

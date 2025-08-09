@@ -1,23 +1,38 @@
+import clsx from 'clsx';
 import type { ICountry } from '@/interfaces';
 
 import { useCountryStore } from '@/hooks';
 
-import { CountryItem } from '@/components';
+import { CountryItem, Heading, OverlayUpdate } from '@/components';
 
 interface Props {
-  countries: ICountry[] | [];
+  countries: ICountry[] | [] | undefined;
   activeCountry?: string;
+  error: string | undefined;
+  isFetching: boolean;
 }
 
-export const CountryList = ({ countries, activeCountry }: Props) => {
+export const CountryList = ({
+  countries,
+  activeCountry,
+  error,
+  isFetching,
+}: Props) => {
   const favorite = useCountryStore((state) => state.favorite);
   return (
-    <>
-      {countries.length === 0 && (
+    <ul
+      className={clsx(
+        'relative order-1 grid grid-cols-1 gap-2 overflow-hidden rounded-2xl border-2 md:order-0',
+        !activeCountry && 'md:grid-cols-2 lg:grid-cols-3'
+      )}
+    >
+      {error && <Heading variant="error">{error}</Heading>}
+
+      {countries?.length === 0 && (
         <li className="text-center">No countries found</li>
       )}
 
-      {countries.map((item) => (
+      {countries?.map((item) => (
         <CountryItem
           key={`${item.name.official}`}
           isFavorite={favorite.some(
@@ -27,6 +42,7 @@ export const CountryList = ({ countries, activeCountry }: Props) => {
           countryData={item}
         />
       ))}
-    </>
+      {isFetching && <OverlayUpdate />}
+    </ul>
   );
 };
