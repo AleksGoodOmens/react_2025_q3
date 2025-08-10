@@ -6,5 +6,6 @@ export function useCountry(name: string) {
     queryKey: ['details', name],
     queryFn: () => getCountry(name),
     enabled: Boolean(name),
+    staleTime: 3000,
   });
 }

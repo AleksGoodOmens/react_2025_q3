@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router';
 
 import { useCountry } from '@/hooks';
@@ -24,6 +25,7 @@ const Details = () => {
     isFetching,
     refetch,
     error,
+    isStale,
   } = useCountry(countryName);
 
   const handleClose = () => {
@@ -39,6 +41,14 @@ const Details = () => {
         <Button variant="main" onClick={handleRefetch}>
           update details
         </Button>
+        <div
+          className={clsx(
+            'w-fit rounded-2xl p-2',
+            isStale ? 'bg-red-500' : 'bg-green-500'
+          )}
+        >
+          {isStale ? 'old date' : 'fresh data'}
+        </div>
         <Button className="self-start" variant="ghost" onClick={handleClose}>
           X
         </Button>

@@ -21,11 +21,13 @@ const Home = () => {
   const { country } = useParams();
   const [isError, setIsError] = useState(false);
   const { limit, page, search } = useLoaderData<IHomePageProps>();
-  const { data, error, isLoading, isFetching, refetch } = useCountries({
-    limit,
-    page,
-    search,
-  });
+  const { data, error, isLoading, isFetching, isStale, refetch } = useCountries(
+    {
+      limit,
+      page,
+      search,
+    }
+  );
 
   if (isError) {
     throw new Error('test error');
@@ -62,9 +64,19 @@ const Home = () => {
           />
         </>
       )}
-      <Button variant="main" className="mb-2" onClick={() => refetch()}>
-        fresh reload
-      </Button>
+      <div className="flex items-center gap-2">
+        <Button variant="main" className="mb-2" onClick={() => refetch()}>
+          fresh reload
+        </Button>
+        <div
+          className={clsx(
+            'w-fit rounded-2xl p-2',
+            isStale ? 'bg-red-500' : 'bg-green-500'
+          )}
+        >
+          {isStale ? 'old date' : 'fresh data'}
+        </div>
+      </div>
       <div
         className={clsx(
           'relative grid gap-2',
