@@ -1,8 +1,7 @@
 import { useEffect, useState, type PropsWithChildren } from 'react';
-
-import { ThemeContext } from '@/components/theme-changer/themeContext';
-
 import type { Theme } from '@/interfaces';
+
+import { ThemeContext } from '@/contexts';
 
 import { useLocalStorage } from '@/hooks';
 

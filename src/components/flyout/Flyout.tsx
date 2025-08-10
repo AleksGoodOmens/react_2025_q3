@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 
-import { Button } from '@/components';
-
 import { useCountryStore, useCSV } from '@/hooks';
+
+import { Button } from '@/components';
 
 const styles = {
   container:
@@ -19,7 +19,7 @@ const styles = {
 const { container, show, hide, browserHints, highlight } = styles;
 
 export const Flyout = () => {
-  const { favorite, clearFavorite } = useCountryStore((state) => state);
+  const { favorite, clearFavorite } = useCountryStore();
   const { create, isLoading, url, clear } = useCSV();
 
   const handleRestore = async () => {

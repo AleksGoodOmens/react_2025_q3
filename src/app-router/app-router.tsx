@@ -1,10 +1,11 @@
+import { createBrowserRouter, redirect, type RouteObject } from 'react-router';
+import type { IDetailsPageProps, IHomePageProps } from '@/interfaces';
+
 import About from '@/pages/about/About';
 import { aboutMe } from '@/pages/about/data';
-import { Details } from '@/pages/details/Details';
+import Details from '@/pages/details/Details';
 import Home from '@/pages/home/Home';
 import NotFound from '@/pages/not-found/NotFound';
-import { getCountries, getCountry } from '@/service/CountryAPI';
-import { createBrowserRouter, type RouteObject } from 'react-router';
 
 import { GeneralLayout } from '@/components';
 
@@ -17,30 +18,16 @@ export const routerConfig: RouteObject[] = [
         path: '/',
         Component: Home,
         hydrateFallbackElement: <div>loading...</div>,
-        loader: async ({ request }) => {
+        loader: ({ request }): IHomePageProps => {
           const url = new URL(request.url);
-          const search = url.searchParams.get('search') || '';
+          const search = url.searchParams.get('search') || 'all';
           const page = Number(url.searchParams.get('page')) || 1;
           const limit = Number(url.searchParams.get('limit')) || 20;
 
-          const { countries, error } = await getCountries(
-            search ? `translation/${search}` : 'all'
-          );
-
-          const offset = (page - 1) * limit;
-          const end = offset + limit;
-
-          const filteredCountries = countries.slice(offset, end);
-
           return {
-            countries: filteredCountries,
             search: search,
-            prev: page <= 1,
-            next: page < Math.ceil(countries.length / limit),
             page: page,
             limit: limit,
-            total: countries.length,
-            error: error,
           };
         },
         children: [
@@ -48,12 +35,15 @@ export const routerConfig: RouteObject[] = [
             path: 'details/:country',
             hydrateFallbackElement: <div>loading...</div>,
             Component: Details,
-            loader: async ({ params }) => {
+            loader: ({ params }): IDetailsPageProps | undefined => {
               const countryName = params.country;
 
-              const country = await getCountry(countryName);
+              if (!countryName) {
+                redirect('/');
+                return;
+              }
 
-              return { country };
+              return { countryName };
             },
           },
         ],
@@ -74,4 +64,4 @@ export const routerConfig: RouteObject[] = [
   },
 ];
 
-export const router = createBrowserRouter(routerConfig);
+export const appRouter = createBrowserRouter(routerConfig);

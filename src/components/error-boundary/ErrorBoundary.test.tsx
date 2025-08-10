@@ -1,6 +1,6 @@
 import { ErrorBoundary } from './ErrorBoundary';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('error boundary', () => {
   const fallback = <p>test fallback</p>;

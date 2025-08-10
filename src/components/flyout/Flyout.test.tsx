@@ -1,7 +1,7 @@
 import { Flyout } from './Flyout';
 import { mockCountry } from '@/__test__/mockData/countries.mock';
-import { beforeEach, describe, expect, it } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { useCountryStore } from '@/hooks';
 
