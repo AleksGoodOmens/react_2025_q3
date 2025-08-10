@@ -47,7 +47,7 @@ const Details = () => {
             isStale ? 'bg-red-500' : 'bg-green-500'
           )}
         >
-          {isStale ? 'old date' : 'fresh data'}
+          {isStale ? 'old data' : 'fresh data'}
         </div>
         <Button className="self-start" variant="ghost" onClick={handleClose}>
           X

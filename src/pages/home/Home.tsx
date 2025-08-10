@@ -74,7 +74,7 @@ const Home = () => {
             isStale ? 'bg-red-500' : 'bg-green-500'
           )}
         >
-          {isStale ? 'old date' : 'fresh data'}
+          {isStale ? 'old data' : 'fresh data'}
         </div>
       </div>
       <div
