@@ -11,7 +11,10 @@ const links = [
 export const GeneralLayout = () => {
   const [searchParams] = useSearchParams();
   return (
-    <div className="container mx-auto flex min-h-dvh flex-col p-2">
+    <div
+      role="document"
+      className="container mx-auto flex min-h-dvh flex-col p-2"
+    >
       <header className="flex items-center justify-between gap-2 rounded-2xl bg-amber-700 px-4">
         <nav className="flex gap-2">
           {links.map((link) => (

@@ -1,6 +1,6 @@
 export const PaginationSkeleton = () => {
   return (
-    <div className="animate-pulse">
+    <div className="animate-pulse" role="status">
       <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border-2 p-4">
         <div className="flex items-center gap-2">
           <div className="h-6 w-24 rounded-full bg-amber-50/30"></div>
