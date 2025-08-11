@@ -1,7 +1,6 @@
 export const DetailsCountrySkeleton = () => {
   return (
     <article className="animate-pulse">
-      {/* Заголовок */}
       <header className="mb-6 flex justify-between">
         <div className="space-y-2">
           <div className="h-8 w-64 rounded bg-gray-300"></div>
@@ -10,15 +9,12 @@ export const DetailsCountrySkeleton = () => {
       </header>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        {/* Левая колонка */}
         <div className="space-y-4">
-          {/* Флаги и герб */}
           <div className="flex gap-4">
             <div className="h-32 w-48 rounded-lg bg-gray-300"></div>
             <div className="h-32 w-32 rounded-lg bg-gray-300"></div>
           </div>
 
-          {/* Основные детали */}
           <div className="grid grid-cols-2 gap-4">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="space-y-2">
@@ -28,7 +24,6 @@ export const DetailsCountrySkeleton = () => {
             ))}
           </div>
 
-          {/* Телефонные коды */}
           <div className="mt-4 space-y-2">
             <div className="h-5 w-32 rounded bg-gray-300"></div>
             <div className="flex flex-wrap gap-2">
@@ -39,9 +34,7 @@ export const DetailsCountrySkeleton = () => {
           </div>
         </div>
 
-        {/* Правая колонка */}
         <div className="space-y-6">
-          {/* Языки */}
           <div className="space-y-2">
             <div className="h-5 w-24 rounded bg-gray-300"></div>
             <ul className="space-y-2">
@@ -51,7 +44,6 @@ export const DetailsCountrySkeleton = () => {
             </ul>
           </div>
 
-          {/* Валюты */}
           <div className="space-y-2">
             <div className="h-5 w-24 rounded bg-gray-300"></div>
             <ul className="space-y-2">
@@ -61,7 +53,6 @@ export const DetailsCountrySkeleton = () => {
             </ul>
           </div>
 
-          {/* Часовые пояса */}
           <div className="space-y-2">
             <div className="h-5 w-24 rounded bg-gray-300"></div>
             <div className="flex flex-wrap gap-2">
@@ -71,7 +62,6 @@ export const DetailsCountrySkeleton = () => {
             </div>
           </div>
 
-          {/* Граничащие страны */}
           <div className="space-y-2">
             <div className="h-5 w-36 rounded bg-gray-300"></div>
             <div className="flex flex-wrap gap-2">

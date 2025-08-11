@@ -36,7 +36,7 @@ const Details = () => {
   };
 
   return (
-    <section className="animate-fadeIn sticky top-0 h-fit rounded-2xl border-2 border-black bg-amber-800 p-6 text-white shadow-md">
+    <section className="animate-fadeIn top-0 h-fit rounded-2xl border-2 border-black bg-amber-800 p-6 text-white shadow-md md:sticky">
       <div className="flex justify-between">
         <Button variant="main" onClick={handleRefetch}>
           update details

@@ -1,5 +1,3 @@
-// home.test.tsx
-
 import '@/__test__/mockHooks';
 
 import { render, screen } from '@testing-library/react';

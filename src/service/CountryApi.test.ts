@@ -14,7 +14,6 @@ describe('API functions with MSW', () => {
     expect(result.prev).toBe(false);
     expect(result.next).toBe(true);
 
-    // Проверка данных
     expect(result.countries[0].name).toBeDefined();
   });
 

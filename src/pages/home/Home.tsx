@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { Outlet, useLoaderData, useParams } from 'react-router';
@@ -21,6 +22,7 @@ const Home = () => {
   const { country } = useParams();
   const [isError, setIsError] = useState(false);
   const { limit, page, search } = useLoaderData<IHomePageProps>();
+  const qc = useQueryClient();
   const { data, error, isLoading, isFetching, isStale, refetch } = useCountries(
     {
       limit,
@@ -28,6 +30,17 @@ const Home = () => {
       search,
     }
   );
+
+  const handleInvalidate = () => {
+    qc.invalidateQueries({
+      queryKey: ['countries'],
+      exact: false,
+    });
+    qc.invalidateQueries({
+      queryKey: ['details'],
+      exact: false,
+    });
+  };
 
   if (isError) {
     throw new Error('test error');
@@ -45,6 +58,9 @@ const Home = () => {
         }}
       >
         error
+      </Button>
+      <Button variant="main" onClick={handleInvalidate}>
+        invalidate countries
       </Button>
       {isLoading && (
         <>

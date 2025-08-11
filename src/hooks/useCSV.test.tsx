@@ -37,12 +37,10 @@ describe('useCSV hook', () => {
 
     const { result } = renderHook(() => useCSV());
 
-    // Сначала создаем URL
     await act(async () => {
       await result.current.create(mockCountries);
     });
 
-    // Затем очищаем
     await act(async () => {
       await result.current.clear();
     });

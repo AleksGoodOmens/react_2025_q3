@@ -1,5 +1,6 @@
 import js from '@eslint/js';
 import pluginQuery from '@tanstack/eslint-plugin-query';
+import eslintPluginNoComments from 'eslint-plugin-no-comments';
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 import react from 'eslint-plugin-react';
 import reactCompiler from 'eslint-plugin-react-compiler';
@@ -27,6 +28,7 @@ export default tseslint.config(
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
       'react-compiler': reactCompiler,
+      'eslint-plugin-no-comments': eslintPluginNoComments,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -39,6 +41,7 @@ export default tseslint.config(
       ...react.configs['jsx-runtime'].rules,
       'import/order': 'off',
       'sort-imports': 'off',
+      'eslint-plugin-no-comments/disallowComments': 'error',
     },
     settings: {
       react: {
