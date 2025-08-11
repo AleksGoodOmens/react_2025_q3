@@ -1,0 +1,20 @@
+import { ThemeChanger } from 'components/theme-changer/ThemeChanger';
+import { NavLink } from 'components/ui/nav-link/NavLink';
+
+export const NavigationBar = () => {
+  const links = [
+    { path: '/', name: 'home' },
+    { path: '/about', name: 'about' },
+  ];
+
+  return (
+    <header className="flex items-center justify-between gap-2 rounded-2xl bg-amber-700 px-4">
+      <nav className="flex gap-2">
+        {links.map((link) => (
+          <NavLink key={link.name} path={link.path} name={link.name} />
+        ))}
+      </nav>
+      <ThemeChanger />
+    </header>
+  );
+};
