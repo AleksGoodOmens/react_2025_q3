@@ -42,6 +42,7 @@ export default tseslint.config(
       'import/order': 'off',
       'sort-imports': 'off',
       'eslint-plugin-no-comments/disallowComments': 'error',
+      'react-refresh/only-export-components': 'off',
     },
     settings: {
       react: {
