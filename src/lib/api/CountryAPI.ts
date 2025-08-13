@@ -1,11 +1,11 @@
-import { BASE_API_URL } from '@/constants';
-import z from 'zod';
+import { BASE_API_URL } from '../constants';
 import {
   CountrySchema,
   DetailedCountriesSchema,
-  type ICountriesData,
-  type IHomePageProps,
-} from '@/interfaces';
+  ICountriesData,
+  IHomePageProps,
+} from 'interfaces/index';
+import z from 'zod';
 
 export async function getCountries({
   limit,

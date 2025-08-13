@@ -1,5 +1,5 @@
+import { ICountry } from 'interfaces/index';
 import { useCallback, useState } from 'react';
-import type { ICountry } from '@/interfaces';
 
 export const useCSV = () => {
   const [isLoading, setIsLoading] = useState(false);

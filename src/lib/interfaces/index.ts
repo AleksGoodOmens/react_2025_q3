@@ -115,4 +115,12 @@ export interface IDetailsPageProps {
 
 export interface IHomePageProps extends Pick<ICountriesData, 'limit' | 'page'> {
   search: string;
+  details?: string;
+}
+
+export interface IHomePageSearchParams {
+  limit?: string;
+  page?: string;
+  search?: string;
+  details?: string;
 }

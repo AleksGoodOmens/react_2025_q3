@@ -1,0 +1,101 @@
+'use client';
+
+import { PaginationSkeleton } from './skeletons/PaginationSkeleton';
+import { Flyout } from './ui/flyout/Flyout';
+import { Pagination } from './ui/pagination/Pagination';
+import {
+  DehydratedState,
+  HydrationBoundary,
+  useQueryClient,
+} from '@tanstack/react-query';
+import clsx from 'clsx';
+import { Button } from 'components/ui/Button';
+import { useCountries } from 'hooks/useCountries';
+import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
+import { SkeletonList } from 'src/app/components/skeletons/SkeletonList';
+import { CountryList } from 'src/app/components/ui/country-list/CountryList';
+
+export default function HomeClient({
+  limit,
+  page,
+  search,
+  dehydratedState,
+}: {
+  limit: number;
+  page: number;
+  search: string;
+  dehydratedState: DehydratedState;
+}) {
+  const country = useSearchParams().get('details');
+  const qc = useQueryClient();
+  const [isError, setIsError] = useState(false);
+
+  const { data, error, isLoading, isFetching, isStale, refetch } = useCountries(
+    { limit, page, search }
+  );
+
+  const handleInvalidate = () => {
+    qc.invalidateQueries({ queryKey: ['countries'], exact: false });
+    qc.invalidateQueries({ queryKey: ['details'], exact: false });
+  };
+
+  if (isError) {
+    throw new Error('test error');
+  }
+
+  return (
+    <HydrationBoundary state={dehydratedState}>
+      <section>
+        <Button variant="main" onClick={() => setIsError(true)}>
+          error
+        </Button>
+        <Button variant="main" onClick={handleInvalidate}>
+          invalidate countries
+        </Button>
+
+        {isLoading && (
+          <>
+            <PaginationSkeleton />
+          </>
+        )}
+        {!isLoading && (
+          <>
+            <Pagination
+              limit={limit}
+              total={data?.total}
+              next={Boolean(data?.next)}
+              prev={Boolean(data?.prev)}
+              page={page}
+            />
+          </>
+        )}
+
+        <div className="flex items-center gap-2">
+          <Button variant="main" className="mb-2" onClick={() => refetch()}>
+            fresh reload
+          </Button>
+          <div
+            className={clsx(
+              'w-fit rounded-2xl p-2',
+              isStale ? 'bg-red-500' : 'bg-green-500'
+            )}
+          >
+            {isStale ? 'old data' : 'fresh data'}
+          </div>
+        </div>
+
+        {isLoading && <SkeletonList active={Boolean(country)} amount={limit} />}
+        {!isLoading && (
+          <CountryList
+            isFetching={isFetching}
+            error={error?.message}
+            countries={data?.countries}
+            activeCountry={country}
+          />
+        )}
+        <Flyout />
+      </section>
+    </HydrationBoundary>
+  );
+}

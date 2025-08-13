@@ -7,16 +7,19 @@ import { useEffect, useState, type PropsWithChildren } from 'react';
 
 export const ThemeProvider = ({ children }: PropsWithChildren) => {
   const { storageValue, updateStorage } = useLocalStorage('theme');
-  const [theme, setTheme] = useState<Theme>(() => {
-    const savedTheme = storageValue as Theme | null;
-    if (savedTheme) return savedTheme;
-    if (typeof window !== 'undefined' && window.matchMedia) {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light';
+  const [theme, setTheme] = useState<Theme>('light');
+
+  useEffect(() => {
+    if (storageValue) {
+      setTheme(storageValue as Theme);
+    } else if (window.matchMedia) {
+      setTheme(
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+          ? 'dark'
+          : 'light'
+      );
     }
-    return 'light';
-  });
+  }, [storageValue]);
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -26,11 +29,15 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
       document.documentElement.classList.add('light');
       document.documentElement.classList.remove('dark');
     }
-    updateStorage(theme);
-  }, [theme, updateStorage]);
+  }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+    setTheme((prev) => {
+      const nextTheme = prev === 'light' ? 'dark' : 'light';
+      updateStorage(nextTheme);
+
+      return nextTheme;
+    });
   };
 
   return (

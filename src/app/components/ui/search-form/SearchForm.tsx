@@ -3,17 +3,19 @@
 import { Button } from '../../../../components/ui/Button';
 import { SearchInput } from './SearchInput';
 import { useLocalStorage } from 'hooks/useLocalStorage';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { FormEvent } from 'react';
 
 export const SearchForm = () => {
   const searchParams = useSearchParams();
+  const path = usePathname();
   const router = useRouter();
   const searchValue = searchParams.get('search');
 
   const { storageValue, clearStorage } = useLocalStorage('search');
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const newSearchValue = formData.get('search')?.toString() || null;
 
@@ -23,7 +25,7 @@ export const SearchForm = () => {
     const params = new URLSearchParams(searchParams);
     if (newSearchValue) params.set('search', newSearchValue);
 
-    router.push(`/?${params.toString()}`);
+    router.push(`${path}?${params.toString()}`);
   };
 
   return (

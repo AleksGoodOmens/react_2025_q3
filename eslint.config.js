@@ -1,4 +1,5 @@
 import js from '@eslint/js';
+import eslintPluginNext from '@next/eslint-plugin-next';
 import pluginQuery from '@tanstack/eslint-plugin-query';
 import eslintPluginNoComments from 'eslint-plugin-no-comments';
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
@@ -10,38 +11,32 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist', 'coverage'] },
+  { ignores: ['dist', 'coverage', 'node_modules', '*.d.ts'] },
+
   ...pluginQuery.configs['flat/recommended'],
+
   {
-    extends: [
-      js.configs.recommended,
-      ...tseslint.configs.strict,
-      eslintPluginPrettier,
-    ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
     },
     plugins: {
-      react,
+      react: react,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
       'react-compiler': reactCompiler,
       'eslint-plugin-no-comments': eslintPluginNoComments,
+      '@next/next': eslintPluginNext,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
-      'react-compiler/react-compiler': 'error',
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
+      'react-compiler/react-compiler': 'error',
+      'eslint-plugin-no-comments/disallowComments': 'error',
       'import/order': 'off',
       'sort-imports': 'off',
-      'eslint-plugin-no-comments/disallowComments': 'error',
       'react-refresh/only-export-components': 'off',
     },
     settings: {
@@ -49,5 +44,13 @@ export default tseslint.config(
         version: 'detect',
       },
     },
+  },
+
+  {
+    extends: [
+      js.configs.recommended,
+      ...tseslint.configs.strict,
+      eslintPluginPrettier,
+    ],
   }
 );

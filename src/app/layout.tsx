@@ -1,9 +1,12 @@
-import { NavigationBar } from 'components/navigation-bar/NavigationBar';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { NavigationBar } from 'src/app/components/ui/navigation-bar/NavigationBar';
 import { QueryProvider, ThemeProvider } from 'src/lib/providers';
 
 import './globals.css';
+
+import { Heading } from 'components/ui/Heading';
+import { PropsWithChildren, Suspense } from 'react';
 
 const jetBrains = localFont({
   src: [
@@ -30,11 +33,7 @@ export const metadata: Metadata = {
   description: 'app where you can find any information about countries',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body>
@@ -47,8 +46,16 @@ export default function RootLayout({
         >
           <QueryProvider>
             <ThemeProvider>
-              <NavigationBar />
-              <main className="grow">{children}</main>
+              <main className="grow">
+                <Suspense fallback={<div>Loading nav...</div>}>
+                  <NavigationBar />
+                </Suspense>
+                <Heading variant="main" Tag="h1">
+                  Countries by AmensGood
+                </Heading>
+
+                {children}
+              </main>
             </ThemeProvider>
           </QueryProvider>
         </div>

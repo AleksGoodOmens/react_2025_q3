@@ -1,7 +1,59 @@
-export function generateStaticParams() {
-  return [{ slug: [''] }];
+import DetailsClient from './components/details-client';
+import HomeClient from './components/HomeClient';
+import { SearchForm } from './components/ui/search-form/SearchForm';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import clsx from 'clsx';
+import { IHomePageSearchParams } from 'interfaces/index';
+import { getCountries, getCountry } from 'src/lib/api/CountryAPI';
+import { normalizeParams } from 'src/lib/utils/normalizeParams';
+
+interface PageProps {
+  searchParams: Promise<IHomePageSearchParams>;
 }
 
-export default function Page() {
-  return <div>main page</div>;
+export default async function HomePage({ searchParams }: PageProps) {
+  const params = normalizeParams(await searchParams);
+  const { limit, page, search, details } = params;
+
+  console.log(params);
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['countries', { limit, page, search }],
+    queryFn: () => getCountries({ limit, page, search }),
+  });
+
+  if (details) {
+    await queryClient.prefetchQuery({
+      queryKey: ['details', { details }],
+      queryFn: () => getCountry(details),
+    });
+  }
+
+  const dehydratedState = dehydrate(queryClient);
+
+  return (
+    <section>
+      <SearchForm />
+      <div
+        className={clsx(
+          'relative grid gap-2',
+          Boolean(details) && 'md:grid-cols-2'
+        )}
+      >
+        <HomeClient
+          limit={limit}
+          page={page}
+          search={search}
+          dehydratedState={dehydratedState}
+        />
+        {details && (
+          <DetailsClient
+            countryName={details}
+            dehydratedState={dehydratedState}
+          />
+        )}
+      </div>
+    </section>
+  );
 }
