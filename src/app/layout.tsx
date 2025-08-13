@@ -11,17 +11,17 @@ import { PropsWithChildren, Suspense } from 'react';
 const jetBrains = localFont({
   src: [
     {
-      path: 'fonts/JetBrainsMono-Bold.woff2',
+      path: '/fonts/JetBrainsMono-Bold.woff2',
       weight: '600',
       style: 'bold',
     },
     {
-      path: 'fonts/JetBrainsMono-light.woff2',
+      path: '/fonts/JetBrainsMono-light.woff2',
       weight: '300',
       style: 'italic',
     },
     {
-      path: 'fonts/JetBrainsMono-regular.woff2',
+      path: '/fonts/JetBrainsMono-regular.woff2',
       weight: '400',
       style: 'normal',
     },
