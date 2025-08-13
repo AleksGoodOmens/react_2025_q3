@@ -16,12 +16,12 @@ const jetBrains = localFont({
       style: 'bold',
     },
     {
-      path: './fonts/JetBrainsMono-light.woff2',
+      path: './fonts/JetBrainsMono-Light.woff2',
       weight: '300',
       style: 'italic',
     },
     {
-      path: './fonts/JetBrainsMono-regular.woff2',
+      path: './fonts/JetBrainsMono-Regular.woff2',
       weight: '400',
       style: 'normal',
     },
