@@ -1,18 +1,20 @@
 import { ThemeChanger } from '../theme-changer/ThemeChanger';
-import { NavLink } from 'components/ui/NavLink';
+import { NavigationClient } from './navigation-client';
+import { NavigationServer } from './navigation-server';
+import { Suspense } from 'react';
 
 export const NavigationBar = () => {
   const links = [
     { path: '/', name: 'home' },
-    { path: 'about', name: 'about' },
+    { path: '/about', name: 'about' },
   ];
 
   return (
     <header className="flex items-center justify-between gap-2 rounded-2xl bg-amber-700 px-4">
       <nav className="flex gap-2">
-        {links.map((link) => (
-          <NavLink key={link.name} path={link.path} name={link.name} />
-        ))}
+        <Suspense fallback={<NavigationServer links={links} />}>
+          <NavigationClient links={links} />
+        </Suspense>
       </nav>
       <ThemeChanger />
     </header>

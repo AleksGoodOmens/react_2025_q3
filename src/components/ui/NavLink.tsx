@@ -2,23 +2,18 @@
 
 import clsx from 'clsx';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
 
 interface Props {
   path: string;
   name: string;
+  isActive: boolean;
 }
-export const NavLink = ({ path, name }: Props) => {
-  const pathname = usePathname();
-  const params = useSearchParams();
+export const NavLink = ({ path, name, isActive }: Props) => {
   return (
     <Link
-      className={clsx(
-        'uppercase',
-        pathname === path && 'text-white dark:text-black'
-      )}
+      className={clsx('uppercase', isActive && 'text-white dark:text-black')}
       key={name}
-      href={{ pathname: path, search: params.toString() }}
+      href={path}
     >
       {name}
     </Link>

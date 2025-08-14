@@ -1,6 +1,7 @@
 import Avatar from './components/ALEKS.png';
 import { aboutMe } from './components/data';
 import Image from 'next/image';
+import Link from 'next/link';
 import { BsGithub } from 'react-icons/bs';
 import { FaDiscord } from 'react-icons/fa';
 
@@ -45,14 +46,14 @@ const About = () => {
             <FaDiscord className="h-6 w-6" />
           </a>
 
-          <a
+          <Link
             href="https://rs.school/"
             className="text-amber-800"
             target="_blank"
             rel="noreferrer"
           >
             RS-School
-          </a>
+          </Link>
         </div>
       </div>
     </section>
