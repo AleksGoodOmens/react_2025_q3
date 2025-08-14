@@ -53,9 +53,10 @@ export const useCountryStore = create<IState & IActions>((set) => ({
 }));
 
 export const useHydratedCountryStore = () => {
+  const hydrate = useCountryStore((state) => state.hydrate);
   const store = useCountryStore();
   useEffect(() => {
-    store.hydrate();
-  }, [store]);
+    hydrate();
+  }, [hydrate]);
   return store;
 };
