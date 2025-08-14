@@ -1,7 +1,7 @@
 'use client';
 
-import { Button } from '../../../../components/ui/Button';
 import { SearchInput } from './SearchInput';
+import { Button } from 'components/ui/Button';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { FormEvent } from 'react';
@@ -23,7 +23,10 @@ export const SearchForm = () => {
       clearStorage();
     }
     const params = new URLSearchParams(searchParams);
-    if (newSearchValue) params.set('search', newSearchValue);
+    if (newSearchValue) {
+      params.set('search', newSearchValue);
+      params.set('page', '1');
+    }
 
     router.push(`${path}?${params.toString()}`);
   };

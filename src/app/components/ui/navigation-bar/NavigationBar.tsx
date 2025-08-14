@@ -1,10 +1,10 @@
+import { ThemeChanger } from '../theme-changer/ThemeChanger';
 import { NavLink } from 'components/ui/NavLink';
-import { ThemeChanger } from 'src/app/components/ui/theme-changer/ThemeChanger';
 
 export const NavigationBar = () => {
   const links = [
     { path: '/', name: 'home' },
-    { path: '/about', name: 'about' },
+    { path: 'about', name: 'about' },
   ];
 
   return (

@@ -1,4 +1,4 @@
-export const SkeletonCountry = () => {
+export const DetailsSkeleton = () => {
   return (
     <article className="animate-pulse">
       <header className="mb-6 flex justify-between">

@@ -1,15 +1,32 @@
+import { DetailsSkeleton } from './components/skeletons/DetailsSkeleton';
 import { PaginationSkeleton } from './components/skeletons/PaginationSkeleton';
 import { SearchFormSkeleton } from './components/skeletons/SearchFromSkeleton';
-import { Heading } from 'components/ui/Heading';
+import { SkeletonList } from './components/skeletons/SkeletonList';
+import clsx from 'clsx';
+import { IHomePageSearchParams } from 'interfaces/index';
 
-export default function Loading() {
+interface PageProps {
+  searchParams: IHomePageSearchParams;
+}
+export default async function Loading({ searchParams }: PageProps) {
+  const params = searchParams;
+
   return (
     <section>
-      <Heading variant="main" Tag="h1">
-        Countries by AmensGood
-      </Heading>
       <SearchFormSkeleton />
       <PaginationSkeleton />
+      <div
+        className={clsx(
+          'relative grid gap-2',
+          Boolean(params?.details) && 'md:grid-cols-2'
+        )}
+      >
+        <SkeletonList
+          amount={Number(params?.limit) || 20}
+          active={Boolean(params?.details)}
+        />
+        <DetailsSkeleton />
+      </div>
     </section>
   );
 }

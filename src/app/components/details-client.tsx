@@ -1,8 +1,8 @@
 'use client';
 
+import { DetailsSkeleton } from './skeletons/DetailsSkeleton';
 import { CountryDetails } from './ui/country-details';
 import { DetailsControls } from './ui/details-controls';
-import { SkeletonCountry } from './ui/skeleton-country';
 import { DehydratedState, HydrationBoundary } from '@tanstack/react-query';
 import { Heading } from 'components/ui/Heading';
 import { OverlayUpdate } from 'components/ui/OverlayUpdate';
@@ -35,7 +35,7 @@ const DetailsClient = ({ countryName, dehydratedState }: Props) => {
             message={isLoading ? 'Loading details' : 'Update details'}
           />
         )}
-        {isLoading && <SkeletonCountry />}
+        {isLoading && <DetailsSkeleton />}
         {updatedCountry && (
           <CountryDetails
             country={updatedCountry}

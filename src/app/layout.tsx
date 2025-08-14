@@ -1,32 +1,12 @@
+import { Providers } from './providers/providers';
 import type { Metadata } from 'next';
-import localFont from 'next/font/local';
-import { NavigationBar } from 'src/app/components/ui/navigation-bar/NavigationBar';
-import { QueryProvider, ThemeProvider } from 'src/lib/providers';
+import { PropsWithChildren } from 'react';
 
 import './globals.css';
 
+import { NavigationBar } from './components/ui/navigation-bar/NavigationBar';
+import jetBrains from './fonts/fonts';
 import { Heading } from 'components/ui/Heading';
-import { PropsWithChildren, Suspense } from 'react';
-
-const jetBrains = localFont({
-  src: [
-    {
-      path: './fonts/JetBrainsMono-Bold.woff2',
-      weight: '600',
-      style: 'bold',
-    },
-    {
-      path: './fonts/JetBrainsMono-Light.woff2',
-      weight: '300',
-      style: 'italic',
-    },
-    {
-      path: './fonts/JetBrainsMono-Regular.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-  ],
-});
 
 export const metadata: Metadata = {
   title: 'Countries AmensGood',
@@ -37,27 +17,21 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body>
-        <div
-          id="root"
-          className={
-            (jetBrains.className,
-            'container mx-auto flex min-h-dvh flex-col gap-4 p-2')
-          }
-        >
-          <QueryProvider>
-            <ThemeProvider>
-              <main className="grow">
-                <Suspense fallback={<div>Loading nav...</div>}>
-                  <NavigationBar />
-                </Suspense>
-                <Heading variant="main" Tag="h1">
-                  Countries by AmensGood
-                </Heading>
-
-                {children}
-              </main>
-            </ThemeProvider>
-          </QueryProvider>
+        <div id="root">
+          <Providers>
+            <NavigationBar />
+            <main
+              className={
+                (jetBrains.className,
+                'container mx-auto flex min-h-dvh flex-col gap-4 p-2')
+              }
+            >
+              <Heading variant="main" Tag="h1">
+                Countries by AmensGood
+              </Heading>
+              {children}
+            </main>
+          </Providers>
         </div>
       </body>
     </html>

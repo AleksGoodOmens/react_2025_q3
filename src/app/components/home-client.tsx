@@ -1,6 +1,8 @@
 'use client';
 
 import { PaginationSkeleton } from './skeletons/PaginationSkeleton';
+import { SkeletonList } from './skeletons/SkeletonList';
+import { CountryList } from './ui/country-list/CountryList';
 import { Flyout } from './ui/flyout/Flyout';
 import { Pagination } from './ui/pagination/Pagination';
 import {
@@ -13,8 +15,6 @@ import { Button } from 'components/ui/Button';
 import { useCountries } from 'hooks/useCountries';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
-import { SkeletonList } from 'src/app/components/skeletons/SkeletonList';
-import { CountryList } from 'src/app/components/ui/country-list/CountryList';
 
 export default function HomeClient({
   limit,

@@ -1,5 +1,5 @@
 import DetailsClient from './components/details-client';
-import HomeClient from './components/HomeClient';
+import HomeClient from './components/home-client';
 import { SearchForm } from './components/ui/search-form/SearchForm';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
@@ -7,15 +7,16 @@ import { IHomePageSearchParams } from 'interfaces/index';
 import { getCountries, getCountry } from 'src/lib/api/CountryAPI';
 import { normalizeParams } from 'src/lib/utils/normalizeParams';
 
+import './globals.css';
+
 interface PageProps {
   searchParams: Promise<IHomePageSearchParams>;
 }
 
-export default async function HomePage({ searchParams }: PageProps) {
+export default async function page({ searchParams }: PageProps) {
   const params = normalizeParams(await searchParams);
   const { limit, page, search, details } = params;
 
-  console.log(params);
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
