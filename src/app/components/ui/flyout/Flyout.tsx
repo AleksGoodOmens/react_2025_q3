@@ -2,7 +2,6 @@
 
 import clsx from 'clsx';
 import { Button } from 'components/ui/Button';
-import { useCSV } from 'hooks/index';
 import { useHydratedCountryStore } from 'hooks/store/useCountryStore';
 import { useTranslations } from 'next-intl';
 
@@ -22,16 +21,27 @@ const { container, show, hide, browserHints, highlight } = styles;
 
 export const Flyout = () => {
   const { favorite, clearFavorite } = useHydratedCountryStore();
-  const { create, isLoading, url, clear } = useCSV();
   const t = useTranslations('flyout');
 
-  const handleRestore = async () => {
-    if (url) await clear();
-    clearFavorite();
-  };
+  const handleDownload = async () => {
+    const res = await fetch('/api/csv', {
+      method: 'POST',
+      body: JSON.stringify(favorite),
+      headers: { 'Content-Type': 'application/json' },
+    });
 
-  const handleDownload = () => {
-    create(favorite);
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${favorite.length}-items.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+    clearFavorite();
   };
 
   return (
@@ -48,30 +58,20 @@ export const Flyout = () => {
       </p>
       <div className="space-x-2">
         <Button
-          disabled={!favorite.length || isLoading}
-          onClick={url ? clear : handleRestore}
+          disabled={!favorite.length}
+          onClick={clearFavorite}
           variant="main"
         >
-          {url ? t('cancel') : t('unselect')}
+          {t('unselect')}
         </Button>
-        {url ? (
-          <a
-            href={url}
-            className="inline-block px-2 py-2"
-            download={`${favorite.length}-items`}
-            onClick={handleRestore}
-          >
-            {t('download')} - {favorite.length}
-          </a>
-        ) : (
-          <Button
-            variant="main"
-            disabled={!favorite.length || isLoading}
-            onClick={handleDownload}
-          >
-            {isLoading ? t('wait') : t('create')}
-          </Button>
-        )}
+
+        <Button
+          variant="main"
+          disabled={!favorite.length}
+          onClick={handleDownload}
+        >
+          {t('download')} - {favorite.length}
+        </Button>
       </div>
     </div>
   );

@@ -65,6 +65,7 @@ export default function HomeClient({
         {!isLoading && (
           <>
             <Pagination
+              active={Boolean(country)}
               limit={limit}
               total={data?.total}
               next={Boolean(data?.next)}

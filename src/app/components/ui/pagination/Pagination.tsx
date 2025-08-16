@@ -12,9 +12,17 @@ interface Props {
   page: number;
   next: boolean;
   prev: boolean;
+  active: boolean;
 }
 
-export const Pagination = ({ limit, total = 0, page, next, prev }: Props) => {
+export const Pagination = ({
+  limit,
+  total = 0,
+  page,
+  next,
+  prev,
+  active,
+}: Props) => {
   const router = useRouter();
   const path = usePathname();
   const t = useTranslations('pagination');
@@ -70,7 +78,12 @@ export const Pagination = ({ limit, total = 0, page, next, prev }: Props) => {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center gap-4 p-2 sm:flex-row">
+      <div
+        className={clsx(
+          'flex flex-col justify-center gap-4 p-2',
+          !active && 'sm:flex-row'
+        )}
+      >
         <Button
           variant="main"
           disabled={!prev}
