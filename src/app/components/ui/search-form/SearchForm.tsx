@@ -26,6 +26,7 @@ export const SearchForm = () => {
       clearStorage();
     }
     const params = new URLSearchParams(searchParams);
+    console.log(newSearchValue);
     if (newSearchValue) {
       params.set('search', newSearchValue);
       params.set('page', '1');
@@ -41,8 +42,8 @@ export const SearchForm = () => {
       className="my-2 grid gap-2 sm:grid-cols-6 sm:justify-center"
     >
       <SearchInput
-        name={t('label')}
-        id="search"
+        label={t('label')}
+        name="search"
         storageValue={searchValue || storageValue}
         placeholder={t('placeholder')}
       />
