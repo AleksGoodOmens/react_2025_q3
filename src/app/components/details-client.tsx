@@ -7,6 +7,7 @@ import { DehydratedState, HydrationBoundary } from '@tanstack/react-query';
 import { Heading } from 'components/ui/Heading';
 import { OverlayUpdate } from 'components/ui/OverlayUpdate';
 import { useCountry } from 'hooks/useCountry';
+import { useTranslations } from 'next-intl';
 
 interface Props {
   countryName: string;
@@ -22,17 +23,18 @@ const DetailsClient = ({ countryName, dehydratedState }: Props) => {
     error,
     isStale,
   } = useCountry(countryName);
+  const t = useTranslations('details');
 
   const handleRefetch = () => {
     refetch();
   };
   return (
     <HydrationBoundary state={dehydratedState}>
-      <section className="animate-fadeIn top-0 h-fit rounded-2xl border-2 border-black bg-amber-800 p-6 text-white shadow-md md:sticky">
+      <section className="animate-fadeIn top-0 h-fit rounded-2xl border-2 border-black bg-amber-800 p-2 text-white shadow-md md:sticky">
         <DetailsControls handleRefetch={handleRefetch} isStale={isStale} />
         {isFetching && (
           <OverlayUpdate
-            message={isLoading ? 'Loading details' : 'Update details'}
+            message={isLoading ? t('overlayLoading') : t('overlayUpdating')}
           />
         )}
         {isLoading && <DetailsSkeleton />}
@@ -42,7 +44,7 @@ const DetailsClient = ({ countryName, dehydratedState }: Props) => {
             handleRefetch={handleRefetch}
           />
         )}
-        {error && <Heading variant="error">No info about this country</Heading>}
+        {error && <Heading variant="error">{t('titleError')}</Heading>}
       </section>
     </HydrationBoundary>
   );

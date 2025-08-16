@@ -2,6 +2,7 @@
 
 import clsx from 'clsx';
 import { Button } from 'components/ui/Button';
+import { useTranslations } from 'next-intl';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useMemo, type ChangeEvent } from 'react';
 
@@ -16,6 +17,7 @@ interface Props {
 export const Pagination = ({ limit, total = 0, page, next, prev }: Props) => {
   const router = useRouter();
   const path = usePathname();
+  const t = useTranslations('pagination');
   const searchParams = useSearchParams();
   const totalPages = useMemo(() => {
     return Math.ceil(total / limit);
@@ -45,7 +47,7 @@ export const Pagination = ({ limit, total = 0, page, next, prev }: Props) => {
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border-2 p-4">
         <div className="flex items-center gap-2">
-          <h4>limit per page</h4>
+          <h4>{t('select')}</h4>
           <select
             name="limit"
             id="limit"
@@ -60,10 +62,10 @@ export const Pagination = ({ limit, total = 0, page, next, prev }: Props) => {
         </div>
         <div className="grid gap-1">
           <h4 className="rounded-2xl border-2 bg-amber-600 p-2 text-white">
-            Total items: <span>{total}</span>
+            {t('totalItems')}: <span>{total}</span>
           </h4>
           <h4 className="rounded-2xl border-2 bg-amber-600 p-2 text-white">
-            Total pages: <span>{Math.ceil(total / limit)}</span>
+            {t('totalPages')}: <span>{Math.ceil(total / limit)}</span>
           </h4>
         </div>
       </div>
@@ -74,7 +76,7 @@ export const Pagination = ({ limit, total = 0, page, next, prev }: Props) => {
           disabled={!prev}
           onClick={() => handlePageChange(page - 1)}
         >
-          prev
+          {t('prev')}
         </Button>
         <div className="flex gap-2 self-center">
           {visiblePages.map((_, pageNumber) => {
@@ -100,7 +102,7 @@ export const Pagination = ({ limit, total = 0, page, next, prev }: Props) => {
           disabled={!next}
           onClick={() => handlePageChange(page + 1)}
         >
-          next
+          {t('next')}
         </Button>
       </div>
     </div>

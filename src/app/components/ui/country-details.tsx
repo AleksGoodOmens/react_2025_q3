@@ -1,4 +1,6 @@
 import { IDetailedCountry } from 'interfaces/index';
+import { useTranslations } from 'next-intl';
+import { ReactNode } from 'react';
 
 interface Props {
   country: IDetailedCountry;
@@ -26,65 +28,70 @@ export const CountryDetails = ({ country }: Props) => {
     status,
     altSpellings,
   } = country;
+  const t = useTranslations('details');
+
   return (
     <article>
-      <header className="mb-4 flex justify-between gap-2">
+      <header className="flex justify-between gap-1">
         <div>
-          <h2 className="text-3xl font-bold">
+          <h2 className="text-center text-xl font-bold">
             {name?.official || name?.common}
           </h2>
           {name?.common !== name?.official && (
-            <h2 className="text-xl">{name?.common}</h2>
+            <h2 className="text-sm">{name?.common}</h2>
           )}
         </div>
       </header>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="space-y-2">
-          <div className="flex flex-wrap gap-2">
+      <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+        <div className="space-y-1">
+          <div className="flex flex-wrap gap-1">
             {flags?.png && (
               <img
                 src={flags.png}
-                alt={flags.alt || `Flag of ${name?.common}`}
+                alt={flags.alt || `${t('flag')} ${name?.common}`}
                 className="aspect-video h-32 border object-cover"
               />
             )}
             {coatOfArms?.png && (
               <img
                 src={coatOfArms.png}
-                alt={`Coat of arms of ${name?.common}`}
+                alt={`${t('coat')} ${name?.common}`}
                 className="aspect-square h-32 object-contain"
               />
             )}
           </div>
 
           <div
-            className="grid gap-2"
+            className="grid gap-1"
             style={{
               gridTemplateColumns:
                 'repeat(auto-fill, minmax(min(180px, 100%), 1fr))',
               maxWidth: 'calc(180px * 2 + 8px)',
             }}
           >
-            <DetailItem label="Region" value={region} />
-            <DetailItem label="Subregion" value={subregion} />
-            <DetailItem label="Capital" value={capital?.join(', ')} />
-            <DetailItem label="Area" value={`${area?.toLocaleString()} km²`} />
+            <DetailItem label={t('region')} value={region} />
+            <DetailItem label={t('subregion')} value={subregion} />
+            <DetailItem label={t('capital')} value={capital?.join(', ')} />
             <DetailItem
-              label="Population"
+              label={t('area')}
+              value={`${area?.toLocaleString()} km²`}
+            />
+            <DetailItem
+              label={t('population')}
               value={population?.toLocaleString()}
             />
-            <DetailItem label="Status" value={status} />
+            <DetailItem label={t('status')} value={status} />
             <DetailItem
-              label="Independent"
-              value={independent ? 'Yes' : 'No'}
+              label={t('independent')}
+              value={independent ? t('yes') : t('no')}
             />
           </div>
 
           {idd?.root && (
             <div>
-              <h3 className="mb-2 text-lg font-semibold">Calling Codes</h3>
-              <div className="flex flex-wrap gap-2">
+              <h3 className="mb-2 text-sm font-semibold">{t('codesTitle')}</h3>
+              <div className="flex flex-wrap gap-1">
                 {idd.suffixes?.map((suffix) => (
                   <span key={suffix} className="rounded bg-amber-500 px-3 py-1">
                     +{idd.root}
@@ -99,7 +106,7 @@ export const CountryDetails = ({ country }: Props) => {
         <div className="space-y-2">
           {languages && Object.keys(languages).length > 0 && (
             <DetailSection
-              title="Languages"
+              title={t('languages')}
               content={
                 <ul className="space-y-1">
                   {Object.entries(languages).map(([code, name]) => (
@@ -114,7 +121,7 @@ export const CountryDetails = ({ country }: Props) => {
 
           {currencies && Object.keys(currencies).length > 0 && (
             <DetailSection
-              title="Currencies"
+              title={t('currencies')}
               content={
                 <ul className="space-y-2">
                   {Object.entries(currencies).map(([code, currency]) => (
@@ -130,9 +137,9 @@ export const CountryDetails = ({ country }: Props) => {
 
           {timezones?.length > 0 && (
             <DetailSection
-              title="Timezones"
+              title={t('timezones')}
               content={
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1">
                   {timezones.map((tz) => (
                     <span key={tz} className="rounded bg-amber-500 px-2 py-1">
                       {tz}
@@ -145,9 +152,9 @@ export const CountryDetails = ({ country }: Props) => {
 
           {borders && borders?.length > 0 && (
             <DetailSection
-              title="Bordering Countries"
+              title={t('borders')}
               content={
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1">
                   {borders.map((code) => (
                     <span key={code} className="rounded bg-amber-500 px-3 py-1">
                       {code}
@@ -160,7 +167,7 @@ export const CountryDetails = ({ country }: Props) => {
 
           {postalCode?.format && (
             <DetailSection
-              title="Postal Code"
+              title={t('postCode')}
               content={
                 <div>
                   <p>Format: {postalCode.format}</p>
@@ -174,9 +181,9 @@ export const CountryDetails = ({ country }: Props) => {
 
           {altSpellings?.length > 0 && (
             <DetailSection
-              title="Alternative Names"
+              title={t('altNames')}
               content={
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1">
                   {altSpellings.map((name) => (
                     <span key={name} className="rounded bg-amber-500 px-2 py-1">
                       {name}
@@ -189,7 +196,7 @@ export const CountryDetails = ({ country }: Props) => {
 
           {maps && (
             <DetailSection
-              title="Maps"
+              title={t('maps')}
               content={
                 <div className="space-y-2">
                   <a
@@ -236,10 +243,10 @@ const DetailSection = ({
   content,
 }: {
   title: string;
-  content: React.ReactNode;
+  content: ReactNode;
 }) => (
   <div className="border-t pt-2">
-    <h3 className="mb-1 text-lg font-semibold text-black">{title}</h3>
+    <h3 className="mb-1 text-sm font-semibold text-black">{title}</h3>
     {content}
   </div>
 );

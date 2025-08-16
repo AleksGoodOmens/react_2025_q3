@@ -1,13 +1,11 @@
-import DetailsClient from './components/details-client';
-import HomeClient from './components/home-client';
-import { SearchForm } from './components/ui/search-form/SearchForm';
+import DetailsClient from '../components/details-client';
+import HomeClient from '../components/home-client';
+import { SearchForm } from '../components/ui/search-form/SearchForm';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { IHomePageSearchParams } from 'interfaces/index';
 import { getCountries, getCountry } from 'src/lib/api/CountryAPI';
 import { normalizeParams } from 'src/lib/utils/normalizeParams';
-
-import './globals.css';
 
 interface PageProps {
   searchParams: Promise<IHomePageSearchParams>;

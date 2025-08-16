@@ -1,11 +1,23 @@
 import Avatar from './components/ALEKS.png';
 import { aboutMe } from './components/data';
+import { useTranslations } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
 import Image from 'next/image';
 import Link from 'next/link';
+import { use } from 'react';
 import { BsGithub } from 'react-icons/bs';
 import { FaDiscord } from 'react-icons/fa';
 
-const About = () => {
+interface Props {
+  params: Promise<{ locale: string }>;
+}
+const About = ({ params }: Props) => {
+  const { locale } = use(params);
+
+  setRequestLocale(locale);
+
+  const t = useTranslations('about');
+
   return (
     <section className="mx-auto flex max-w-4xl flex-col items-center gap-6 rounded-lg bg-amber-300 p-6 shadow-md md:flex-row">
       <div className="h-48 w-48 overflow-hidden rounded-full border-4 border-amber-500 bg-amber-800 shadow-lg">
@@ -13,17 +25,17 @@ const About = () => {
           src={Avatar.src}
           width={Avatar.width}
           height={Avatar.height}
-          alt={`${aboutMe.name} avatar`}
+          alt={`${t('name')} avatar`}
           priority={true}
           className="h-full w-full object-cover"
         />
       </div>
 
       <div className="flex-1">
-        <h1 className="text-3xl font-bold text-gray-800">{aboutMe.name}</h1>
-        <h2 className="mb-4 text-xl text-amber-600">{aboutMe.role}</h2>
+        <h1 className="text-3xl font-bold text-gray-800">{t('name')}</h1>
+        <h2 className="mb-4 text-xl text-amber-600">{t('role')}</h2>
 
-        <p className="mb-4 text-gray-600">{aboutMe.bio}</p>
+        <p className="mb-4 text-gray-600">{t('bio')}</p>
 
         <div className="flex gap-4">
           <a

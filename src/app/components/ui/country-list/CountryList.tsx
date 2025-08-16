@@ -4,6 +4,7 @@ import { Heading } from 'components/ui/Heading';
 import { OverlayUpdate } from 'components/ui/OverlayUpdate';
 import { useHydratedCountryStore } from 'hooks/store/useCountryStore';
 import { ICountry } from 'interfaces/index';
+import { useTranslations } from 'next-intl';
 
 interface Props {
   countries: ICountry[] | [] | undefined;
@@ -19,6 +20,7 @@ export const CountryList = ({
   isFetching,
 }: Props) => {
   const { favorite } = useHydratedCountryStore();
+  const t = useTranslations('pagination');
   return (
     <ul
       className={clsx(
@@ -29,7 +31,7 @@ export const CountryList = ({
       {error && <Heading variant="error">{error}</Heading>}
 
       {countries?.length === 0 && (
-        <li className="text-center">No countries found</li>
+        <li className="text-center">{t('emptyList')}</li>
       )}
 
       {countries?.map((item) => (

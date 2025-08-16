@@ -3,11 +3,14 @@
 import { SearchInput } from './SearchInput';
 import { Button } from 'components/ui/Button';
 import { useLocalStorage } from 'hooks/useLocalStorage';
+import { useTranslations } from 'next-intl';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { FormEvent } from 'react';
 
 export const SearchForm = () => {
   const searchParams = useSearchParams();
+  const t = useTranslations('search');
+
   const path = usePathname();
   const router = useRouter();
   const searchValue = searchParams.get('search');
@@ -38,12 +41,13 @@ export const SearchForm = () => {
       className="my-2 grid gap-2 sm:grid-cols-6 sm:justify-center"
     >
       <SearchInput
-        name="search"
+        name={t('label')}
         id="search"
         storageValue={searchValue || storageValue}
+        placeholder={t('placeholder')}
       />
       <Button variant="ghost" type="submit">
-        search
+        {t('btn')}
       </Button>
     </form>
   );

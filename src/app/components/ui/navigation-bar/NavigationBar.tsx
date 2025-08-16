@@ -1,3 +1,4 @@
+import { LocaleChanger } from '../locale-changer/locale-changer';
 import { ThemeChanger } from '../theme-changer/ThemeChanger';
 import { NavigationClient } from './navigation-client';
 import { NavigationServer } from './navigation-server';
@@ -16,6 +17,7 @@ export const NavigationBar = () => {
           <NavigationClient links={links} />
         </Suspense>
       </nav>
+      <LocaleChanger />
       <ThemeChanger />
     </header>
   );

@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { Button } from 'components/ui/Button';
 import { useCSV } from 'hooks/index';
 import { useHydratedCountryStore } from 'hooks/store/useCountryStore';
+import { useTranslations } from 'next-intl';
 
 const styles = {
   container:
@@ -22,6 +23,7 @@ const { container, show, hide, browserHints, highlight } = styles;
 export const Flyout = () => {
   const { favorite, clearFavorite } = useHydratedCountryStore();
   const { create, isLoading, url, clear } = useCSV();
+  const t = useTranslations('flyout');
 
   const handleRestore = async () => {
     if (url) await clear();
@@ -39,8 +41,10 @@ export const Flyout = () => {
       style={browserHints}
     >
       <p>
-        You have <span className={highlight}>{favorite.length}</span> countr
-        {favorite.length > 1 ? 'ies' : 'y'}
+        {t.rich('counter', {
+          count: favorite.length,
+          span: (chunks) => <span className={highlight}>{chunks}</span>,
+        })}
       </p>
       <div className="space-x-2">
         <Button
@@ -48,7 +52,7 @@ export const Flyout = () => {
           onClick={url ? clear : handleRestore}
           variant="main"
         >
-          {url ? 'cancel' : 'unselect all'}
+          {url ? t('cancel') : t('unselect')}
         </Button>
         {url ? (
           <a
@@ -57,7 +61,7 @@ export const Flyout = () => {
             download={`${favorite.length}-items`}
             onClick={handleRestore}
           >
-            download - {favorite.length}
+            {t('download')} - {favorite.length}
           </a>
         ) : (
           <Button
@@ -65,7 +69,7 @@ export const Flyout = () => {
             disabled={!favorite.length || isLoading}
             onClick={handleDownload}
           >
-            {isLoading ? 'wait...' : 'create CSV'}
+            {isLoading ? t('wait') : t('create')}
           </Button>
         )}
       </div>

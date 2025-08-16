@@ -1,0 +1,68 @@
+{
+  "navigation": {
+    "home": "home",
+    "about": "about"
+  },
+  "heading": { "title": "Countries by AmensGood" },
+  "search": {
+    "label": "search",
+    "placeholder": "name of country",
+    "btn": "search"
+  },
+  "pagination": {
+    "errorBtn": "error",
+    "invalidateButton": "invalidate countries",
+    "select": "limit per page",
+    "totalItems": "total items",
+    "totalPages": "total pages",
+    "prev": "prev",
+    "next": "next",
+    "reloadBtn": "fresh reload",
+    "freshData": "fresh data",
+    "oldData": "old data",
+    "emptyList": "not countries found"
+  },
+
+  "about": {
+    "name": "Aleks Gomeniuk",
+    "role": "Frontend/React Developer",
+    "bio": "Experienced React developer specializing in state management and UI implementation."
+  },
+  "details": {
+    "titleError": "No info about this country",
+    "flag": "Flag of",
+    "coat": "Coat of arms of",
+    "overlayLoading": "Loading details",
+    "overlayUpdating": "Update details",
+    "region": "Region",
+    "subregion": "Subregion",
+    "capital": "Capital",
+    "area": "Area",
+    "population": "Population",
+    "status": "Status",
+    "independent": "Independent",
+    "no": "No",
+    "yes": "Yes",
+    "codesTitle": "Calling Codes",
+    "languages": "Languages",
+    "currencies": "Currencies",
+    "timezones": "Timezones",
+    "borders": "Bordering Countries",
+    "postCode": "Postal Code",
+    "altNames": "Alternative Names",
+    "maps": "Maps"
+  },
+  "detailsControls": {
+    "updateBtn": "update details",
+    "freshData": "fresh data",
+    "oldData": "old data"
+  },
+  "flyout": {
+    "cancel": "cancel",
+    "unselect": "unselect all",
+    "download": "download",
+    "wait": "wait..",
+    "create": "create CSV",
+    "counter": "You have selected {count, plural, one {<span>#</span> country} other {<span>#</span> countries}}"
+  }
+}

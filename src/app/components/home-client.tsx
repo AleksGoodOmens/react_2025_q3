@@ -13,6 +13,7 @@ import {
 import clsx from 'clsx';
 import { Button } from 'components/ui/Button';
 import { useCountries } from 'hooks/useCountries';
+import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
@@ -28,6 +29,8 @@ export default function HomeClient({
   dehydratedState: DehydratedState;
 }) {
   const country = useSearchParams().get('details');
+  const t = useTranslations('pagination');
+
   const qc = useQueryClient();
   const [isError, setIsError] = useState(false);
 
@@ -48,10 +51,10 @@ export default function HomeClient({
     <HydrationBoundary state={dehydratedState}>
       <section>
         <Button variant="main" onClick={() => setIsError(true)}>
-          error
+          {t('errorBtn')}
         </Button>
         <Button variant="main" onClick={handleInvalidate}>
-          invalidate countries
+          {t('invalidateButton')}
         </Button>
 
         {isLoading && (
@@ -73,7 +76,7 @@ export default function HomeClient({
 
         <div className="flex items-center gap-2">
           <Button variant="main" className="mb-2" onClick={() => refetch()}>
-            fresh reload
+            {t('reloadBtn')}
           </Button>
           <div
             className={clsx(
@@ -81,7 +84,7 @@ export default function HomeClient({
               isStale ? 'bg-red-500' : 'bg-green-500'
             )}
           >
-            {isStale ? 'old data' : 'fresh data'}
+            {isStale ? t('oldData') : t('freshData')}
           </div>
         </div>
 

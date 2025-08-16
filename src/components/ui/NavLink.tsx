@@ -1,7 +1,8 @@
 'use client';
 
 import clsx from 'clsx';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from 'src/i18n/navigation';
 
 interface Props {
   path: string;
@@ -9,13 +10,14 @@ interface Props {
   isActive: boolean;
 }
 export const NavLink = ({ path, name, isActive }: Props) => {
+  const t = useTranslations('navigation');
   return (
     <Link
       className={clsx('uppercase', isActive && 'text-white dark:text-black')}
       key={name}
       href={path}
     >
-      {name}
+      {t(name)}
     </Link>
   );
 };
