@@ -6,8 +6,8 @@ import { Suspense } from 'react';
 
 export const NavigationBar = () => {
   const links = [
-    { path: '/', name: 'home' },
-    { path: '/about', name: 'about' },
+    { path: `/`, name: 'home' },
+    { path: `/about`, name: 'about' },
   ];
 
   return (

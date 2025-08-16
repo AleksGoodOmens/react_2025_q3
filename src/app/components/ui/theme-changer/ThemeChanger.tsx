@@ -8,9 +8,13 @@ import { useContext } from 'react';
 export const ThemeChanger = () => {
   const { theme, toggleTheme } = useContext(ThemeContext) as ThemeContextType;
 
+  const HandleChange = () => {
+    toggleTheme();
+  };
+
   return (
     <button
-      onClick={toggleTheme}
+      onClick={HandleChange}
       className="rounded-full p-2 transition-colors hover:bg-amber-600/20 dark:hover:bg-gray-700/50"
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
     >
