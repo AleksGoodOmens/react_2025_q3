@@ -1,22 +1,18 @@
 import Avatar from './components/ALEKS.png';
 import { aboutMe } from './components/data';
-import { useTranslations } from 'next-intl';
-import { setRequestLocale } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import Link from 'next/link';
-import { use } from 'react';
 import { BsGithub } from 'react-icons/bs';
 import { FaDiscord } from 'react-icons/fa';
 
 interface Props {
   params: Promise<{ locale: string }>;
 }
-const About = ({ params }: Props) => {
-  const { locale } = use(params);
+const About = async ({ params }: Props) => {
+  const { locale } = await params;
 
-  setRequestLocale(locale);
-
-  const t = useTranslations('about');
+  const t = await getTranslations({ locale, namespace: 'about' });
 
   return (
     <section className="mx-auto flex max-w-4xl flex-col items-center gap-6 rounded-lg bg-amber-300 p-6 shadow-md md:flex-row">
@@ -48,7 +44,7 @@ const About = ({ params }: Props) => {
             <BsGithub className="h-6 w-6" />
           </a>
 
-          <a
+          <Link
             href={aboutMe.discord}
             target="_blank"
             rel="noopener noreferrer"
@@ -56,7 +52,7 @@ const About = ({ params }: Props) => {
           >
             <span className="sr-only">Discord</span>
             <FaDiscord className="h-6 w-6" />
-          </a>
+          </Link>
 
           <Link
             href="https://rs.school/"
