@@ -3,6 +3,7 @@
 import clsx from 'clsx';
 import { useHydratedCountryStore } from 'hooks/store/useCountryStore';
 import { ICountry } from 'interfaces/index';
+import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 interface Props {
@@ -63,7 +64,7 @@ export const CountryItem = ({
 
         <div className="flex gap-2">
           <div className="aspect-video h-15 w-20">
-            <img
+            <Image
               width={80}
               height={60}
               className="rounded-md object-cover"

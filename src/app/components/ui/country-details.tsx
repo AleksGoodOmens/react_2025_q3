@@ -1,5 +1,6 @@
 import { IDetailedCountry } from 'interfaces/index';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import { ReactNode } from 'react';
 
 interface Props {
@@ -47,17 +48,21 @@ export const CountryDetails = ({ country }: Props) => {
         <div className="space-y-1">
           <div className="flex flex-wrap gap-1">
             {flags?.png && (
-              <img
+              <Image
+                width={140}
+                height={70}
                 src={flags.png}
                 alt={flags.alt || `${t('flag')} ${name?.common}`}
                 className="aspect-video h-32 border object-cover"
               />
             )}
             {coatOfArms?.png && (
-              <img
+              <Image
+                width={70}
+                height={140}
                 src={coatOfArms.png}
                 alt={`${t('coat')} ${name?.common}`}
-                className="aspect-square h-32 object-contain"
+                className="aspect-square h-32 w-auto object-contain"
               />
             )}
           </div>
