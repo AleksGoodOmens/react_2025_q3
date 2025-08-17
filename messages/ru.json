@@ -1,0 +1,71 @@
+{
+  "navigation": {
+    "home": "Домой",
+    "about": "Био"
+  },
+  "heading": { "title": "Страны от AmensGood" },
+  "search": {
+    "label": "поиск",
+    "placeholder": "название страны",
+    "btn": "найти"
+  },
+  "pagination": {
+    "errorBtn": "ошибка",
+    "invalidateButton": "обновить список стран",
+    "select": "стран на странице",
+    "totalItems": "всего стран",
+    "totalPages": "всего страниц",
+    "prev": "назад",
+    "next": "вперед",
+    "reloadBtn": "обновить",
+    "freshData": "актуальные данные",
+    "oldData": "устаревшие данные",
+    "emptyList": "ни каких стран не найдено"
+  },
+
+  "about": {
+    "name": "Алексей Гоменюк",
+    "role": "Frontend/React разработчик/кодер/просто красавец",
+    "bio": "ну ты понял тут ти по шутка пасхальное яйцо для проверяющего =)"
+  },
+
+  "details": {
+    "titleError": "Нет информации о стране",
+    "flag": "Флаг",
+    "coat": "Герб",
+    "overlayLoading": "Загрузка данных",
+    "overlayUpdating": "Обновление данных",
+    "region": "Регион",
+    "subregion": "Субрегион",
+    "capital": "Столица",
+    "area": "Площадь",
+    "population": "Население",
+    "status": "Статус",
+    "independent": "Независимость",
+    "no": "Нет",
+    "yes": "Да",
+    "codesTitle": "Телефонные коды",
+    "languages": "Языки",
+    "currencies": "Валюты",
+    "timezones": "Часовые пояса",
+    "borders": "Граничит с",
+    "postCode": "Почтовый индекс",
+    "altNames": "Другие названия",
+    "maps": "Карты"
+  },
+
+  "detailsControls": {
+    "updateBtn": "Обновить детали",
+    "freshData": "актуальные данные",
+    "oldData": "устаревшие данные"
+  },
+
+  "flyout": {
+    "cancel": "галя отмена",
+    "unselect": "снять выделенное",
+    "download": "скачать",
+    "wait": "ждем..",
+    "create": "создать CSV",
+    "counter": "У вас выделено {count, plural, one {<span>#</span> страна} few {<span>#</span> страны} many {<span>#</span> стран} other {<span>#</span> страна}}"
+  }
+}
