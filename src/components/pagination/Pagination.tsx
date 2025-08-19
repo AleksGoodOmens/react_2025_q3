@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useCallback, useMemo, type ChangeEvent } from 'react';
+import { useCallback, type ChangeEvent } from 'react';
 import { useSearchParams } from 'react-router';
 
 import { Button } from '@/components';
@@ -14,15 +14,9 @@ interface Props {
 
 export const Pagination = ({ limit, total, page, next, prev }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const totalPages = useMemo(() => {
-    return Math.ceil(total / limit);
-  }, [limit, total]);
+  const totalPages = Math.ceil(total / limit);
 
-  const currentPage = useMemo(() => page, [page]);
-
-  const visiblePages = useMemo(() => {
-    return Array.from({ length: totalPages }, (_, i) => i + 1);
-  }, [totalPages]);
+  const visiblePages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   const handleChangeLimit = (e: ChangeEvent<HTMLSelectElement>) => {
     const newLimit = e.target.value;
@@ -70,7 +64,7 @@ export const Pagination = ({ limit, total, page, next, prev }: Props) => {
         <Button
           variant="main"
           disabled={prev}
-          onClick={() => handlePageChange(currentPage - 1)}
+          onClick={() => handlePageChange(page - 1)}
         >
           prev
         </Button>
@@ -80,11 +74,9 @@ export const Pagination = ({ limit, total, page, next, prev }: Props) => {
               <Button
                 variant="minor"
                 className={clsx(
-                  'w-14',
-                  currentPage === pageNumber + 1 &&
-                    'bg-amber-800 dark:bg-amber-600',
-                  currentPage - (pageNumber + 1) > 2 && 'hidden',
-                  currentPage - (pageNumber + 1) < -2 && 'hidden'
+                  page === pageNumber + 1 && 'bg-amber-800',
+                  page - (pageNumber + 1) > 2 && 'hidden',
+                  page - (pageNumber + 1) < -2 && 'hidden'
                 )}
                 key={pageNumber}
                 onClick={() => handlePageChange(pageNumber + 1)}
@@ -97,7 +89,7 @@ export const Pagination = ({ limit, total, page, next, prev }: Props) => {
         <Button
           variant="main"
           disabled={!next}
-          onClick={() => handlePageChange(currentPage + 1)}
+          onClick={() => handlePageChange(page + 1)}
         >
           next
         </Button>

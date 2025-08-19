@@ -6,19 +6,13 @@ export const useLocalStorage = (name: string) => {
   );
 
   const updateStorage = (value: string) => {
-    const trimmedValue = value.trim();
-    if (trimmedValue === storageValue) return;
-    if (trimmedValue) {
-      localStorage.setItem(name, trimmedValue);
-    } else {
-      localStorage.removeItem(name);
-    }
-
-    setStorageValue(trimmedValue);
+    localStorage.setItem(name, value);
+    setStorageValue(value);
   };
 
   const clearStorage = () => {
     localStorage.removeItem(name);
+    setStorageValue('');
   };
 
   return { storageValue, updateStorage, clearStorage };

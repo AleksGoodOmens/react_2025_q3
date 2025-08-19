@@ -1,28 +1,27 @@
-import type { aboutMe } from './data';
-import { useLoaderData } from 'react-router';
+import { aboutMe } from './data';
 
 const About = () => {
-  const data = useLoaderData<typeof aboutMe>();
+  const { bio, discord, gitHub, img, name, role } = aboutMe;
   return (
     <section className="mx-auto max-w-4xl rounded-lg bg-amber-300 p-6 shadow-md">
       <div className="flex flex-col items-center gap-6 md:flex-row">
         <div className="h-48 w-48 overflow-hidden rounded-full border-4 border-amber-500 bg-amber-800 shadow-lg">
           <img
-            src={data.img}
-            alt={`${data.name} avatar`}
+            src={img}
+            alt={`${name} avatar`}
             className="h-full w-full object-cover"
           />
         </div>
 
         <div className="flex-1">
-          <h1 className="text-3xl font-bold text-gray-800">{data.name}</h1>
-          <h2 className="mb-4 text-xl text-amber-600">{data.role}</h2>
+          <h1 className="text-3xl font-bold text-gray-800">{name}</h1>
+          <h2 className="mb-4 text-xl text-amber-600">{role}</h2>
 
-          <p className="mb-4 text-gray-600">{data.bio}</p>
+          <p className="mb-4 text-gray-600">{bio}</p>
 
           <div className="flex gap-4">
             <a
-              href={data.gitHub}
+              href={gitHub}
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-700 transition-colors hover:text-amber-600"
@@ -43,7 +42,7 @@ const About = () => {
             </a>
 
             <a
-              href={data.discord}
+              href={discord}
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-700 transition-colors hover:text-indigo-600"

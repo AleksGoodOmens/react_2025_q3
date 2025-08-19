@@ -57,9 +57,6 @@ export async function getCountry(countryName: string = '') {
 
     const result = z.array(DetailedCountriesSchema).safeParse(data);
 
-    if (response.status === 404) {
-      return null;
-    }
     if (!result.success) {
       result.error.issues.forEach((err) => {
         console.warn(`Problem with field: ${err.path.join('.')}`);
@@ -69,8 +66,7 @@ export async function getCountry(countryName: string = '') {
       return null;
     }
     return result.data[0];
-  } catch (error: unknown) {
-    if (error instanceof Error) return null;
+  } catch {
     return null;
   }
 }

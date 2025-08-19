@@ -8,7 +8,7 @@ import type { ICountry } from '@/interfaces';
 import { useCountryStore } from '@/hooks';
 
 interface Props {
-  countries: ICountry[] | [];
+  countries: ICountry[];
   className?: string;
   activeCountry?: string;
   limit: number;

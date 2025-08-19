@@ -96,7 +96,7 @@ export type IGetCountries = z.infer<typeof CountriesSchema>;
 
 export interface IGetCountriesResponse {
   error?: string;
-  countries: ICountry[] | [];
+  countries: ICountry[];
 }
 export type Theme = 'light' | 'dark';
 export type ThemeContextType = {
