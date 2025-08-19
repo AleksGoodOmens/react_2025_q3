@@ -1,4 +1,3 @@
-// src/components/ThemeToggle.tsx
 import { ThemeContext } from './themeContext';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 import { useContext } from 'react';
