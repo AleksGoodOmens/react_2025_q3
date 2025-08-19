@@ -1,15 +1,27 @@
 import { CountryItem } from './CountryItem';
+import { user } from '@/__test__';
 import {
   mockCountry,
   mockCountryWithoutCapital,
 } from '@/__test__/mockData/countries.mock';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 
 describe('CountryItem component tests', () => {
-  describe('Basic rendering tests with complete data', () => {
+  describe('Basic rendering tests with complete data', async () => {
+    const mockNavigate = vi.fn();
+    vi.spyOn(await import('react-router'), 'useNavigate').mockReturnValue(
+      mockNavigate
+    );
     beforeEach(() => {
-      render(<CountryItem {...mockCountry} />);
+      cleanup();
+
+      render(
+        <MemoryRouter>
+          <CountryItem countryData={mockCountry} />
+        </MemoryRouter>
+      );
     });
 
     it('should render as a list item with proper "li" tag', () => {
@@ -28,8 +40,50 @@ describe('CountryItem component tests', () => {
     });
     it('should render only two paragraphs when capital data is missing', () => {
       cleanup();
-      render(<CountryItem {...mockCountryWithoutCapital} />);
+      render(
+        <MemoryRouter>
+          <CountryItem countryData={mockCountryWithoutCapital} />
+        </MemoryRouter>
+      );
       expect(screen.getAllByRole('paragraph').length).toBe(2);
+    });
+    it('user can navigate to details page by click on item', async () => {
+      const liBtn = screen.getByRole('button', {
+        name: /official-test-country-name/i,
+      });
+      expect(liBtn).toBeInTheDocument();
+
+      await user.click(liBtn);
+
+      expect(mockNavigate).toBeCalledWith({
+        pathname: 'details/common-test-country-name',
+        search: '',
+      });
+    });
+
+    it('user can navigate to home page by click on item', async () => {
+      cleanup();
+      const mockParams = { country: 'common-test-country-name' };
+      vi.spyOn(await import('react-router'), 'useParams').mockReturnValue(
+        mockParams
+      );
+
+      render(
+        <MemoryRouter>
+          <CountryItem countryData={mockCountry} />
+        </MemoryRouter>
+      );
+      const liBtn = screen.getByRole('button', {
+        name: /official-test-country-name/i,
+      });
+      expect(liBtn).toBeInTheDocument();
+
+      await user.click(liBtn);
+
+      expect(mockNavigate).toBeCalledWith({
+        pathname: '/',
+        search: '',
+      });
     });
   });
 });

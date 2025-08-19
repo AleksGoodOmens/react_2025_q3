@@ -1,37 +1,57 @@
-import { Component } from 'react';
+import type { ICountry } from '@/interfaces';
+import { useState } from 'react';
+import { Outlet, useLoaderData, useParams } from 'react-router';
 
-import { Button, CountryList, ErrorBoundary, SearchForm } from '@/components';
+import { Button, CountryList, Pagination, SearchForm } from '@/components';
 
-class Home extends Component {
-  state = {
-    isError: false,
-  };
-
-  componentWillUnmount(): void {
-    this.setState({ isError: false });
-  }
-  render() {
-    if (this.state.isError) {
-      throw new Error('test error');
-    }
-    return (
-      <section className="container mx-auto flex min-h-dvh flex-col p-2">
-        <h1 className="text-4xl">Countries by AmensGood</h1>
-        <Button
-          className="cursor-pointer rounded-xl border-2 bg-amber-800 px-4 py-2 text-white hover:bg-white"
-          onClick={() => {
-            this.setState({ isError: true });
-          }}
-        >
-          error
-        </Button>
-        <SearchForm />
-        <ErrorBoundary fallback={<p>Some error try again</p>}>
-          <CountryList />
-        </ErrorBoundary>
-      </section>
-    );
-  }
+interface LoaderData {
+  countries: ICountry[] | [];
+  search: string;
+  page: number;
+  next: boolean;
+  prev: boolean;
+  limit: number;
+  total: number;
+  error: string | undefined;
 }
+const Home = () => {
+  const [isError, setIsError] = useState(false);
+  const { country } = useParams();
+  const { countries, limit, total, page, next, prev, search, error } =
+    useLoaderData<LoaderData>();
+
+  if (isError) {
+    throw new Error('test error');
+  }
+  return (
+    <section>
+      <h2>{error}</h2>
+      <h1 className="text-4xl">Countries by AmensGood</h1>
+      <Button
+        variant="main"
+        onClick={() => {
+          setIsError(true);
+        }}
+      >
+        error
+      </Button>
+      <SearchForm searchValue={search} />
+      {total > 0 && (
+        <Pagination
+          limit={limit}
+          total={total}
+          next={next}
+          prev={prev}
+          page={page}
+        />
+      )}
+
+      <div className="flex flex-col-reverse gap-2 md:flex-row">
+        <CountryList countries={countries} isActive={Boolean(country)} />
+        <Outlet />
+      </div>
+    </section>
+  );
+};
 
 export default Home;

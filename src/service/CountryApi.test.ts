@@ -1,4 +1,4 @@
-import { getCountry } from './CountryAPI';
+import { getCountries } from './CountryAPI';
 import { server } from '@/__test__';
 import { BASE_API_URL } from '@/constants';
 import { http, HttpResponse } from 'msw';
@@ -23,7 +23,7 @@ describe('CountryAPI', () => {
     consoleSpy.mockRestore();
   });
   it('should handle errors for', async () => {
-    const url = new URL('all', BASE_API_URL);
+    const url = new URL('v3.1/all', BASE_API_URL);
 
     server.use(
       http.get(url.href, () => {
@@ -34,10 +34,9 @@ describe('CountryAPI', () => {
       })
     );
 
-    await expect(getCountry()).rejects.toThrow('Internal Server Error');
-    expect(consoleSpy).toHaveBeenCalledWith(
-      'CountryService failed:',
-      expect.any(Error)
-    );
+    expect(await getCountries()).toStrictEqual({
+      countries: [],
+      error: 'Internal Server Error',
+    });
   });
 });

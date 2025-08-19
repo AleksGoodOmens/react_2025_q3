@@ -1,26 +1,49 @@
-import { mockCountries } from './countries.mock';
+import {
+  longListOfMockCountries,
+  mockCountries,
+  MockDetailedCountry,
+} from './countries.mock';
 import { BASE_API_URL } from '@/constants';
+import type { ICountry, IDetailedCountry } from '@/interfaces';
 import { http, HttpResponse } from 'msw';
 
 const NETWORK_DELAY = 10;
-export const test_base_url = `${BASE_API_URL}all`;
-export const test_url_by_name = `${BASE_API_URL}translation/test`;
-export const test_url_by_non_existed = `${BASE_API_URL}translation/non_existent_country`;
+
+const simulateNetworkDelay = () =>
+  new Promise((resolve) => setTimeout(resolve, NETWORK_DELAY));
+
+const createEndpointHandler = (config: {
+  path: string;
+  response: ICountry | [] | ICountry[] | IDetailedCountry[];
+  errorResponse?: unknown;
+  exactMatch?: boolean;
+}) => {
+  const url = new URL(config.path, BASE_API_URL);
+
+  return http.get(url.href, async () => {
+    await simulateNetworkDelay();
+
+    return HttpResponse.json(config.response);
+  });
+};
+
 export const handlers = [
-  http.get(test_base_url, async () => {
-    await new Promise((resolve) => setTimeout(resolve, NETWORK_DELAY));
-
-    return HttpResponse.json(mockCountries);
+  createEndpointHandler({
+    path: 'v3.1/all',
+    response: longListOfMockCountries,
   }),
 
-  http.get(test_url_by_name, async () => {
-    await new Promise((resolve) => setTimeout(resolve, NETWORK_DELAY));
-
-    return HttpResponse.json(mockCountries[0]);
+  createEndpointHandler({
+    path: 'v3.1/translation/test',
+    response: [mockCountries[0]],
   }),
-  http.get(test_url_by_non_existed, async () => {
-    await new Promise((resolve) => setTimeout(resolve, NETWORK_DELAY));
+  createEndpointHandler({
+    path: 'v3.1/name/Moldova',
+    response: [MockDetailedCountry],
+  }),
 
-    return HttpResponse.json([]);
+  createEndpointHandler({
+    path: 'v3.1/translation/non_existent_country',
+    response: [],
   }),
 ];

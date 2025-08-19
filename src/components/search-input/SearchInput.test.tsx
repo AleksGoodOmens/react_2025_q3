@@ -26,12 +26,6 @@ describe('SearchInput', () => {
       render(<SearchInput />);
       expect(screen.getByRole('searchbox')).toHaveValue('');
     });
-
-    it('render with initial search value from local storage', () => {
-      localStorage.setItem('search', 'test value');
-      render(<SearchInput />);
-      expect(screen.getByRole('searchbox')).toHaveValue('test value');
-    });
   });
   describe('check label', () => {
     beforeEach(() => {
@@ -50,11 +44,6 @@ describe('SearchInput', () => {
       render(<SearchInput />);
       expect(screen.getByRole('heading', { name: 'search' }));
       expect(screen.getByRole('searchbox', { name: /search/i }));
-    });
-    it('render different label from props', () => {
-      render(<SearchInput label="test" />);
-      expect(screen.getByRole('heading', { name: 'test' }));
-      expect(screen.getByRole('searchbox', { name: /test/i }));
     });
   });
 
