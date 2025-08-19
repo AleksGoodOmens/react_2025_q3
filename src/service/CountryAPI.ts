@@ -1,10 +1,11 @@
 import { BASE_API_URL } from '@/constants';
+import z from 'zod';
+
 import {
   CountrySchema,
   DetailedCountriesSchema,
   type IGetCountriesResponse,
 } from '@/interfaces';
-import z from 'zod';
 
 export async function getCountries(
   params: string = 'all'

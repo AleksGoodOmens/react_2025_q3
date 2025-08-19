@@ -19,7 +19,11 @@ describe('CountryItem component tests', () => {
 
       render(
         <MemoryRouter>
-          <CountryItem countryData={mockCountry} />
+          <CountryItem
+            isActive={false}
+            countryData={mockCountry}
+            isFavorite={false}
+          />
         </MemoryRouter>
       );
     });
@@ -42,7 +46,11 @@ describe('CountryItem component tests', () => {
       cleanup();
       render(
         <MemoryRouter>
-          <CountryItem countryData={mockCountryWithoutCapital} />
+          <CountryItem
+            isActive={false}
+            countryData={mockCountryWithoutCapital}
+            isFavorite={false}
+          />
         </MemoryRouter>
       );
       expect(screen.getAllByRole('paragraph').length).toBe(2);
@@ -51,6 +59,7 @@ describe('CountryItem component tests', () => {
       const liBtn = screen.getByRole('button', {
         name: /official-test-country-name/i,
       });
+      screen.debug(liBtn);
       expect(liBtn).toBeInTheDocument();
 
       await user.click(liBtn);
@@ -62,15 +71,19 @@ describe('CountryItem component tests', () => {
     });
 
     it('user can navigate to home page by click on item', async () => {
-      cleanup();
       const mockParams = { country: 'common-test-country-name' };
       vi.spyOn(await import('react-router'), 'useParams').mockReturnValue(
         mockParams
       );
+      cleanup();
 
       render(
         <MemoryRouter>
-          <CountryItem countryData={mockCountry} />
+          <CountryItem
+            countryData={mockCountry}
+            isFavorite={false}
+            isActive={true}
+          />
         </MemoryRouter>
       );
       const liBtn = screen.getByRole('button', {

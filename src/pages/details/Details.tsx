@@ -1,11 +1,13 @@
-import { Button } from '../button/Button';
-import type { IDetailedCountry } from '@/interfaces';
 import {
   useLoaderData,
   useNavigate,
   useNavigation,
   useSearchParams,
 } from 'react-router';
+
+import { Button } from '@/components';
+
+import type { IDetailedCountry } from '@/interfaces';
 
 interface loaderData {
   country: IDetailedCountry;
@@ -23,7 +25,7 @@ export const Details = () => {
 
   if (!country) {
     return (
-      <section className="animate-fadeIn mx-auto flex-4/6 self-start rounded-2xl border-2 border-black bg-amber-800 p-6 text-white shadow-md">
+      <section className="animate-fadeIn rounded-2xl border-2 border-black bg-amber-800 p-6 text-white shadow-md">
         <h2>No info about this country</h2>
       </section>
     );
@@ -53,7 +55,7 @@ export const Details = () => {
   if (state === 'loading') return <div>loading...</div>;
 
   return (
-    <section className="animate-fadeIn mx-auto flex-4/6 self-start rounded-2xl border-2 border-black bg-amber-800 p-6 text-white shadow-md">
+    <section className="animate-fadeIn rounded-2xl border-2 border-black bg-amber-800 p-6 text-white shadow-md">
       <header className="mb-4 flex justify-between gap-2">
         <div>
           <h2 className="text-3xl font-bold">
@@ -82,12 +84,19 @@ export const Details = () => {
               <img
                 src={coatOfArms.png}
                 alt={`Coat of arms of ${name?.common}`}
-                className="aspect-square h-32 object-cover"
+                className="aspect-square h-32 object-contain"
               />
             )}
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div
+            className="grid gap-2"
+            style={{
+              gridTemplateColumns:
+                'repeat(auto-fill, minmax(min(180px, 100%), 1fr))',
+              maxWidth: 'calc(180px * 2 + 8px)',
+            }}
+          >
             <DetailItem label="Region" value={region} />
             <DetailItem label="Subregion" value={subregion} />
             <DetailItem label="Capital" value={capital?.join(', ')} />
@@ -248,7 +257,7 @@ export const DetailItem = ({
   value?: string | number | null;
 }) => (
   <div>
-    <dt className="text-sm font-medium">{label}</dt>
+    <dt className="text-sm font-medium text-black">{label}</dt>
     <dd className="mt-1 text-sm">{value || 'N/A'}</dd>
   </div>
 );
@@ -261,7 +270,7 @@ export const DetailSection = ({
   content: React.ReactNode;
 }) => (
   <div className="border-t pt-2">
-    <h3 className="mb-1 text-lg font-semibold">{title}</h3>
+    <h3 className="mb-1 text-lg font-semibold text-black">{title}</h3>
     {content}
   </div>
 );

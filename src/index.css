@@ -5,7 +5,6 @@
   --font-jetBrains: 'JetBrains Mono', 'sans-serif';
 
   --animate-fadeIn: fadeIn 0.5s ease-in-out;
-
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -15,11 +14,13 @@
     }
   }
 }
+
+@custom-variant dark (&:where(.dark, .dark *));
 @layer base {
   html {
     scroll-behavior: smooth;
     overflow-y: scroll;
-    @apply font-jetBrains bg-amber-500;
+    @apply font-jetBrains bg-amber-500 text-black dark:bg-amber-900 dark:text-white;
   }
   img {
     height: 100%;
