@@ -96,5 +96,5 @@ export type IGetCountries = z.infer<typeof CountriesSchema>;
 
 export interface IGetCountriesResponse {
   error?: string;
-  countries: ICountry[] | [];
+  countries: ICountry[];
 }

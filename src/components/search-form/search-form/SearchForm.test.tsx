@@ -44,7 +44,6 @@ describe('SearchForm', () => {
         }
       );
 
-      // 2. Рендерим через RouterProvider
       render(<RouterProvider router={router} />);
     });
 

@@ -11,7 +11,12 @@ const mainClasses =
 const ghostClasses = 'hover:bg-amber-800 hover:text-white duration-300';
 const minorClasses = 'text-white';
 
-export const Button = ({ children, className, variant, ...props }: IButton) => {
+export const Button = ({
+  children,
+  className,
+  variant = 'main',
+  ...props
+}: IButton) => {
   return (
     <button
       className={clsx(

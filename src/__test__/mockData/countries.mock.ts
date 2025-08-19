@@ -876,11 +876,11 @@ export const longListOfMockCountries: ICountry[] = [
     name: {
       common: 'Hong Kong',
       official:
-        "Hong Kong Special Administrative Region of the People's Republic of China",
+        "Hong Kong Special Administrative Region of the People's Republic of China 2",
       nativeName: {
         eng: {
           official:
-            "Hong Kong Special Administrative Region of the People's Republic of China",
+            "Hong Kong Special Administrative Region of the People's Republic of China 2",
           common: 'Hong Kong',
         },
         zho: {

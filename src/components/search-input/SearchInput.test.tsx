@@ -4,7 +4,7 @@ import { localStorageMock } from '@/__test__/mockData/mockLocalStorage';
 import { afterAll, beforeEach, describe, expect, it } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 
-describe.only('SearchInput', () => {
+describe('SearchInput', () => {
   describe('render with local storage', () => {
     const originalLocalStorage: Storage = window.localStorage;
     Object.defineProperty(window, 'localStorage', {
@@ -23,7 +23,7 @@ describe.only('SearchInput', () => {
     });
     it('render empty search input when local storage is empty', () => {
       expect(localStorage.getItem('search')).toBeNull();
-      render(<SearchInput storageValue="" />);
+      render(<SearchInput />);
       expect(screen.getByRole('searchbox')).toHaveValue('');
     });
   });
@@ -32,7 +32,7 @@ describe.only('SearchInput', () => {
       cleanup();
     });
     it('render label with h5 and input', () => {
-      render(<SearchInput storageValue="" />);
+      render(<SearchInput />);
       const searchbox = screen.getByRole('searchbox', { name: /search/i });
       const h5 = screen.getByRole('heading', { level: 5 });
 
@@ -41,7 +41,7 @@ describe.only('SearchInput', () => {
       expect(searchbox).toHaveAttribute('type', 'search');
     });
     it('render default label empty props', () => {
-      render(<SearchInput storageValue="" />);
+      render(<SearchInput />);
       expect(screen.getByRole('heading', { name: 'search' }));
       expect(screen.getByRole('searchbox', { name: /search/i }));
     });
@@ -50,7 +50,7 @@ describe.only('SearchInput', () => {
   describe('input check', () => {
     beforeEach(() => {
       cleanup();
-      render(<SearchInput storageValue="" />);
+      render(<SearchInput />);
     });
 
     it('user can type the text', async () => {

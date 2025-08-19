@@ -1,5 +1,4 @@
 import About from '@/pages/about/About';
-import { aboutMe } from '@/pages/about/data';
 import Home from '@/pages/home/Home';
 import NotFound from '@/pages/not-found/NotFound';
 import { getCountries, getCountry } from '@/service/CountryAPI';
@@ -61,9 +60,6 @@ export const routerConfig: RouteObject[] = [
         path: 'about',
         hydrateFallbackElement: <div>loading...</div>,
         Component: About,
-        loader: () => {
-          return aboutMe;
-        },
       },
     ],
   },

@@ -3,7 +3,7 @@ import type { ICountry } from '@/interfaces';
 import clsx from 'clsx';
 
 interface Props {
-  countries: ICountry[] | [];
+  countries: ICountry[];
   className?: string;
   isActive: boolean;
 }

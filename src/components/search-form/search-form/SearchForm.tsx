@@ -20,7 +20,7 @@ export const SearchForm = ({ searchValue }: Props) => {
     const formData = new FormData(event.currentTarget);
     const searchValue = formData.get('search')?.toString() || '';
     if (!searchValue) clearStorage();
-    updateStorage(searchValue);
+    updateStorage(searchValue.trim());
     currentParams.set('search', searchValue);
   };
 
@@ -33,7 +33,7 @@ export const SearchForm = ({ searchValue }: Props) => {
       <SearchInput
         name="search"
         id="search"
-        storageValue={searchValue || storageValue}
+        defaultValue={searchValue || storageValue}
       />
       <Button variant="ghost" type="submit">
         search

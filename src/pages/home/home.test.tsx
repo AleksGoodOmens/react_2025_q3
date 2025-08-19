@@ -16,7 +16,6 @@ describe('home page', () => {
 
     render(<RouterProvider router={router} />);
 
-    // Проверяем, что заголовок отрендерился
     expect(
       await screen.findByRole('heading', { level: 1 })
     ).toBeInTheDocument();
