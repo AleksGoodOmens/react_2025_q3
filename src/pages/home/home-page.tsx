@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { Button, Heading, ThemeChanger } from '@/components';
 import { ModalWindow } from '@/components/modal-window/modal-window';
+import { UncontrolledForm } from '@/components/uncontrolled-form/UncontrolledForm';
 
 export const HomePage = () => {
   const [isUncontrolledFormOpen, setIsUncontrolledFormOpen] =
@@ -34,7 +35,7 @@ export const HomePage = () => {
         onClose={() => setIsUncontrolledFormOpen((prev) => !prev)}
         isOpen={isUncontrolledFormOpen}
       >
-        <h1>uncontrolled form</h1>
+        <UncontrolledForm />
       </ModalWindow>
       <ModalWindow
         onClose={() => setIsControlledFormOpen((prev) => !prev)}
