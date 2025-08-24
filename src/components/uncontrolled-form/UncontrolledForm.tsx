@@ -4,8 +4,11 @@ import clsx from 'clsx';
 import { useState } from 'react';
 import type { ErrorsMessageTypes } from '@/interfaces';
 
+import { useStore } from '@/hooks';
+
 export const UncontrolledForm = () => {
   const [errors, setErrors] = useState<ErrorsMessageTypes>({});
+  const { countries, addToUnControlledForm } = useStore();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -41,8 +44,6 @@ export const UncontrolledForm = () => {
       return;
     }
 
-    console.log('Valid data:', result.data);
-
     if (result.data.file?.[0]) {
       const reader = new FileReader();
       reader.onload = () => {
@@ -51,6 +52,8 @@ export const UncontrolledForm = () => {
       };
       reader.readAsDataURL(result.data.file[0]);
     }
+
+    addToUnControlledForm(result.data);
   };
   return (
     <form className="grid gap-2 py-4" onSubmit={handleSubmit}>
@@ -165,7 +168,13 @@ export const UncontrolledForm = () => {
             className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
             name="country"
           >
-            <option value="russia">russia</option>
+            {countries.map((country) => {
+              return (
+                <option key={country} value={country}>
+                  {country}
+                </option>
+              );
+            })}
           </select>
           {errors['country'] && drawErrors(errors['country'])}
         </label>

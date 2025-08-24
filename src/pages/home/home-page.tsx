@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
+import { useStore } from '@/hooks';
+
 import { Button, Heading, ThemeChanger } from '@/components';
+import { ListOfItems } from '@/components/list-of-items/ListOfItems';
 import { ModalWindow } from '@/components/modal-window/modal-window';
 import { UncontrolledForm } from '@/components/uncontrolled-form/UncontrolledForm';
 
@@ -9,6 +12,8 @@ export const HomePage = () => {
     useState<boolean>(false);
   const [isControlledFormOpen, setIsControlledFormOpen] =
     useState<boolean>(false);
+  const { uncontrolledFormData } = useStore();
+
   return (
     <section>
       <header className="flex justify-center">
@@ -43,6 +48,13 @@ export const HomePage = () => {
       >
         <h1>controlled form</h1>
       </ModalWindow>
+      <div className="grid grid-cols-2">
+        <ListOfItems
+          title="Data from Uncontrolled form"
+          items={uncontrolledFormData}
+        />
+        <ListOfItems title="Data from controlled form" />
+      </div>
     </section>
   );
 };
