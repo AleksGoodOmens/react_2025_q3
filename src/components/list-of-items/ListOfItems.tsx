@@ -17,7 +17,7 @@ export const ListOfItems = ({ title, items }: Props) => {
               country,
               email,
               gender,
-
+              file,
               name,
               password,
               tc,
@@ -36,6 +36,7 @@ export const ListOfItems = ({ title, items }: Props) => {
                 </div>
                 <p>gender: {gender}</p>
                 {tc && <p>terms and conditions accepted</p>}
+                {file && <img src={file} alt={name} />}
               </li>
             );
           })}

@@ -5,17 +5,24 @@ import type { Item } from '@/interfaces';
 type IState = {
   countries: string[];
   uncontrolledFormData: Item[];
+  controlledFormData: Item[];
 };
 
 type IActions = {
   addToUnControlledForm: (value: Item) => void;
+  addToControlledForm: (value: Item) => void;
 };
 
 export const useStore = create<IState & IActions>((set) => ({
   countries: countriesList,
   uncontrolledFormData: [],
+  controlledFormData: [],
   addToUnControlledForm: (value) =>
     set((state) => ({
       uncontrolledFormData: [...state.uncontrolledFormData, value],
+    })),
+  addToControlledForm: (value) =>
+    set((state) => ({
+      controlledFormData: [...state.controlledFormData, value],
     })),
 }));

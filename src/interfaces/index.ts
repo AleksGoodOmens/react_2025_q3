@@ -19,12 +19,12 @@ export interface ErrorsMessageTypes {
 
 export interface Item {
   name: string;
-  age: number;
+  age: string;
   email: string;
   password: string;
   confirmPassword: string;
   gender: 'male' | 'female';
-  tc?: 'on';
-  file: [];
+  tc: null | string;
+  file?: string;
   country: string;
 }

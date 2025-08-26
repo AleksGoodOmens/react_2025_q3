@@ -1,89 +1,72 @@
 import { Button } from '../button/Button';
-import { formSchema } from '@/schemas/formSchema';
+import { formSchema, type FormSchemaType } from '@/schemas/formSchema';
 import { toBase64 } from '@/utils/toBase64';
-import { filesToFileList } from '@/utils/toFileList';
+import { zodResolver } from '@hookform/resolvers/zod';
 import clsx from 'clsx';
-import { useState } from 'react';
-import type { ErrorsMessageTypes } from '@/interfaces';
+import { useForm, type SubmitHandler } from 'react-hook-form';
 
 import { useStore } from '@/hooks';
 
 interface Props {
   closeForm: () => void;
 }
+export const ControlledForm = ({ closeForm }: Props) => {
+  const { countries, addToControlledForm } = useStore();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormSchemaType>({
+    resolver: zodResolver(formSchema),
+    mode: 'onChange',
+    defaultValues: {
+      name: '',
+      age: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      gender: undefined,
+      country: '',
+      tc: false,
+      file: undefined,
+    },
+  });
 
-export const UncontrolledForm = ({ closeForm }: Props) => {
-  const [errors, setErrors] = useState<ErrorsMessageTypes>({});
-  const { countries, addToUnControlledForm } = useStore();
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-
-    const data = {
-      name: formData.get('name'),
-      age: formData.get('age'),
-      email: formData.get('email'),
-      password: formData.get('password'),
-      confirmPassword: formData.get('confirmPassword'),
-      gender: formData.get('gender'),
-      tc: Boolean(formData.get('tc')),
-      file: filesToFileList(formData.getAll('file') as File[]),
-      country: formData.get('country'),
-    };
-    const result = formSchema.safeParse(data);
-    if (!result.success) {
-      const formattedErrors: ErrorsMessageTypes = {};
-
-      result.error.issues.forEach((err) => {
-        const key = err.path[0] as keyof ErrorsMessageTypes;
-        if (typeof key === 'string') {
-          if (Array.isArray(formattedErrors[key])) {
-            (formattedErrors[key] as string[]).push(err.message);
-          } else {
-            formattedErrors[key] = [err.message];
-          }
-        }
-      });
-      setErrors(formattedErrors);
-      return;
-    }
-
+  const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
     const base64 = (await toBase64(data.file[0])) as string;
-
-    const item = {
-      ...result.data,
-      age: result.data.age.toString(),
+    addToControlledForm({
+      ...data,
       file: base64,
-      tc: result.data.tc ? 'on' : null,
-    };
-
-    addToUnControlledForm(item);
-    e.currentTarget.reset();
+      tc: data.tc ? 'on' : null,
+    });
+    reset();
     closeForm();
   };
+
   return (
-    <form className="grid gap-2 py-4" onSubmit={handleSubmit}>
+    <form className="grid gap-2 py-4" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex gap-2">
         <label className="w-full rounded-2xl border bg-amber-400 p-2">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Name</h3>
           <input
+            {...register('name')}
             type="text"
             placeholder="Name"
             id="name"
-            name="name"
             className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
           />
-          {errors['name'] && drawErrors(errors['name'])}
+          {errors['name'] && <p>{errors.name.message}</p>}
         </label>
         <label className="rounded-2xl border bg-amber-400 p-2">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Age</h3>
           <input
-            type="number"
+            type="text"
             id="age"
-            name="age"
+            {...register('age')}
             className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
           />
-          {errors['age'] && drawErrors(errors['age'])}
+          {errors['age'] && <p>{errors.age.message}</p>}
         </label>
       </div>
       <label className="w-full rounded-2xl border bg-amber-400 p-2">
@@ -91,11 +74,11 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
         <input
           type="email"
           placeholder="your email"
-          name="email"
+          {...register('email')}
           id="email"
           className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
         />
-        {errors['email'] && drawErrors(errors['email'])}
+        {errors['email'] && <p>{errors.email.message}</p>}
       </label>
       <div className="flex gap-2">
         <label className="w-full rounded-2xl border bg-amber-400 p-2">
@@ -104,7 +87,7 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
             type="password"
             placeholder="password"
             id="password"
-            name="password"
+            {...register('password')}
             className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
           />
           <div
@@ -113,17 +96,12 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
               'bg-green-500',
               'text-black',
               'text-center',
-              'rounded-2xl',
-              errors['password']?.length === 1 && 'bg-yellow-200',
-              errors['password']?.length === 2 && 'bg-yellow-400',
-              errors['password']?.length === 3 && 'bg-yellow-600',
-              errors['password']?.length === 4 && 'bg-orange-500',
-              errors['password']?.length === 5 && 'bg-red-500'
+              'rounded-2xl'
             )}
           >
-            {passWordStrength(errors.password?.length)}
+            {passWordStrength(errors.password?.message?.length)}
           </div>
-          {errors['password'] && drawErrors(errors['password'])}
+          {errors['password'] && <p>{errors.password.message}</p>}
         </label>
         <label className="w-full rounded-2xl border bg-amber-400 p-2">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Confirm</h3>
@@ -131,10 +109,10 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
             type="password"
             placeholder="confirm password"
             id="confirmPassword"
-            name="confirmPassword"
+            {...register('confirmPassword')}
             className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
           />
-          {errors['confirmPassword'] && drawErrors(errors['confirmPassword'])}
+          {errors['confirmPassword'] && <p>{errors.confirmPassword.message}</p>}
         </label>
       </div>
       <div className="grid grid-cols-2 rounded-2xl border bg-amber-400 p-2">
@@ -143,7 +121,7 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
           <input
             type="radio"
             id="gender-male"
-            name="gender"
+            {...register('gender')}
             value={'male'}
             className="rounded-b-xl bg-amber-800 px-4 py-2"
           />
@@ -153,26 +131,26 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
           <input
             type="radio"
             id="gender-female"
-            name="gender"
+            {...register('gender')}
             value={'female'}
             className="rounded-b-xl bg-amber-800 px-4 py-2"
           />
         </label>
-        {errors['gender'] && drawErrors(errors['gender'])}
+        {errors['gender'] && <p>{errors.gender.message}</p>}
       </div>
 
       <div className="flex">
         <label className="w-full rounded-2xl border bg-amber-400 p-2">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Upload file</h3>
-          <input type="file" name="file" id="file" />
-          {errors['file'] && drawErrors(errors['file'])}
+          <input type="file" {...register('file')} id="file" />
+          {errors['file'] && <p>{errors.file.message}</p>}
         </label>
         <label className="w-full rounded-2xl border bg-amber-400 p-2">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Country</h3>
           <select
             defaultValue="choose you country"
             className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
-            name="country"
+            {...register('country')}
           >
             {countries.map((country) => {
               return (
@@ -182,7 +160,7 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
               );
             })}
           </select>
-          {errors['country'] && drawErrors(errors['country'])}
+          {errors['country'] && <p>{errors.country.message}</p>}
         </label>
       </div>
       <div className="flex gap-2">
@@ -192,17 +170,18 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
             Terms and conditions
           </h3>
           <div className="grid place-content-center rounded-r-xl bg-amber-800 px-4">
-            <input type="checkbox" name="tc" id="tc" className="px-4 py-2" />
+            <input
+              type="checkbox"
+              {...register('tc')}
+              id="tc"
+              className="px-4 py-2"
+            />
           </div>
-          {errors['tc'] && drawErrors(errors['tc'])}
+          {errors['tc'] && <p>{errors.tc.message}</p>}
         </label>
       </div>
     </form>
   );
-};
-
-const drawErrors = (errors: string[]) => {
-  return <p>{errors[errors.length - 1]}</p>;
 };
 
 const passWordStrength = (value: number | undefined) => {

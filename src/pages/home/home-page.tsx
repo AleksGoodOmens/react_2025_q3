@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useStore } from '@/hooks';
 
 import { Button, Heading, ThemeChanger } from '@/components';
+import { ControlledForm } from '@/components/controlled-form/ControlledForm';
 import { ListOfItems } from '@/components/list-of-items/ListOfItems';
 import { ModalWindow } from '@/components/modal-window/modal-window';
 import { UncontrolledForm } from '@/components/uncontrolled-form/UncontrolledForm';
@@ -12,7 +13,14 @@ export const HomePage = () => {
     useState<boolean>(false);
   const [isControlledFormOpen, setIsControlledFormOpen] =
     useState<boolean>(false);
-  const { uncontrolledFormData } = useStore();
+  const { uncontrolledFormData, controlledFormData } = useStore();
+
+  const handleCloseControlledForm = () => {
+    setIsControlledFormOpen((prev) => !prev);
+  };
+  const handleCloseUnControlledForm = () => {
+    setIsUncontrolledFormOpen((prev) => !prev);
+  };
 
   return (
     <section>
@@ -37,23 +45,26 @@ export const HomePage = () => {
         </Button>
       </div>
       <ModalWindow
-        onClose={() => setIsUncontrolledFormOpen((prev) => !prev)}
+        onClose={handleCloseUnControlledForm}
         isOpen={isUncontrolledFormOpen}
       >
-        <UncontrolledForm />
+        <UncontrolledForm closeForm={handleCloseUnControlledForm} />
       </ModalWindow>
       <ModalWindow
-        onClose={() => setIsControlledFormOpen((prev) => !prev)}
+        onClose={handleCloseControlledForm}
         isOpen={isControlledFormOpen}
       >
-        <h1>controlled form</h1>
+        <ControlledForm closeForm={handleCloseControlledForm} />
       </ModalWindow>
       <div className="grid grid-cols-2">
         <ListOfItems
           title="Data from Uncontrolled form"
           items={uncontrolledFormData}
         />
-        <ListOfItems title="Data from controlled form" />
+        <ListOfItems
+          items={controlledFormData}
+          title="Data from controlled form"
+        />
       </div>
     </section>
   );

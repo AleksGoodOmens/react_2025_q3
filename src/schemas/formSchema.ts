@@ -3,32 +3,36 @@ import { z } from 'zod';
 export const formSchema = z
   .object({
     name: z
-      .string()
-      .min(1, 'Name is required')
-      .regex(/^[A-Z]/, 'Name must start with an uppercase letter'),
+      .string('Name should be a string')
+      .regex(/^[A-Z]/, 'should start with capital letter')
+      .min(2, 'The length of the name should be more than 1'),
     age: z
       .string()
-      .refine((val) => !isNaN(Number(val)), { message: 'Age must be a number' })
       .transform(Number)
+      .refine((val) => !isNaN(Number(val)), { message: 'Age must be a number' })
       .refine((val) => val >= 0, { message: 'Age cannot be negative' })
-      .refine((val) => val >= 18, {
-        message: 'age should be greater or equal to 18',
-      }),
-    email: z.email('Invalid email'),
+      .refine((val) => val >= 21, {
+        message: 'age should be greater or equal to 21',
+      })
+      .transform(String),
+    email: z.email('Please provide correct email'),
     password: z
       .string()
-      .min(6, 'Password must be at least 6 characters')
-      .regex(/[0-9]/, 'Must contain a number')
-      .regex(/[A-Z]/, 'Must contain an uppercase letter')
-      .regex(/[a-z]/, 'Must contain a lowercase letter')
-      .regex(/[^a-zA-Z0-9]/, 'Must contain a special character'),
+      .regex(/[a-z]/, 'password should contain at least 1 lowercase letter')
+      .regex(/[A-Z]/, 'password should contain at least one uppercase letter')
+      .regex(/[0-9]/, 'password should contain at least one number')
+      .regex(
+        /[!@#$%^&*]/,
+        'password should contain any of special characters [!@#$%^&*]'
+      )
+      .min(8, 'password should be at least 8 characters')
+      .max(16, 'password cant be longer that 16'),
     confirmPassword: z.string(),
-    gender: z.enum(['male', 'female']),
-    tc: z.literal('on', {
-      message: 'You must accept T&C',
-    }),
+    gender: z.literal(['male', 'female'], 'we accept only two genders!'),
+    tc: z.literal<boolean>(true, 'you need to accept our TC'),
+    country: z.string().min(2, 'please select the country'),
     file: z
-      .any()
+      .instanceof(FileList)
       .refine((file: FileList) => file?.length === 1, 'File is required')
       .refine(
         (file: FileList) => ['image/png', 'image/jpeg'].includes(file[0]?.type),
@@ -38,9 +42,10 @@ export const formSchema = z
         (file: FileList) => file[0]?.size <= 2 * 1024 * 1024,
         'File size must be <= 2MB'
       ),
-    country: z.string().min(1, 'Country is required'),
   })
   .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
     path: ['confirmPassword'],
-    message: 'Passwords do not match',
   });
+
+export type FormSchemaType = z.infer<typeof formSchema>;
