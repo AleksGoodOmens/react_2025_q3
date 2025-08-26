@@ -41,11 +41,8 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
       result.error.issues.forEach((err) => {
         const key = err.path[0] as keyof ErrorsMessageTypes;
         if (typeof key === 'string') {
-          if (Array.isArray(formattedErrors[key])) {
-            (formattedErrors[key] as string[]).push(err.message);
-          } else {
+          if (formattedErrors[key] === undefined)
             formattedErrors[key] = [err.message];
-          }
         }
       });
       setErrors(formattedErrors);

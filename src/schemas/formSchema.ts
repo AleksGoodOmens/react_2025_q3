@@ -4,20 +4,25 @@ export const formSchema = z
   .object({
     name: z
       .string('Name should be a string')
-      .regex(/^[A-Z]/, 'should start with capital letter')
+      .nonempty('Name is required')
+      .regex(/^[A-Z]/, 'Should start with capital letter')
       .min(2, 'The length of the name should be more than 1'),
     age: z
       .string()
-      .transform(Number)
-      .refine((val) => !isNaN(Number(val)), { message: 'Age must be a number' })
-      .refine((val) => val >= 0, { message: 'Age cannot be negative' })
-      .refine((val) => val >= 21, {
-        message: 'you need to be minimum 21',
+      .nonempty('Age is required')
+      .refine((val) => !isNaN(Number(val)), {
+        message: 'Age must be a number',
       })
-      .transform(String),
+      .refine((val) => Number(val) >= 0, {
+        message: 'Age cannot be negative',
+      })
+      .refine((val) => Number(val) >= 21, {
+        message: 'You need to be at least 21 years old',
+      }),
     email: z.email('Please provide correct email'),
     password: z
       .string()
+      .nonempty('Email is required')
       .regex(/[a-z]/, 'password should contain at least 1 lowercase letter')
       .regex(/[A-Z]/, 'password should contain at least one uppercase letter')
       .regex(/[0-9]/, 'password should contain at least one number')
