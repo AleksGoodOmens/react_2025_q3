@@ -1,4 +1,5 @@
 import { Button } from '../button/Button';
+import { ErrorMessage } from '../error-message/ErrorMessage';
 import { PasswordStrength } from '../password-strength/PasswordStrength';
 import { formSchema } from '@/schemas/formSchema';
 import { toBase64 } from '@/utils/toBase64';
@@ -61,13 +62,12 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
     };
 
     addToUnControlledForm(item);
-    e.currentTarget.reset();
     closeForm();
   };
   return (
     <form className="grid gap-2 py-4" onSubmit={handleSubmit}>
       <div className="flex gap-2">
-        <label className="w-full rounded-2xl border bg-amber-400 p-2">
+        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Name</h3>
           <input
             type="text"
@@ -76,9 +76,9 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
             name="name"
             className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
           />
-          {errors['name'] && drawErrors(errors['name'])}
+          {errors['name'] && <ErrorMessage>{errors['name']}</ErrorMessage>}
         </label>
-        <label className="rounded-2xl border bg-amber-400 p-2">
+        <label className="relative rounded-2xl border bg-amber-400 p-2 pb-10">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Age</h3>
           <input
             type="number"
@@ -86,10 +86,10 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
             name="age"
             className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
           />
-          {errors['age'] && drawErrors(errors['age'])}
+          {errors['age'] && <ErrorMessage>{errors['age']}</ErrorMessage>}
         </label>
       </div>
-      <label className="w-full rounded-2xl border bg-amber-400 p-2">
+      <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
         <h3 className="rounded-t-xl bg-amber-600 p-2">Email</h3>
         <input
           type="email"
@@ -98,10 +98,10 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
           id="email"
           className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
         />
-        {errors['email'] && drawErrors(errors['email'])}
+        {errors['email'] && <ErrorMessage>{errors['email']}</ErrorMessage>}
       </label>
       <div className="flex gap-2">
-        <label className="w-full rounded-2xl border bg-amber-400 p-2">
+        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Password</h3>
           <input
             type="password"
@@ -112,9 +112,11 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
           />
 
           <PasswordStrength text={value} />
-          {errors['password'] && drawErrors(errors['password'])}
+          {errors['password'] && (
+            <ErrorMessage>{errors['password'][0]}</ErrorMessage>
+          )}
         </label>
-        <label className="w-full rounded-2xl border bg-amber-400 p-2">
+        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Confirm</h3>
           <input
             type="password"
@@ -123,10 +125,12 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
             name="confirmPassword"
             className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
           />
-          {errors['confirmPassword'] && drawErrors(errors['confirmPassword'])}
+          {errors['confirmPassword'] && (
+            <ErrorMessage>{errors['confirmPassword']}</ErrorMessage>
+          )}
         </label>
       </div>
-      <div className="grid grid-cols-2 rounded-2xl border bg-amber-400 p-2">
+      <div className="relative grid grid-cols-2 rounded-2xl border bg-amber-400 p-2 pb-10">
         <label className="flex justify-center gap-2">
           <h3>Male</h3>
           <input
@@ -147,16 +151,16 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
             className="rounded-b-xl bg-amber-800 px-4 py-2"
           />
         </label>
-        {errors['gender'] && drawErrors(errors['gender'])}
+        {errors['gender'] && <ErrorMessage>{errors['gender']}</ErrorMessage>}
       </div>
 
       <div className="flex">
-        <label className="w-full rounded-2xl border bg-amber-400 p-2">
+        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Upload file</h3>
           <input type="file" name="file" id="file" />
-          {errors['file'] && drawErrors(errors['file'])}
+          {errors['file'] && <ErrorMessage>{errors['file']}</ErrorMessage>}
         </label>
-        <label className="w-full rounded-2xl border bg-amber-400 p-2">
+        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Country</h3>
           <select
             defaultValue="choose you country"
@@ -171,25 +175,23 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
               );
             })}
           </select>
-          {errors['country'] && drawErrors(errors['country'])}
+          {errors['country'] && (
+            <ErrorMessage>{errors['country']}</ErrorMessage>
+          )}
         </label>
       </div>
       <div className="flex gap-2">
-        <Button className="grow">Submit</Button>
-        <label className="flex rounded-2xl border bg-amber-400 p-2">
-          <h3 className="rounded-l-xl bg-amber-600 p-2">
+        <Button>Submit</Button>
+        <label className="relative flex grow rounded-2xl border bg-amber-400 p-2 pb-10">
+          <h3 className="w-full rounded-l-xl bg-amber-600 p-2">
             Terms and conditions
           </h3>
           <div className="grid place-content-center rounded-r-xl bg-amber-800 px-4">
             <input type="checkbox" name="tc" id="tc" className="px-4 py-2" />
           </div>
-          {errors['tc'] && drawErrors(errors['tc'])}
+          {errors['tc'] && <ErrorMessage>{errors['tc']}</ErrorMessage>}
         </label>
       </div>
     </form>
   );
-};
-
-const drawErrors = (errors: string[]) => {
-  return <p>{errors[errors.length - 1]}</p>;
 };

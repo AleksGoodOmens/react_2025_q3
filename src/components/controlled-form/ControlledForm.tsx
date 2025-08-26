@@ -1,11 +1,11 @@
-import { Button } from '../button/Button';
-import { PasswordStrength } from '../password-strength/PasswordStrength';
 import { formSchema, type FormSchemaType } from '@/schemas/formSchema';
 import { toBase64 } from '@/utils/toBase64';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
 import { useStore } from '@/hooks';
+
+import { Button, ErrorMessage, PasswordStrength } from '@/components';
 
 interface Props {
   closeForm: () => void;
@@ -48,7 +48,7 @@ export const ControlledForm = ({ closeForm }: Props) => {
   return (
     <form className="grid gap-2 py-4" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex gap-2">
-        <label className="w-full rounded-2xl border bg-amber-400 p-2">
+        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Name</h3>
           <input
             {...register('name')}
@@ -57,9 +57,9 @@ export const ControlledForm = ({ closeForm }: Props) => {
             id="name"
             className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
           />
-          {errors['name'] && <p>{errors.name.message}</p>}
+          {errors['name'] && <ErrorMessage>{errors.name.message}</ErrorMessage>}
         </label>
-        <label className="rounded-2xl border bg-amber-400 p-2">
+        <label className="relative rounded-2xl border bg-amber-400 p-2 pb-10">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Age</h3>
           <input
             type="text"
@@ -67,10 +67,10 @@ export const ControlledForm = ({ closeForm }: Props) => {
             {...register('age')}
             className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
           />
-          {errors['age'] && <p>{errors.age.message}</p>}
+          {errors['age'] && <ErrorMessage>{errors.age.message}</ErrorMessage>}
         </label>
       </div>
-      <label className="w-full rounded-2xl border bg-amber-400 p-2">
+      <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
         <h3 className="rounded-t-xl bg-amber-600 p-2">Email</h3>
         <input
           type="email"
@@ -79,10 +79,10 @@ export const ControlledForm = ({ closeForm }: Props) => {
           id="email"
           className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
         />
-        {errors['email'] && <p>{errors.email.message}</p>}
+        {errors['email'] && <ErrorMessage>{errors.email.message}</ErrorMessage>}
       </label>
       <div className="flex gap-2">
-        <label className="w-full rounded-2xl border bg-amber-400 p-2">
+        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Password</h3>
           <input
             type="password"
@@ -92,9 +92,11 @@ export const ControlledForm = ({ closeForm }: Props) => {
             className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
           />
           <PasswordStrength text={watch('password')} />
-          {errors['password'] && <p>{errors.password.message}</p>}
+          {errors['password'] && (
+            <ErrorMessage>{errors.password.message}</ErrorMessage>
+          )}
         </label>
-        <label className="w-full rounded-2xl border bg-amber-400 p-2">
+        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Confirm</h3>
           <input
             type="password"
@@ -105,10 +107,12 @@ export const ControlledForm = ({ closeForm }: Props) => {
           />
           <PasswordStrength text={watch('confirmPassword')} />
 
-          {errors['confirmPassword'] && <p>{errors.confirmPassword.message}</p>}
+          {errors['confirmPassword'] && (
+            <ErrorMessage>{errors.confirmPassword.message}</ErrorMessage>
+          )}
         </label>
       </div>
-      <div className="grid grid-cols-2 rounded-2xl border bg-amber-400 p-2">
+      <div className="relative grid grid-cols-2 rounded-2xl border bg-amber-400 p-2 pb-10">
         <label className="flex justify-center gap-2">
           <h3>Male</h3>
           <input
@@ -129,16 +133,18 @@ export const ControlledForm = ({ closeForm }: Props) => {
             className="rounded-b-xl bg-amber-800 px-4 py-2"
           />
         </label>
-        {errors['gender'] && <p>{errors.gender.message}</p>}
+        {errors['gender'] && (
+          <ErrorMessage>{errors.gender.message}</ErrorMessage>
+        )}
       </div>
 
       <div className="flex">
-        <label className="w-full rounded-2xl border bg-amber-400 p-2">
+        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Upload file</h3>
           <input type="file" {...register('file')} id="file" />
-          {errors['file'] && <p>{errors.file.message}</p>}
+          {errors['file'] && <ErrorMessage>{errors.file.message}</ErrorMessage>}
         </label>
-        <label className="w-full rounded-2xl border bg-amber-400 p-2">
+        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Country</h3>
           <select
             defaultValue="choose you country"
@@ -153,13 +159,15 @@ export const ControlledForm = ({ closeForm }: Props) => {
               );
             })}
           </select>
-          {errors['country'] && <p>{errors.country.message}</p>}
+          {errors['country'] && (
+            <ErrorMessage>{errors.country.message}</ErrorMessage>
+          )}
         </label>
       </div>
       <div className="flex gap-2">
-        <Button className="grow">Submit</Button>
-        <label className="flex rounded-2xl border bg-amber-400 p-2">
-          <h3 className="rounded-l-xl bg-amber-600 p-2">
+        <Button>Submit</Button>
+        <label className="relative flex grow rounded-2xl border bg-amber-400 p-2 pb-10">
+          <h3 className="w-full rounded-l-xl bg-amber-600 p-2">
             Terms and conditions
           </h3>
           <div className="grid place-content-center rounded-r-xl bg-amber-800 px-4">
@@ -170,7 +178,7 @@ export const ControlledForm = ({ closeForm }: Props) => {
               className="px-4 py-2"
             />
           </div>
-          {errors['tc'] && <p>{errors.tc.message}</p>}
+          {errors['tc'] && <ErrorMessage>{errors.tc.message}</ErrorMessage>}
         </label>
       </div>
     </form>

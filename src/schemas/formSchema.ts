@@ -12,7 +12,7 @@ export const formSchema = z
       .refine((val) => !isNaN(Number(val)), { message: 'Age must be a number' })
       .refine((val) => val >= 0, { message: 'Age cannot be negative' })
       .refine((val) => val >= 21, {
-        message: 'age should be greater or equal to 21',
+        message: 'you need to be minimum 21',
       })
       .transform(String),
     email: z.email('Please provide correct email'),

@@ -5,3 +5,5 @@ export * from './overlay-update/OverlayUpdate';
 export * from './heading/Heading';
 export * from './modal-window/modal-window';
 export * from './uncontrolled-form/UncontrolledForm';
+export * from './error-message/ErrorMessage';
+export * from './password-strength/PasswordStrength';
