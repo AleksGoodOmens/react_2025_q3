@@ -58,7 +58,7 @@ export const HomePage = () => {
       >
         <ControlledForm closeForm={handleCloseControlledForm} />
       </ModalWindow>
-      <div className="grid grid-cols-2">
+      <div className="container mx-auto grid grid-cols-2 py-6">
         <ListOfItems
           title="Data from Uncontrolled form"
           items={uncontrolledFormData}
