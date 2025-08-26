@@ -28,7 +28,7 @@ export const ControlledForm = ({ closeForm }: Props) => {
       password: '',
       confirmPassword: '',
       gender: undefined,
-      country: '',
+      country: 'Russia',
       tc: false,
       file: undefined,
     },
@@ -89,7 +89,7 @@ export const ControlledForm = ({ closeForm }: Props) => {
           placeholder="confirm password"
           id="confirmPassword"
           {...register('confirmPassword')}
-          textValue={watch('password')}
+          textValue={watch('confirmPassword')}
         />
       </div>
       <div className="relative grid grid-cols-2 rounded-2xl border bg-amber-400 p-2 pb-10">
