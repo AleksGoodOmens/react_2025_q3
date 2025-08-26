@@ -1,4 +1,4 @@
-import { UncontrolledForm } from './UncontrolledForm';
+import { ControlledForm } from './ControlledForm';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -30,7 +30,7 @@ describe('UncontrolledForm', () => {
   });
 
   it('renders all form fields', () => {
-    render(<UncontrolledForm closeForm={mockCloseForm} />);
+    render(<ControlledForm closeForm={mockCloseForm} />);
 
     expect(
       screen.getByRole('heading', { level: 3, name: /name/i })
@@ -65,7 +65,7 @@ describe('UncontrolledForm', () => {
   });
 
   it('shows error messages for invalid submission', async () => {
-    render(<UncontrolledForm closeForm={mockCloseForm} />);
+    render(<ControlledForm closeForm={mockCloseForm} />);
 
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await userEvent.click(submitButton);

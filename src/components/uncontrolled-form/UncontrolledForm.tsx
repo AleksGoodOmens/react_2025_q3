@@ -1,6 +1,6 @@
 import { Button } from '../button/Button';
 import { ErrorMessage } from '../error-message/ErrorMessage';
-import { PasswordStrength } from '../password-strength/PasswordStrength';
+import { InputWithError } from '../input-with-error/InputWithError';
 import { formSchema } from '@/schemas/formSchema';
 import { toBase64 } from '@/utils/toBase64';
 import { filesToFileList } from '@/utils/toFileList';
@@ -42,7 +42,7 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
         const key = err.path[0] as keyof ErrorsMessageTypes;
         if (typeof key === 'string') {
           if (formattedErrors[key] === undefined)
-            formattedErrors[key] = [err.message];
+            formattedErrors[key] = [err.message][0];
         }
       });
       setErrors(formattedErrors);
@@ -64,99 +64,77 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
   return (
     <form className="grid gap-2 py-4" onSubmit={handleSubmit}>
       <div className="flex gap-2">
-        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
-          <h3 className="rounded-t-xl bg-amber-600 p-2">Name</h3>
-          <input
-            type="text"
-            placeholder="Name"
-            id="name"
-            name="name"
-            className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
-          />
-          {errors['name'] && <ErrorMessage>{errors['name']}</ErrorMessage>}
-        </label>
-        <label className="relative rounded-2xl border bg-amber-400 p-2 pb-10">
-          <h3 className="rounded-t-xl bg-amber-600 p-2">Age</h3>
-          <input
-            type="number"
-            id="age"
-            name="age"
-            className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
-          />
-          {errors['age'] && <ErrorMessage>{errors['age']}</ErrorMessage>}
-        </label>
-      </div>
-      <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
-        <h3 className="rounded-t-xl bg-amber-600 p-2">Email</h3>
-        <input
-          type="email"
-          placeholder="your email"
-          name="email"
-          id="email"
-          className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
+        <InputWithError
+          message={errors['name']}
+          label="Name"
+          placeholder="Name"
+          id="name"
+          name="name"
         />
-        {errors['email'] && <ErrorMessage>{errors['email']}</ErrorMessage>}
-      </label>
-      <div className="flex gap-2">
-        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
-          <h3 className="rounded-t-xl bg-amber-600 p-2">Password</h3>
-          <input
-            type="password"
-            placeholder="password"
-            id="password"
-            name="password"
-            className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
-          />
+        <InputWithError
+          message={errors['age']}
+          label="age"
+          id="age"
+          name="age"
+          type="number"
+        />
+      </div>
+      <InputWithError
+        message={errors['email']}
+        id="email"
+        label="email"
+        name="email"
+        placeholder="your email"
+      />
 
-          <PasswordStrength text={value} />
-          {errors['password'] && (
-            <ErrorMessage>{errors['password'][0]}</ErrorMessage>
-          )}
-        </label>
-        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
-          <h3 className="rounded-t-xl bg-amber-600 p-2">Confirm</h3>
-          <input
-            type="password"
-            placeholder="confirm password"
-            id="confirmPassword"
-            name="confirmPassword"
-            className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
-          />
-          {errors['confirmPassword'] && (
-            <ErrorMessage>{errors['confirmPassword']}</ErrorMessage>
-          )}
-        </label>
+      <div className="flex gap-2">
+        <InputWithError
+          message={errors['password']}
+          label="Password"
+          type="password"
+          placeholder="password"
+          id="password"
+          name="password"
+          textValue={value}
+        />
+
+        <InputWithError
+          label="confirm password"
+          message={errors['confirmPassword']}
+          type="password"
+          placeholder="confirm password"
+          id="confirmPassword"
+          name="confirmPassword"
+        />
       </div>
       <div className="relative grid grid-cols-2 rounded-2xl border bg-amber-400 p-2 pb-10">
-        <label className="flex justify-center gap-2">
-          <h3>Male</h3>
-          <input
-            type="radio"
-            id="gender-male"
-            name="gender"
-            value={'male'}
-            className="rounded-b-xl bg-amber-800 px-4 py-2"
-          />
-        </label>
-        <label className="flex justify-center gap-2">
-          <h3>Female</h3>
-          <input
-            type="radio"
-            id="gender-female"
-            name="gender"
-            value={'female'}
-            className="rounded-b-xl bg-amber-800 px-4 py-2"
-          />
-        </label>
+        <InputWithError
+          label="male"
+          type="radio"
+          id="gender-male"
+          name="gender"
+          value={'male'}
+        />
+        <InputWithError
+          label="female"
+          type="radio"
+          id="gender-female"
+          name="gender"
+          value={'female'}
+        />
+
         {errors['gender'] && <ErrorMessage>{errors['gender']}</ErrorMessage>}
       </div>
 
       <div className="flex">
-        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
-          <h3 className="rounded-t-xl bg-amber-600 p-2">Upload file</h3>
-          <input type="file" name="file" id="file" />
-          {errors['file'] && <ErrorMessage>{errors['file']}</ErrorMessage>}
-        </label>
+        <InputWithError
+          message={errors['file']}
+          label="upload file"
+          type="file"
+          id="file"
+          name="upload file"
+        />
+
         <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
           <h3 className="rounded-t-xl bg-amber-600 p-2">Country</h3>
           <select
@@ -179,6 +157,7 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
       </div>
       <div className="flex gap-2">
         <Button>Submit</Button>
+
         <label className="relative flex grow rounded-2xl border bg-amber-400 p-2 pb-10">
           <h3 className="w-full rounded-l-xl bg-amber-600 p-2">
             Terms and conditions

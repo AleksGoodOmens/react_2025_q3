@@ -6,15 +6,15 @@ export interface ThemeContextType {
 }
 
 export interface ErrorsMessageTypes {
-  name?: string[];
-  age?: string[];
-  email?: string[];
-  password?: string[];
-  confirmPassword?: string[];
-  gender?: string[];
-  tc?: string[];
-  file?: string[];
-  country?: string[];
+  name?: string;
+  age?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+  gender?: string;
+  tc?: string;
+  file?: string;
+  country?: string;
 }
 
 export interface Item {

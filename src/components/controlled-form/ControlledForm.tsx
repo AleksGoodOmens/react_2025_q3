@@ -5,7 +5,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 
 import { useStore } from '@/hooks';
 
-import { Button, ErrorMessage, PasswordStrength } from '@/components';
+import { Button, ErrorMessage, InputWithError } from '@/components';
 
 interface Props {
   closeForm: () => void;
@@ -48,91 +48,65 @@ export const ControlledForm = ({ closeForm }: Props) => {
   return (
     <form className="grid gap-2 py-4" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex gap-2">
-        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
-          <h3 className="rounded-t-xl bg-amber-600 p-2">Name</h3>
-          <input
-            {...register('name')}
-            type="text"
-            placeholder="Name"
-            id="name"
-            className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
-          />
-          {errors['name'] && <ErrorMessage>{errors.name.message}</ErrorMessage>}
-        </label>
-        <label className="relative rounded-2xl border bg-amber-400 p-2 pb-10">
-          <h3 className="rounded-t-xl bg-amber-600 p-2">Age</h3>
-          <input
-            type="text"
-            id="age"
-            {...register('age')}
-            className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
-          />
-          {errors['age'] && <ErrorMessage>{errors.age.message}</ErrorMessage>}
-        </label>
-      </div>
-      <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
-        <h3 className="rounded-t-xl bg-amber-600 p-2">Email</h3>
-        <input
-          type="email"
-          placeholder="your email"
-          {...register('email')}
-          id="email"
-          className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
+        <InputWithError
+          message={errors['name']?.message}
+          label="Name"
+          placeholder="Name"
+          id="name"
+          {...register('name')}
         />
-        {errors['email'] && <ErrorMessage>{errors.email.message}</ErrorMessage>}
-      </label>
-      <div className="flex gap-2">
-        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
-          <h3 className="rounded-t-xl bg-amber-600 p-2">Password</h3>
-          <input
-            type="password"
-            placeholder="password"
-            id="password"
-            {...register('password')}
-            className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
-          />
-          <PasswordStrength text={watch('password')} />
-          {errors['password'] && (
-            <ErrorMessage>{errors.password.message}</ErrorMessage>
-          )}
-        </label>
-        <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
-          <h3 className="rounded-t-xl bg-amber-600 p-2">Confirm</h3>
-          <input
-            type="password"
-            placeholder="confirm password"
-            id="confirmPassword"
-            {...register('confirmPassword')}
-            className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
-          />
-          <PasswordStrength text={watch('confirmPassword')} />
+        <InputWithError
+          message={errors['age']?.message}
+          label="age"
+          id="age"
+          {...register('age')}
+          type="number"
+        />
+      </div>
+      <InputWithError
+        message={errors['email']?.message}
+        id="email"
+        label="email"
+        {...register('email')}
+        placeholder="your email"
+      />
 
-          {errors['confirmPassword'] && (
-            <ErrorMessage>{errors.confirmPassword.message}</ErrorMessage>
-          )}
-        </label>
+      <div className="flex gap-2">
+        <InputWithError
+          message={errors['password']?.message}
+          label="Password"
+          type="password"
+          placeholder="password"
+          id="password"
+          {...register('password')}
+          textValue={watch('password')}
+        />
+
+        <InputWithError
+          label="confirm password"
+          message={errors['confirmPassword']?.message}
+          type="password"
+          placeholder="confirm password"
+          id="confirmPassword"
+          {...register('confirmPassword')}
+          textValue={watch('password')}
+        />
       </div>
       <div className="relative grid grid-cols-2 rounded-2xl border bg-amber-400 p-2 pb-10">
-        <label className="flex justify-center gap-2">
-          <h3>Male</h3>
-          <input
-            type="radio"
-            id="gender-male"
-            {...register('gender')}
-            value={'male'}
-            className="rounded-b-xl bg-amber-800 px-4 py-2"
-          />
-        </label>
-        <label className="flex justify-center gap-2">
-          <h3>Female</h3>
-          <input
-            type="radio"
-            id="gender-female"
-            {...register('gender')}
-            value={'female'}
-            className="rounded-b-xl bg-amber-800 px-4 py-2"
-          />
-        </label>
+        <InputWithError
+          label="male"
+          type="radio"
+          id="gender-male"
+          {...register('gender')}
+          value={'male'}
+        />
+        <InputWithError
+          label="female"
+          type="radio"
+          id="gender-female"
+          {...register('gender')}
+          value={'female'}
+        />
         {errors['gender'] && (
           <ErrorMessage>{errors.gender.message}</ErrorMessage>
         )}

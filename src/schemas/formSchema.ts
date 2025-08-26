@@ -22,7 +22,7 @@ export const formSchema = z
     email: z.email('Please provide correct email'),
     password: z
       .string()
-      .nonempty('Email is required')
+      .nonempty('password is required')
       .regex(/[a-z]/, 'password should contain at least 1 lowercase letter')
       .regex(/[A-Z]/, 'password should contain at least one uppercase letter')
       .regex(/[0-9]/, 'password should contain at least one number')
@@ -32,7 +32,7 @@ export const formSchema = z
       )
       .min(8, 'password should be at least 8 characters')
       .max(16, 'password cant be longer that 16'),
-    confirmPassword: z.string(),
+    confirmPassword: z.string().nonempty('confirm password required'),
     gender: z.literal(['male', 'female'], 'we accept only two genders!'),
     tc: z.literal<boolean>(true, 'you need to accept our TC'),
     country: z.string().min(2, 'please select the country'),

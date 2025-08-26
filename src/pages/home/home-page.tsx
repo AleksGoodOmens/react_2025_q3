@@ -25,9 +25,7 @@ export const HomePage = () => {
   return (
     <section>
       <header className="flex justify-center">
-        <Heading variant="main" className="py-6 text-center">
-          Form by AmensGood
-        </Heading>
+        <Heading className="py-6 text-center">Form by AmensGood</Heading>
         <ThemeChanger />
       </header>
       <div className="flex justify-center gap-4">
