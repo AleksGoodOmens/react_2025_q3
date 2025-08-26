@@ -13,7 +13,7 @@ export const ModalWindow = ({ isOpen, onClose, children, title }: Props) => {
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'esc') onClose();
+      if (e.key === 'Escape') onClose();
     };
 
     if (isOpen) {
