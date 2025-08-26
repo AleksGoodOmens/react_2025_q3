@@ -1,8 +1,8 @@
 import { Button } from '../button/Button';
+import { PasswordStrength } from '../password-strength/PasswordStrength';
 import { formSchema, type FormSchemaType } from '@/schemas/formSchema';
 import { toBase64 } from '@/utils/toBase64';
 import { zodResolver } from '@hookform/resolvers/zod';
-import clsx from 'clsx';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
 import { useStore } from '@/hooks';
@@ -15,6 +15,7 @@ export const ControlledForm = ({ closeForm }: Props) => {
   const {
     register,
     handleSubmit,
+    watch,
     reset,
     formState: { errors },
   } = useForm<FormSchemaType>({
@@ -90,17 +91,7 @@ export const ControlledForm = ({ closeForm }: Props) => {
             {...register('password')}
             className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
           />
-          <div
-            className={clsx(
-              'h-5',
-              'bg-green-500',
-              'text-black',
-              'text-center',
-              'rounded-2xl'
-            )}
-          >
-            {passWordStrength(errors.password?.message?.length)}
-          </div>
+          <PasswordStrength text={watch('password')} />
           {errors['password'] && <p>{errors.password.message}</p>}
         </label>
         <label className="w-full rounded-2xl border bg-amber-400 p-2">
@@ -112,6 +103,8 @@ export const ControlledForm = ({ closeForm }: Props) => {
             {...register('confirmPassword')}
             className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
           />
+          <PasswordStrength text={watch('confirmPassword')} />
+
           {errors['confirmPassword'] && <p>{errors.confirmPassword.message}</p>}
         </label>
       </div>
@@ -182,23 +175,4 @@ export const ControlledForm = ({ closeForm }: Props) => {
       </div>
     </form>
   );
-};
-
-const passWordStrength = (value: number | undefined) => {
-  switch (value) {
-    case 5:
-      return 'bad';
-    case 4:
-      return 'ugly';
-    case 3:
-      return 'worse';
-    case 2:
-      return 'still bad';
-    case 1:
-      return 'intermediate';
-    case undefined:
-      return '';
-    default:
-      return 'superman';
-  }
 };

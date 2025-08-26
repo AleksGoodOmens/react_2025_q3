@@ -45,12 +45,14 @@ export const HomePage = () => {
         </Button>
       </div>
       <ModalWindow
+        title="uncontrolled form"
         onClose={handleCloseUnControlledForm}
         isOpen={isUncontrolledFormOpen}
       >
         <UncontrolledForm closeForm={handleCloseUnControlledForm} />
       </ModalWindow>
       <ModalWindow
+        title="controlled form"
         onClose={handleCloseControlledForm}
         isOpen={isControlledFormOpen}
       >

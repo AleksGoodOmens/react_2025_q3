@@ -5,9 +5,10 @@ import { createPortal } from 'react-dom';
 interface Props extends PropsWithChildren {
   isOpen: boolean;
   onClose: () => void;
+  title: string;
 }
 
-export const ModalWindow = ({ isOpen, onClose, children }: Props) => {
+export const ModalWindow = ({ isOpen, onClose, children, title }: Props) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -40,9 +41,12 @@ export const ModalWindow = ({ isOpen, onClose, children }: Props) => {
         role="dialog"
         aria-modal="true"
       >
-        <Button variant="ghost" onClick={onClose} aria-label="Close modal">
-          ×
-        </Button>
+        <header className="flex justify-between">
+          <h3 className="uppercase">{title}</h3>
+          <Button variant="ghost" onClick={onClose} aria-label="Close modal">
+            ×
+          </Button>
+        </header>
         {children}
       </div>
     </div>,

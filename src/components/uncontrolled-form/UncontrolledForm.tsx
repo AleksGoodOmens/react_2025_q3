@@ -1,8 +1,8 @@
 import { Button } from '../button/Button';
+import { PasswordStrength } from '../password-strength/PasswordStrength';
 import { formSchema } from '@/schemas/formSchema';
 import { toBase64 } from '@/utils/toBase64';
 import { filesToFileList } from '@/utils/toFileList';
-import clsx from 'clsx';
 import { useState } from 'react';
 import type { ErrorsMessageTypes } from '@/interfaces';
 
@@ -15,6 +15,7 @@ interface Props {
 export const UncontrolledForm = ({ closeForm }: Props) => {
   const [errors, setErrors] = useState<ErrorsMessageTypes>({});
   const { countries, addToUnControlledForm } = useStore();
+  const [value, setValue] = useState('');
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -30,6 +31,8 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
       file: filesToFileList(formData.getAll('file') as File[]),
       country: formData.get('country'),
     };
+
+    if (data.password) setValue(data.password as string);
     const result = formSchema.safeParse(data);
     if (!result.success) {
       const formattedErrors: ErrorsMessageTypes = {};
@@ -107,22 +110,8 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
             name="password"
             className="w-full rounded-b-xl bg-amber-800 px-4 py-2"
           />
-          <div
-            className={clsx(
-              'h-5',
-              'bg-green-500',
-              'text-black',
-              'text-center',
-              'rounded-2xl',
-              errors['password']?.length === 1 && 'bg-yellow-200',
-              errors['password']?.length === 2 && 'bg-yellow-400',
-              errors['password']?.length === 3 && 'bg-yellow-600',
-              errors['password']?.length === 4 && 'bg-orange-500',
-              errors['password']?.length === 5 && 'bg-red-500'
-            )}
-          >
-            {passWordStrength(errors.password?.length)}
-          </div>
+
+          <PasswordStrength text={value} />
           {errors['password'] && drawErrors(errors['password'])}
         </label>
         <label className="w-full rounded-2xl border bg-amber-400 p-2">
@@ -203,23 +192,4 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
 
 const drawErrors = (errors: string[]) => {
   return <p>{errors[errors.length - 1]}</p>;
-};
-
-const passWordStrength = (value: number | undefined) => {
-  switch (value) {
-    case 5:
-      return 'bad';
-    case 4:
-      return 'ugly';
-    case 3:
-      return 'worse';
-    case 2:
-      return 'still bad';
-    case 1:
-      return 'intermediate';
-    case undefined:
-      return '';
-    default:
-      return 'superman';
-  }
 };
