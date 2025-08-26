@@ -31,5 +31,5 @@
     "src/**/*.spec.ts",
     "__test__/setupTest.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/utils"]
 }
