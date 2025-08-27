@@ -20,7 +20,6 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-
     const data = {
       name: formData.get('name'),
       age: formData.get('age'),
@@ -132,7 +131,7 @@ export const UncontrolledForm = ({ closeForm }: Props) => {
           label="upload file"
           type="file"
           id="file"
-          name="upload file"
+          name="file"
         />
 
         <label className="relative w-full rounded-2xl border bg-amber-400 p-2 pb-10">
