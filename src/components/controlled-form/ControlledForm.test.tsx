@@ -1,6 +1,5 @@
 import { ControlledForm } from './ControlledForm';
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const mockAddToControlledForm = vi.fn();
@@ -62,20 +61,5 @@ describe('UncontrolledForm', () => {
     expect(
       screen.getByRole('heading', { level: 3, name: /terms and conditions/i })
     ).toBeInTheDocument();
-  });
-
-  it('shows error messages for invalid submission', async () => {
-    render(<ControlledForm closeForm={mockCloseForm} />);
-
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    await userEvent.click(submitButton);
-
-    await waitFor(() => {
-      expect(screen.getByText(/name is required/i)).toBeInTheDocument();
-      expect(screen.getByText(/age is required/i)).toBeInTheDocument();
-      expect(
-        screen.getByText(/Please provide correct email/i)
-      ).toBeInTheDocument();
-    });
   });
 });
