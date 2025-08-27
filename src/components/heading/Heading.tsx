@@ -8,13 +8,13 @@ const variantStyles = {
 
 interface Props extends HTMLAttributes<HTMLHeadingElement>, PropsWithChildren {
   Tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  variant: 'error' | 'main';
+  variant?: 'error' | 'main';
 }
 
 export const Heading = ({
   Tag = 'h2',
   className,
-  variant,
+  variant = 'main',
   children,
   ...rest
 }: Props) => {

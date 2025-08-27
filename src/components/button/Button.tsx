@@ -4,14 +4,19 @@ import type { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 interface IButton
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     PropsWithChildren {
-  variant: 'main' | 'ghost' | 'minor';
+  variant?: 'main' | 'ghost' | 'minor';
 }
 const mainClasses =
   'bg-amber-800 dark:bg-amber-400 text-white hover:bg-amber-300 dark:hover:bg-amber-500 ';
 const ghostClasses = 'hover:bg-amber-800 bg-amber-600 dark:bg-amber-400 ';
 const minorClasses = 'hover:bg-amber-800 dark:hover:bg-amber-600 text-white';
 
-export const Button = ({ children, className, variant, ...props }: IButton) => {
+export const Button = ({
+  children,
+  className,
+  variant = 'main',
+  ...props
+}: IButton) => {
   return (
     <button
       className={clsx(

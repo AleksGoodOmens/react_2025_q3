@@ -1,31 +1,28 @@
+import { countriesList } from './countryList';
 import { create } from 'zustand';
+import type { Item } from '@/interfaces';
 
 type IState = {
-  favorite: Set<string>;
+  countries: typeof countriesList;
+  uncontrolledFormData: Item[];
+  controlledFormData: Item[];
 };
 
 type IActions = {
-  add: (value: string) => void;
-  remove: (value: string) => void;
-  clearFavorite: () => void;
+  addToUnControlledForm: (value: Item) => void;
+  addToControlledForm: (value: Item) => void;
 };
 
 export const useStore = create<IState & IActions>((set) => ({
-  favorite: new Set(),
-
-  add: (value) =>
-    set((state) => {
-      const updated = new Set(state.favorite);
-      updated.add(value);
-      return { favorite: updated };
-    }),
-
-  remove: (value) =>
-    set((state) => {
-      const updated = new Set(state.favorite);
-      updated.delete(value);
-      return { favorite: updated };
-    }),
-
-  clearFavorite: () => set({ favorite: new Set() }),
+  countries: countriesList,
+  uncontrolledFormData: [],
+  controlledFormData: [],
+  addToUnControlledForm: (value) =>
+    set((state) => ({
+      uncontrolledFormData: [...state.uncontrolledFormData, value],
+    })),
+  addToControlledForm: (value) =>
+    set((state) => ({
+      controlledFormData: [...state.controlledFormData, value],
+    })),
 }));
