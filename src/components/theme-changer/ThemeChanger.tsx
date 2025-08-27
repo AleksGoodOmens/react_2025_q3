@@ -1,11 +1,10 @@
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 import { useContext } from 'react';
-import type { ThemeContextType } from '@/interfaces';
 
 import { ThemeContext } from '@/contexts';
 
 export const ThemeChanger = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext) as ThemeContextType;
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
     <button
