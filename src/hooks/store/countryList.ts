@@ -192,4 +192,4 @@ export const countriesList = [
   'Yemen',
   'Zambia',
   'Zimbabwe',
-];
+] as const;

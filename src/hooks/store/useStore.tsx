@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import type { Item } from '@/interfaces';
 
 type IState = {
-  countries: string[];
+  countries: typeof countriesList;
   uncontrolledFormData: Item[];
   controlledFormData: Item[];
 };

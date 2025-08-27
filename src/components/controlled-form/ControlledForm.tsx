@@ -17,7 +17,8 @@ export const ControlledForm = ({ closeForm }: Props) => {
     handleSubmit,
     watch,
     reset,
-    formState: { errors },
+
+    formState: { errors, isValid },
   } = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -139,7 +140,7 @@ export const ControlledForm = ({ closeForm }: Props) => {
         </label>
       </div>
       <div className="flex gap-2">
-        <Button>Submit</Button>
+        <Button disabled={!isValid}>Submit</Button>
         <label className="relative flex grow rounded-2xl border bg-amber-400 p-2 pb-10">
           <h3 className="w-full rounded-l-xl bg-amber-600 p-2">
             Terms and conditions
