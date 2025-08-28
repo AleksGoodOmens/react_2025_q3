@@ -3,3 +3,4 @@ export * from './error-boundary/ErrorBoundary';
 export * from './theme-changer/ThemeChanger';
 export * from './overlay-update/OverlayUpdate';
 export * from './heading/Heading';
+export * from './countries-list/CountriesList';
