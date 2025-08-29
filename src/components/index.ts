@@ -9,3 +9,6 @@ export * from './list-controls/ListControls';
 export * from './list-item/ListItem';
 export * from './country-yearly-list/CountryYearlyList';
 export * from './modal/Modal';
+export * from './range-year/RangeYears';
+export * from './search-name/SearchName';
+export * from './order-select/OrderSelect';

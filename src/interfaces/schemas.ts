@@ -16,5 +16,3 @@ export const CountrySchema = z.object({
 });
 
 export const CountriesDataSchema = z.record(z.string(), CountrySchema);
-export type CountriesData = z.infer<typeof CountriesDataSchema>;
-export type CountryYearlyData = z.infer<typeof DataSchema>;

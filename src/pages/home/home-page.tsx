@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import { CountriesList, ErrorBoundary, Heading } from '@/components';
 
 export const HomePage = () => {
+  console.log('home page');
   return (
     <section className="container mx-auto">
       <Heading className="p-4 text-center">

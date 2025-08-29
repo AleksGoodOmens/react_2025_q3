@@ -1,7 +1,8 @@
-import type { dataSorter } from './dataSorter';
+import type { CountriesData } from '@/interfaces';
 
-export const getMinMaxYear = (data: ReturnType<typeof dataSorter>) => {
-  const year = data.flatMap((item) => {
+export const getMinMaxYear = (data: CountriesData) => {
+  const arr = Object.values(data);
+  const year = arr.flatMap((item) => {
     return item.data.map((it) => {
       return it.year;
     });
