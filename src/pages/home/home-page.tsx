@@ -1,11 +1,13 @@
 import { Suspense } from 'react';
 
-import { CountriesList, ErrorBoundary } from '@/components';
+import { CountriesList, ErrorBoundary, Heading } from '@/components';
 
 export const HomePage = () => {
   return (
-    <section>
-      <h1>Home page</h1>
+    <section className="container mx-auto">
+      <Heading className="p-4 text-center">
+        CO2 and Greenhouse Gas Emissions by AmensGood
+      </Heading>
       <ErrorBoundary fallback={<div>error accrued </div>}>
         <Suspense fallback={<div>loading...</div>}>
           <CountriesList />

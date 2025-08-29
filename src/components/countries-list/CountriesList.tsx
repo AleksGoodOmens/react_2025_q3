@@ -1,59 +1,80 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { useState, type ChangeEvent } from 'react';
-import { CountriesDataSchema, type CountriesData } from '@/interfaces/schemas';
+import { useCallback, useMemo, useState, type ChangeEvent } from 'react';
+import { getData, getMinMaxYear } from '@/utils';
 
-const dataPath = import.meta.env.VITE_DATA_URL as string;
-
-const fetchData = async (): Promise<CountriesData> => {
-  const response = await fetch(dataPath);
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-
-  const rawData = await response.json();
-
-  return CountriesDataSchema.parse(rawData);
-};
+import { CountryItem, Heading, ListControls, ListItem } from '@/components';
 
 export const CountriesList = () => {
   const { data } = useSuspenseQuery({
     queryKey: ['countries'],
-    queryFn: fetchData,
+    queryFn: getData,
   });
-  const [countriesNames] = useState(Object.keys(data));
-  const [countriesNamesFiltered, setCountriesNamesFiltered] = useState(
-    Object.keys(data)
+  const [minMaxYears] = useState(getMinMaxYear(data));
+  const [currentYear, setCurrentYear] = useState(minMaxYears.max);
+  const [filteredData, setFilteredData] = useState(data);
+
+  const [searchValue, setSearchValue] = useState('');
+
+  const handleSort = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const targetValue = e.target.value;
+      if (targetValue) {
+        const filterData = data.filter((country) =>
+          country.name.includes(targetValue)
+        );
+        setFilteredData(filterData);
+      }
+
+      if (!targetValue) {
+        setFilteredData(data);
+      }
+      setSearchValue(targetValue);
+    },
+    [data]
   );
-  const [value, setValue] = useState('');
+  const handleRange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setCurrentYear(Number(e.target.value));
+  }, []);
 
-  const handleSort = (e: ChangeEvent<HTMLInputElement>) => {
-    const targetValue = e.target.value;
-    if (!targetValue) {
-      setCountriesNamesFiltered(countriesNames);
-      setValue(targetValue);
-      return;
-    }
-    setValue(targetValue);
-
-    const filterData = countriesNames.filter((country) =>
-      country.includes(value)
-    );
-    setCountriesNamesFiltered(filterData);
-  };
+  const headings = useMemo(() => ['country name', 'ISO', 'population'], []);
+  const detailedHeadings = [
+    'year',
+    'population',
+    'co2',
+    'co2 per capita',
+    'methane',
+    'oil co2',
+    'temperature change from co2',
+  ];
 
   return (
-    <ul className="flex flex-wrap gap-2">
-      <h2>countries list </h2>
-      <input
-        className="border-2 bg-amber-400 px-4"
-        value={value}
-        onChange={handleSort}
+    <>
+      <ListControls
+        currentYear={currentYear}
+        handleRange={handleRange}
+        handleSort={handleSort}
+        max={minMaxYears.max}
+        min={minMaxYears.min}
+        searchValue={searchValue}
       />
-      {countriesNamesFiltered.map((country) => (
-        <li className="border px-4 py-2" key={country}>
-          {country}
-        </li>
-      ))}
-    </ul>
+      <ul className="grid">
+        <ListItem>
+          {headings.map((heading) => (
+            <Heading variant="tableHeading" key={heading}>
+              {heading}
+            </Heading>
+          ))}
+        </ListItem>
+
+        {filteredData.map((country) => (
+          <CountryItem
+            key={country.name}
+            country={country}
+            currentYear={currentYear}
+            activeHeadings={detailedHeadings}
+          />
+        ))}
+      </ul>
+    </>
   );
 };

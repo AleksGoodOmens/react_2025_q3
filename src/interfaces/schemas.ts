@@ -1,10 +1,13 @@
 import { z } from 'zod';
 
 export const DataSchema = z.object({
-  cement_co2: z.number().optional(),
-  cumulative_cement_co2: z.number().optional(),
-  population: z.number().optional(),
   year: z.number(),
+  population: z.number().optional(),
+  co2: z.number().optional(),
+  co2_per_capita: z.number().optional(),
+  temperature_change_from_co2: z.number().optional(),
+  oil_co2: z.number().optional(),
+  methane: z.number().optional(),
 });
 
 export const CountrySchema = z.object({
@@ -14,3 +17,4 @@ export const CountrySchema = z.object({
 
 export const CountriesDataSchema = z.record(z.string(), CountrySchema);
 export type CountriesData = z.infer<typeof CountriesDataSchema>;
+export type CountryYearlyData = z.infer<typeof DataSchema>;
