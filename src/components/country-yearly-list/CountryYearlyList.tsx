@@ -1,4 +1,4 @@
-import type { CountryYearlyData } from '@/interfaces/schemas';
+import type { CountryYearlyData } from '@/interfaces';
 
 import { ListItem } from '@/components';
 

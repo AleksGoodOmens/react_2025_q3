@@ -1,4 +1,5 @@
-import { CountriesDataSchema, type CountriesData } from '@/interfaces/schemas';
+import type { CountriesData } from '@/interfaces';
+import { CountriesDataSchema } from '@/interfaces/schemas';
 
 const dataPath = import.meta.env.VITE_DATA_URL as string;
 
