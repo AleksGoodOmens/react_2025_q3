@@ -13,10 +13,8 @@ export const getTopLevelData = (
     const dataForCurrentYear = info.data.find(
       (item) => item.year === currentYear
     );
-
-    if (dataForCurrentYear?.population) {
-      population = dataForCurrentYear?.population;
-    }
+    const rawNumber = dataForCurrentYear?.population;
+    if (rawNumber) population = rawNumber.toLocaleString('ru-RU');
 
     return {
       name: country,

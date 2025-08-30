@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import type { ButtonHTMLAttributes, PropsWithChildren } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 interface IButton
   extends ButtonHTMLAttributes<HTMLButtonElement>,
@@ -21,10 +22,12 @@ export const Button = ({
 }: IButton) => {
   return (
     <button
-      className={clsx(
-        'rounded-xl border-2 px-4 py-2 uppercase disabled:cursor-not-allowed disabled:bg-amber-300',
-        className,
-        styles[variant]
+      className={twMerge(
+        clsx(
+          'rounded-xl border-2 px-4 py-2 uppercase disabled:cursor-not-allowed disabled:bg-amber-300',
+          styles[variant],
+          className
+        )
       )}
       {...props}
     >

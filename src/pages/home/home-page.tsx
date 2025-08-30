@@ -1,6 +1,11 @@
 import { Suspense } from 'react';
 
-import { CountriesList, ErrorBoundary, Heading } from '@/components';
+import {
+  CountriesList,
+  ErrorBoundary,
+  Heading,
+  OverlayUpdate,
+} from '@/components';
 
 export const HomePage = () => {
   console.log('home page');
@@ -10,7 +15,7 @@ export const HomePage = () => {
         CO2 and Greenhouse Gas Emissions by AmensGood
       </Heading>
       <ErrorBoundary fallback={<div>error accrued </div>}>
-        <Suspense fallback={<div>loading...</div>}>
+        <Suspense fallback={<OverlayUpdate message="loading..." />}>
           <CountriesList />
         </Suspense>
       </ErrorBoundary>

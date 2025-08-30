@@ -25,7 +25,7 @@ export const CountryItem = memo(({ country }: CountryItemProps) => {
 
   return (
     <>
-      <ListItem>
+      <ListItem className="relative">
         {cols.map((col, i) => (
           <div
             key={`${col}-${i}`}
@@ -34,8 +34,11 @@ export const CountryItem = memo(({ country }: CountryItemProps) => {
             {col}
           </div>
         ))}
-        <Button onClick={handleOpen}>show more</Button>
+        <Button className="absolute right-0 py-0" onClick={handleOpen}>
+          more
+        </Button>
       </ListItem>
+
       {open && (
         <CountryYearlyList
           data={yearsDetails.data}
