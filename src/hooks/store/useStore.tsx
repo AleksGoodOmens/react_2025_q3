@@ -2,7 +2,12 @@ import { create } from 'zustand';
 import { getMinMaxYear, getTopLevelData } from '@/utils';
 import { sortBy } from '@/utils/sortBy';
 
-import type { CountriesData, SortType, TopLevelDataType } from '@/interfaces';
+import type {
+  ActiveColumnState,
+  CountriesData,
+  SortType,
+  TopLevelDataType,
+} from '@/interfaces';
 
 type IState = {
   rawData: CountriesData;
@@ -12,15 +17,7 @@ type IState = {
   sortBy: SortType;
   currentYear: number;
   searchValue: string;
-  columnNames: [
-    'year',
-    'population',
-    'co2',
-    'co2 per capita',
-    'methane',
-    'oil co2',
-    'temperature change from co2',
-  ];
+  activeColumns: ActiveColumnState;
   minMaxYears: { min: number; max: number };
 };
 
@@ -29,6 +26,7 @@ type IActions = {
   changeCurrentYear: (year: number) => void;
   changeOrder: (newOrder: SortType) => void;
   setRawData: (rawData: CountriesData) => void;
+  changeColumns: (value: ActiveColumnState) => void;
 };
 
 export const useStore = create<IState & IActions>((set) => ({
@@ -45,15 +43,15 @@ export const useStore = create<IState & IActions>((set) => ({
     by: 'name',
   },
   searchValue: '',
-  columnNames: [
-    'year',
-    'population',
-    'co2',
-    'co2 per capita',
-    'methane',
-    'oil co2',
-    'temperature change from co2',
-  ],
+  activeColumns: {
+    year: true,
+    population: true,
+    co2: true,
+    co2_per_capita: true,
+    methane: true,
+    oil_co2: true,
+    temperature_change_from_co2: true,
+  },
   currentYear: new Date().getFullYear(),
 
   setRawData: (rawData) =>
@@ -115,5 +113,10 @@ export const useStore = create<IState & IActions>((set) => ({
         countriesNames,
         searchValue,
       };
+    }),
+
+  changeColumns: (columns: ActiveColumnState) =>
+    set((state) => {
+      return { ...state, activeColumns: columns };
     }),
 }));
