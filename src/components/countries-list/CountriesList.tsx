@@ -12,7 +12,8 @@ export const CountriesList = () => {
     queryFn: getData,
   });
 
-  const { setRawData, topLevelData } = useStore();
+  const setRawData = useStore((state) => state.setRawData);
+  const topLevelData = useStore((state) => state.topLevelData);
 
   useEffect(() => {
     setRawData(rawData);

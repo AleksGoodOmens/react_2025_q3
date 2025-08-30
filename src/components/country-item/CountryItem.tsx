@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { getActiveKeys } from '@/utils/getActiveKeys';
 
 import type { TopLevelDataType } from '@/interfaces';
@@ -12,12 +12,13 @@ interface CountryItemProps {
   country: TopLevelDataType[0];
 }
 
-export const CountryItem = ({ country }: CountryItemProps) => {
+export const CountryItem = memo(({ country }: CountryItemProps) => {
   const { name, ISO, population } = country;
   const [open, setOpen] = useState(false);
-  const { rawData, activeColumns } = useStore();
+  const activeColumns = useStore((state) => state.activeColumns);
+  const rawData = useStore((state) => state.rawData);
 
-  const yearsDetails = rawData[name];
+  const yearsDetails = useMemo(() => rawData[name], [rawData, name]);
   const cols = [name, ISO, population];
 
   const handleOpen = () => {
@@ -48,6 +49,6 @@ export const CountryItem = ({ country }: CountryItemProps) => {
       )}
     </>
   );
-};
+});
 
 CountryItem.displayName = 'CountryItem';
