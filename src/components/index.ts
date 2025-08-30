@@ -12,3 +12,4 @@ export * from './range-year/RangeYears';
 export * from './search-name/SearchName';
 export * from './order-select/OrderSelect';
 export * from './country-yearly-list/CountryYearlyList';
+export * from './top-table-header/TopTableHeader';

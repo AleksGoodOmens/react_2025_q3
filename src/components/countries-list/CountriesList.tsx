@@ -1,28 +1,29 @@
-import { useCountriesList } from '@/hooks/useCountriesList';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { getData } from '@/utils';
 
-import { CountryItem, Heading, ListControls, ListItem } from '@/components';
+import { useStore } from '@/hooks';
 
-const HEADINGS = ['country name', 'ISO', 'population'];
+import { CountryItem, TopTableHeader } from '@/components';
 
 export const CountriesList = () => {
-  const { topLevelData } = useCountriesList();
+  const { data: rawData } = useSuspenseQuery({
+    queryKey: ['countries'],
+    queryFn: getData,
+  });
+
+  const { setRawData, topLevelData } = useStore();
+
+  useEffect(() => {
+    setRawData(rawData);
+  }, [rawData, setRawData]);
 
   return (
-    <>
-      <ListControls />
-      <ul className="grid">
-        <ListItem>
-          {HEADINGS.map((heading) => (
-            <Heading variant="tableHeading" key={heading}>
-              {heading}
-            </Heading>
-          ))}
-        </ListItem>
-
-        {topLevelData.map((country) => (
-          <CountryItem key={country.name} country={country} />
-        ))}
-      </ul>
-    </>
+    <ul className="grid">
+      <TopTableHeader />
+      {topLevelData.map((country) => (
+        <CountryItem key={country.name} country={country} />
+      ))}
+    </ul>
   );
 };

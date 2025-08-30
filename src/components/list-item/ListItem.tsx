@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { memo, type PropsWithChildren } from 'react';
+import { type PropsWithChildren } from 'react';
 
 interface ListItemProps extends PropsWithChildren {
   className?: string;
@@ -11,10 +11,12 @@ const styles = {
   secondary: '',
 };
 
-export const ListItem = memo(
-  ({ children, className, variant = 'primary' }: ListItemProps) => {
-    return <li className={clsx(className, styles[variant])}>{children}</li>;
-  }
-);
+export const ListItem = ({
+  children,
+  className,
+  variant = 'primary',
+}: ListItemProps) => {
+  return <li className={clsx(className, styles[variant])}>{children}</li>;
+};
 
 ListItem.displayName = 'listItem';

@@ -1,35 +1,31 @@
 import { Heading } from '../heading/Heading';
 import styles from './RangeYears.module.css';
 import clsx from 'clsx';
-import { memo, useCallback, useRef, useState, type ChangeEvent } from 'react';
+import { useRef, useState, type ChangeEvent } from 'react';
 
 import { useStore } from '@/hooks';
 
-export const RangeYearsInput = memo(() => {
+export const RangeYearsInput = () => {
   const { minMaxYears, currentYear, changeCurrentYear } = useStore();
   const [year, setYear] = useState(currentYear);
   const [isAnimating, setIsAnimating] = useState(false);
   const timeoutRef = useRef<number | null>(null);
 
-  const handleRange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const newYear = Number(e.target.value);
-      setYear(newYear);
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+  const handleRange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newYear = Number(e.target.value);
+    setYear(newYear);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
 
-      timeoutRef.current = setTimeout(() => {
-        changeCurrentYear(newYear);
+    timeoutRef.current = setTimeout(() => {
+      changeCurrentYear(newYear);
 
-        setIsAnimating(true);
+      setIsAnimating(true);
 
-        setTimeout(() => setIsAnimating(false), 300);
-      }, 300);
-    },
-
-    [changeCurrentYear]
-  );
+      setTimeout(() => setIsAnimating(false), 300);
+    }, 300);
+  };
 
   return (
     <label className="flex items-center justify-center">
@@ -55,5 +51,5 @@ export const RangeYearsInput = memo(() => {
       />
     </label>
   );
-});
+};
 RangeYearsInput.displayName = 'RangeYearsInput';
