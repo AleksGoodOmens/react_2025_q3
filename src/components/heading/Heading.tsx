@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { type HTMLAttributes, type PropsWithChildren } from 'react';
+import { memo, type HTMLAttributes, type PropsWithChildren } from 'react';
 
 const variantStyles = {
   error: 'col-span-full p-4 text-center text-rose-600',
@@ -14,19 +14,16 @@ interface Props extends HTMLAttributes<HTMLHeadingElement>, PropsWithChildren {
   variant?: 'error' | 'main' | 'tableHeading' | 'small';
 }
 
-export const Heading = ({
-  Tag = 'h2',
-  className,
-  variant = 'main',
-  children,
-  ...rest
-}: Props) => {
-  return (
-    <Tag
-      className={clsx(className && className, variantStyles[variant])}
-      {...rest}
-    >
-      {children}
-    </Tag>
-  );
-};
+export const Heading = memo(
+  ({ Tag = 'h2', className, variant = 'main', children, ...rest }: Props) => {
+    return (
+      <Tag
+        className={clsx(className && className, variantStyles[variant])}
+        {...rest}
+      >
+        {children}
+      </Tag>
+    );
+  }
+);
+Heading.displayName = 'Heading';

@@ -1,7 +1,6 @@
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/solid';
 import { memo, useCallback, useMemo, useState } from 'react';
-import { formatValue } from '@/utils/FormatValues';
-import { getSortedData } from '@/utils/getSortedData';
+import { formatValue, getSortedData } from '@/utils';
 
 import { type CountryYearlyData, type SortConfig } from '@/interfaces';
 

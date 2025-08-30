@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { memo, useMemo, useState } from 'react';
-import { getActiveKeys } from '@/utils/getActiveKeys';
+import { getActiveKeys } from '@/utils';
 
 import type { TopLevelDataType } from '@/interfaces';
 

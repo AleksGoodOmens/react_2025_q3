@@ -1,6 +1,5 @@
 import { create } from 'zustand';
-import { getMinMaxYear, getTopLevelData } from '@/utils';
-import { sortBy } from '@/utils/sortBy';
+import { getMinMaxYear, getTopLevelData, sortBy } from '@/utils';
 
 import type {
   ActiveColumnState,
