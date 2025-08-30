@@ -90,14 +90,18 @@ export const CountryYearlyList = memo(
     const items = sortedData.map((item, i) => {
       const content = activeColumns.map((col) => {
         const value = formatValue(col, item[col]);
-        return <div key={col}>{value || 'N/A'}</div>;
+        return (
+          <div className="px-2" key={col}>
+            {value || 'N/A'}
+          </div>
+        );
       });
 
       return <ListItem key={`${item.year}-${i}`}>{content}</ListItem>;
     });
 
     return (
-      <ul>
+      <ul className="bg-amber-500 text-black">
         <ListItem>{headers}</ListItem>
         {items}
       </ul>

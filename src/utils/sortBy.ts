@@ -12,14 +12,22 @@ export const sortBy = (data: TopLevelDataType, newOrder: SortType) => {
     });
   } else if (newOrder.by === 'population') {
     res.sort((a, b) => {
-      const popA = Number(a.population) || 0;
-      const popB = Number(b.population) || 0;
+      const parseNumber = (str: string | number) => {
+        if (typeof str !== 'string' && typeof str !== 'number') return 0;
 
-      if (newOrder.order === 'asc') {
-        return popA - popB;
-      } else {
-        return popB - popA;
-      }
+        const stringValue = String(str);
+
+        const cleaned = stringValue.replace(/[\s,]/g, '');
+
+        const num = Number(cleaned);
+
+        return isNaN(num) ? 0 : num;
+      };
+
+      const popA = parseNumber(a.population);
+      const popB = parseNumber(b.population);
+
+      return newOrder.order === 'asc' ? popA - popB : popB - popA;
     });
   }
   return res;

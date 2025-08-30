@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { memo, useState } from 'react';
 import { getActiveKeys } from '@/utils/getActiveKeys';
 
@@ -25,7 +26,7 @@ export const CountryItem = memo(({ country }: CountryItemProps) => {
 
   return (
     <>
-      <ListItem className="relative">
+      <ListItem className={clsx('relative', open && 'bg-amber-500')}>
         {cols.map((col, i) => (
           <div
             key={`${col}-${i}`}
