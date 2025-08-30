@@ -14,6 +14,11 @@ export interface SortType {
   by: 'name' | 'population';
 }
 
+export interface SortConfig {
+  by: keyof CountryYearlyData | null;
+  order: 'asc' | 'desc';
+}
+
 export const COLUMNS = [
   'year',
   'population',

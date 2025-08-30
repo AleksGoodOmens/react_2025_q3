@@ -1,11 +1,11 @@
 import { Heading } from '../heading/Heading';
 import styles from './RangeYears.module.css';
 import clsx from 'clsx';
-import { useCallback, useRef, useState, type ChangeEvent } from 'react';
+import { memo, useCallback, useRef, useState, type ChangeEvent } from 'react';
 
 import { useStore } from '@/hooks';
 
-export const RangeYearsInput = () => {
+export const RangeYearsInput = memo(() => {
   const { minMaxYears, currentYear, changeCurrentYear } = useStore();
   const [year, setYear] = useState(currentYear);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -55,4 +55,5 @@ export const RangeYearsInput = () => {
       />
     </label>
   );
-};
+});
+RangeYearsInput.displayName = 'RangeYearsInput';

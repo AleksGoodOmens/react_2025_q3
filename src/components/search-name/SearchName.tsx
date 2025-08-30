@@ -1,24 +1,27 @@
-import { useRef, useState, type ChangeEvent } from 'react';
+import { memo, useCallback, useRef, useState, type ChangeEvent } from 'react';
 
 import { useStore } from '@/hooks';
 
-export const SearchNameInput = () => {
+export const SearchNameInput = memo(() => {
   const { searchValue, searchByName } = useStore();
   const [value, setValue] = useState(searchValue);
   const timeoutRef = useRef<number | null>(null);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    setValue(newValue);
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const newValue = e.target.value;
+      setValue(newValue);
 
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
 
-    timeoutRef.current = setTimeout(() => {
-      searchByName(newValue);
-    }, 300);
-  };
+      timeoutRef.current = setTimeout(() => {
+        searchByName(newValue);
+      }, 300);
+    },
+    [searchByName]
+  );
 
   return (
     <input
@@ -29,4 +32,6 @@ export const SearchNameInput = () => {
       onChange={handleChange}
     />
   );
-};
+});
+
+SearchNameInput.displayName = 'SearchNameInput';
