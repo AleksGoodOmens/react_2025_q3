@@ -1,7 +1,7 @@
 import { Heading } from '../heading/Heading';
 import styles from './RangeYears.module.css';
 import clsx from 'clsx';
-import { useRef, useState, type ChangeEvent } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 
 import { useStore } from '@/hooks';
 
@@ -10,6 +10,14 @@ export const RangeYearsInput = () => {
   const [year, setYear] = useState(currentYear);
   const [isAnimating, setIsAnimating] = useState(false);
   const timeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleRange = (e: ChangeEvent<HTMLInputElement>) => {
     const newYear = Number(e.target.value);

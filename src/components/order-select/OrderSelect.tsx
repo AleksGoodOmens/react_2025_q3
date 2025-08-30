@@ -1,33 +1,37 @@
-import { useRef, useState, type ChangeEvent } from 'react';
+import { useCallback, useRef, useState, type ChangeEvent } from 'react';
 
 import { useStore } from '@/hooks';
 
 export const OrderSelect = () => {
-  const { changeOrder, sortBy } = useStore();
+  const sortBy = useStore((state) => state.sortBy);
+  const changeOrder = useStore((state) => state.changeOrder);
   const [localOrder, setLocalOrder] = useState(sortBy);
 
   const timeoutRef = useRef<number | null>(null);
 
-  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value as 'name' | 'population' | 'desc' | 'asc';
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      const value = e.target.value as 'name' | 'population' | 'desc' | 'asc';
 
-    setLocalOrder((prev) => {
-      const newOrder =
-        value === 'name' || value === 'population'
-          ? { ...prev, by: value }
-          : { ...prev, order: value };
+      setLocalOrder((prev) => {
+        const newOrder =
+          value === 'name' || value === 'population'
+            ? { ...prev, by: value }
+            : { ...prev, order: value };
 
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+        }
 
-      timeoutRef.current = setTimeout(() => {
-        changeOrder(newOrder);
-      }, 300);
+        timeoutRef.current = setTimeout(() => {
+          changeOrder(newOrder);
+        }, 300);
 
-      return newOrder;
-    });
-  };
+        return newOrder;
+      });
+    },
+    [changeOrder]
+  );
   return (
     <div className="flex gap-4 rounded-2xl border-2 bg-amber-500 px-2 capitalize">
       <label>
