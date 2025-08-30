@@ -8,6 +8,11 @@ export interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
 }
+
+export interface SortType {
+  order: 'asc' | 'desc';
+  by: 'name' | 'population';
+}
 export type CountryType = z.infer<typeof CountrySchema>;
 export type CountriesData = z.infer<typeof CountriesDataSchema>;
 export type CountryYearlyData = z.infer<typeof DataSchema>;

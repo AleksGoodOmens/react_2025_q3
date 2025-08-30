@@ -1,17 +1,15 @@
 import { create } from 'zustand';
 import { getMinMaxYear, getTopLevelData } from '@/utils';
+import { sortBy } from '@/utils/sortBy';
 
-import type { CountriesData, TopLevelDataType } from '@/interfaces';
+import type { CountriesData, SortType, TopLevelDataType } from '@/interfaces';
 
 type IState = {
   rawData: CountriesData;
   rawCountriesNames: string[];
   countriesNames: string[];
   topLevelData: TopLevelDataType;
-  sortBy: {
-    order: 'asc' | 'desc';
-    by: 'name' | 'population';
-  };
+  sortBy: SortType;
   currentYear: number;
   searchValue: string;
   columnNames: [
@@ -29,10 +27,7 @@ type IState = {
 type IActions = {
   searchByName: (searchValue: string) => void;
   changeCurrentYear: (year: number) => void;
-  changeOrder: (newOrder: {
-    order: 'asc' | 'desc';
-    by: 'name' | 'population';
-  }) => void;
+  changeOrder: (newOrder: SortType) => void;
   setRawData: (rawData: CountriesData) => void;
 };
 
@@ -83,29 +78,10 @@ export const useStore = create<IState & IActions>((set) => ({
 
   changeOrder: (newOrder) =>
     set((state) => {
-      const sortBy = [...state.topLevelData];
-      if (newOrder.by === 'name') {
-        sortBy.sort((a, b) => {
-          if (newOrder.order === 'asc') {
-            return a.name.localeCompare(b.name);
-          } else {
-            return b.name.localeCompare(a.name);
-          }
-        });
-      } else if (newOrder.by === 'population') {
-        sortBy.sort((a, b) => {
-          const popA = Number(a.population) || 0;
-          const popB = Number(b.population) || 0;
-
-          if (newOrder.order === 'asc') {
-            return popA - popB;
-          } else {
-            return popB - popA;
-          }
-        });
-      }
-
-      return { topLevelData: sortBy };
+      return {
+        topLevelData: sortBy(state.topLevelData, newOrder),
+        sortBy: newOrder,
+      };
     }),
 
   changeCurrentYear: (year: number) =>
@@ -116,7 +92,10 @@ export const useStore = create<IState & IActions>((set) => ({
         year
       );
 
-      return { topLevelData, currentYear: year };
+      return {
+        topLevelData: sortBy(topLevelData, state.sortBy),
+        currentYear: year,
+      };
     }),
 
   searchByName: (searchValue: string) =>
@@ -131,6 +110,10 @@ export const useStore = create<IState & IActions>((set) => ({
         state.currentYear
       );
 
-      return { topLevelData, countriesNames, searchValue };
+      return {
+        topLevelData: sortBy(topLevelData, state.sortBy),
+        countriesNames,
+        searchValue,
+      };
     }),
 }));

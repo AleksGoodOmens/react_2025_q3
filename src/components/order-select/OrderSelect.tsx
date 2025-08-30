@@ -11,29 +11,22 @@ export const OrderSelect = () => {
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value as 'name' | 'population' | 'desc' | 'asc';
 
-    if (value === 'name' || value === 'population') {
-      setLocalOrder((prev) => {
-        return {
-          ...prev,
-          by: value,
-        };
-      });
-    } else {
-      setLocalOrder((prev) => {
-        return {
-          ...prev,
-          order: value,
-        };
-      });
-    }
+    setLocalOrder((prev) => {
+      const newOrder =
+        value === 'name' || value === 'population'
+          ? { ...prev, by: value }
+          : { ...prev, order: value };
 
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
 
-    timeoutRef.current = setTimeout(() => {
-      changeOrder(localOrder);
-    }, 300);
+      timeoutRef.current = setTimeout(() => {
+        changeOrder(newOrder);
+      }, 300);
+
+      return newOrder;
+    });
   };
   return (
     <div>
