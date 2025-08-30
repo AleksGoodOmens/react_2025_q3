@@ -22,9 +22,10 @@ export const SearchNameInput = () => {
 
   return (
     <input
-      className="border-2 bg-amber-400 px-4"
+      className="w-full rounded-2xl border-2 bg-amber-400 px-4"
       value={value}
       name="search"
+      placeholder="Type country name"
       onChange={handleChange}
     />
   );

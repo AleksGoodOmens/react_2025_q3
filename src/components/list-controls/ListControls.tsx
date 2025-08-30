@@ -17,12 +17,16 @@ export const ListControls = () => {
   };
 
   return (
-    <section>
-      <SearchNameInput />
-      <OrderSelect />
+    <section className="grid gap-2">
+      <div className="flex">
+        <SearchNameInput />
+        <OrderSelect />
+      </div>
       <RangeYearsInput />
 
-      <Button onClick={handleClose}>Settings</Button>
+      <Button onClick={handleClose} className="justify-self-end">
+        Settings
+      </Button>
       {show && createPortal(<Modal onClose={handleClose} />, document.body)}
     </section>
   );

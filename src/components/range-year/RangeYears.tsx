@@ -32,7 +32,7 @@ export const RangeYearsInput = () => {
   );
 
   return (
-    <label>
+    <label className="flex items-center justify-center">
       <Heading
         Tag={'h3'}
         className={clsx(

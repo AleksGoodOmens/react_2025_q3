@@ -29,17 +29,33 @@ export const OrderSelect = () => {
     });
   };
   return (
-    <div>
+    <div className="flex gap-4 rounded-2xl border-2 bg-amber-500 px-2 capitalize">
       <label>
-        <select value={localOrder.by} onChange={handleChange}>
-          <option value={'name'}>country name</option>
-          <option value={'population'}>population</option>
+        <select
+          className="capitalize"
+          value={localOrder.by}
+          onChange={handleChange}
+        >
+          <option className="capitalize" value={'name'}>
+            country name
+          </option>
+          <option className="capitalize" value={'population'}>
+            population
+          </option>
         </select>
       </label>
       <label>
-        <select value={localOrder.order} onChange={handleChange}>
-          <option value={'desc'}>desc</option>
-          <option value={'asc'}>asc</option>
+        <select
+          className="capitalize"
+          value={localOrder.order}
+          onChange={handleChange}
+        >
+          <option className="capitalize" value={'desc'}>
+            desc
+          </option>
+          <option className="capitalize" value={'asc'}>
+            asc
+          </option>
         </select>
       </label>
     </div>
