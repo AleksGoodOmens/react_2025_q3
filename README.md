@@ -46,47 +46,17 @@ npm run preview
 - **React 18** с Suspense и Concurrent Features
 - **TypeScript** для типизации
 - **Vite** для сборки
-- **React Router** для навигации (если требуется)
 - **CSS Modules** / **Tailwind** для стилизации
 
 ## 📈 Производительность
 
-### Исходные показатели (до оптимизации)
-
-- **Commit Duration**: ~450ms при сортировке
-- **Render Duration**: ~380ms для компонента таблицы
-- **Количество ререндеров**: 15+ при изменении года
-
-### После оптимизации
-
-- **Commit Duration**: ~120ms при сортировке (улучшение на 73%)
-- **Render Duration**: ~90ms для компонента таблицы (улучшение на 76%)
-- **Количество ререндеров**: 3-5 при изменении года
+[report english](./perfomance-report.md)
 
 ### Использованные оптимизации
 
-1. **React.memo** для компонентов CountryCard и DataTable
+1. **React.memo** для компонентов
 2. **useMemo** для мемоизации filtered/sorted списков
 3. **useCallback** для обработчиков событий
-4. **Виртуализация** для больших списков
-5. **Ленивая загрузка** компонентов
-
-## 📊 Результаты профилирования
-
-### Flame Graph до оптимизации
-
-![Flame Graph до оптимизации](https://example.com/flame-before.png)
-_Множественные ненужные ререндеры компонентов_
-
-### Flame Graph после оптимизации
-
-![Flame Graph после оптимизации](https://example.com/flame-after.png)
-_Минимальное количество targeted ререндеров_
-
-### Ranked Chart сравнение
-
-![Ranked Chart сравнение](https://example.com/ranked-comparison.png)
-_Сокращение времени рендера ключевых компонентов_
 
 ## 🎯 Ключевые компоненты
 
@@ -110,32 +80,6 @@ _Сокращение времени рендера ключевых компо�
 
 Селектор года с highlight-анимацией при изменениях
 
-## 📝 Скрипты
-
-```json
-{
-  "dev": "vite",
-  "build": "tsc && vite build",
-  "preview": "vite preview"
-}
-```
-
-## 🌐 Структура данных
-
-Данные ожидаются в формате:
-
-```typescript
-interface CountryData {
-  [country: string]: Array<{
-    year: number;
-    population?: number;
-    co2?: number;
-    co2_per_capita?: number;
-    // ...другие поля
-  }>;
-}
-```
-
 ## 🔧 Настройка
 
 Перед запуском убедитесь, что файл с данными находится в:
@@ -146,12 +90,3 @@ interface CountryData {
 ```env
 VITE_DATA_URL=/path/to/co2-data.json
 ```
-
-## 📊 Метрики производительности
-
-Приложение разработано с учетом следующих метрик:
-
-- **First Contentful Paint**: <1.5s
-- **Time to Interactive**: <2s
-- **Largest Contentful Paint**: <2.5s
-- **Cumulative Layout Shift**: <0.1
