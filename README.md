@@ -1,157 +1,94 @@
 # CO2 Emissions Data Dashboard
 
-React-приложение для анализа данных о выбросах CO2 по странам мира с акцентом на производительность и оптимизацию.
+**# CO2 Emissions Data Dashboard**
 
-## 📊 Функциональность
+A React application for analyzing CO2 emissions data worldwide with a focus on performance and optimization.
 
-### Основные возможности
+## 📊 Functionality
 
-- **Загрузка данных**: Получение иерархических данных о выбросах CO2 (~100MB JSON)
-- **Отображение данных**: Список стран с информацией о населении и выбросах CO2
-- **Таблицы данных**: Детальная информация по годам для каждой страны
-- **Модальное окно**: Выбор дополнительных колонок для отображения
-- **Фильтрация**: Поиск по названию страны, фильтрация по регионам
-- **Сортировка**: По населению и названию страны (возрастание/убывание)
-- **Выбор года**: Отображение данных за конкретный год с анимацией изменений
+### Core Features
 
-### Технические требования
+- **Data Loading**: Retrieval of hierarchical CO2 emissions data (~100MB JSON)
+- **Data Display**: List of countries with population and CO2 emissions information
+- **Data Tables**: Detailed year-by-year information for each country
+- **Modal Window**: Selection of additional columns for display
+- **Filtering**: Search by country name, filtering by regions
+- **Sorting**: By population and country name (ascending/descending)
+- **Year Selection**: Display data for specific years with change animations
 
-- React Suspense для загрузки данных
-- Мемоизация с помощью useMemo и useCallback
-- Оптимизация перерисовок с React.memo
-- Профилирование производительности React Dev Tools
+### Technical Requirements
 
-## 🚀 Установка и запуск
+- React Suspense for data loading
+- Memoization using useMemo and useCallback
+- Render optimization with React.memo
+- Performance profiling with React Dev Tools
+
+## 🚀 Installation and Setup
 
 ```bash
-# Клонирование репозитория
+# Clone repository
 git clone <repository-url>
 cd co2-emissions-dashboard
 
-# Установка зависимостей
+# Install dependencies
 npm install
 
-# Запуск в development режиме
+# Run in development mode
 npm run dev
 
-# Сборка для production
+# Build for production
 npm run build
 
-# Предпросмотр сборки
+# Preview build
 npm run preview
 ```
 
-## 🛠 Технологический стек
+## 🛠 Tech Stack
 
-- **React 18** с Suspense и Concurrent Features
-- **TypeScript** для типизации
-- **Vite** для сборки
-- **React Router** для навигации (если требуется)
-- **CSS Modules** / **Tailwind** для стилизации
+- **React 18** with Suspense and Concurrent Features
+- **TypeScript** for type safety
+- **Vite** for building
+- **CSS Modules** / **Tailwind** for styling
 
-## 📈 Производительность
+## 📈 Performance
 
-### Исходные показатели (до оптимизации)
+[Performance Report](./performance-report.md)
 
-- **Commit Duration**: ~450ms при сортировке
-- **Render Duration**: ~380ms для компонента таблицы
-- **Количество ререндеров**: 15+ при изменении года
+### Implemented Optimizations
 
-### После оптимизации
+1. **React.memo** for components
+2. **useMemo** for memoizing filtered/sorted lists
+3. **useCallback** for event handlers
 
-- **Commit Duration**: ~120ms при сортировке (улучшение на 73%)
-- **Render Duration**: ~90ms для компонента таблицы (улучшение на 76%)
-- **Количество ререндеров**: 3-5 при изменении года
-
-### Использованные оптимизации
-
-1. **React.memo** для компонентов CountryCard и DataTable
-2. **useMemo** для мемоизации filtered/sorted списков
-3. **useCallback** для обработчиков событий
-4. **Виртуализация** для больших списков
-5. **Ленивая загрузка** компонентов
-
-## 📊 Результаты профилирования
-
-### Flame Graph до оптимизации
-
-![Flame Graph до оптимизации](https://example.com/flame-before.png)
-_Множественные ненужные ререндеры компонентов_
-
-### Flame Graph после оптимизации
-
-![Flame Graph после оптимизации](https://example.com/flame-after.png)
-_Минимальное количество targeted ререндеров_
-
-### Ranked Chart сравнение
-
-![Ranked Chart сравнение](https://example.com/ranked-comparison.png)
-_Сокращение времени рендера ключевых компонентов_
-
-## 🎯 Ключевые компоненты
+## 🎯 Key Components
 
 ### DataLoader
 
-Компонент с Suspense для загрузки данных с fallback-индикатором
+Suspense component for data loading with fallback indicator
 
 ### CountryList
 
-Отображает список стран с возможностью сортировки и фильтрации
+Displays country list with sorting and filtering capabilities
 
 ### DataTable
 
-Таблица с годовыми данными, оптимизированная с помощью React.memo
+Yearly data table optimized with React.memo
 
 ### ColumnSelectorModal
 
-Модальное окно для выбора отображаемых колонок
+Modal window for selecting display columns
 
 ### YearSelector
 
-Селектор года с highlight-анимацией при изменениях
+Year selector with highlight animations on changes
 
-## 📝 Скрипты
+## 🔧 Configuration
 
-```json
-{
-  "dev": "vite",
-  "build": "tsc && vite build",
-  "preview": "vite preview"
-}
-```
-
-## 🌐 Структура данных
-
-Данные ожидаются в формате:
-
-```typescript
-interface CountryData {
-  [country: string]: Array<{
-    year: number;
-    population?: number;
-    co2?: number;
-    co2_per_capita?: number;
-    // ...другие поля
-  }>;
-}
-```
-
-## 🔧 Настройка
-
-Перед запуском убедитесь, что файл с данными находится в:
+Before running, ensure the data file is located at:
 `public/data/co2-data.json`
 
-Или укажите путь к данным в environment variables:
+Or specify the data path in environment variables:
 
 ```env
 VITE_DATA_URL=/path/to/co2-data.json
 ```
-
-## 📊 Метрики производительности
-
-Приложение разработано с учетом следующих метрик:
-
-- **First Contentful Paint**: <1.5s
-- **Time to Interactive**: <2s
-- **Largest Contentful Paint**: <2.5s
-- **Cumulative Layout Shift**: <0.1

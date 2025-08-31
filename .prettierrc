@@ -9,6 +9,8 @@
   ],
   "importOrder": [
     "",
+    "@/utils",
+    "",
     "@/interfaces",
     "",
     "@/router",
